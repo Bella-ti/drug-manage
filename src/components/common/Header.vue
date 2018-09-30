@@ -5,7 +5,7 @@
             <el-dropdown trigger="click"
                          @command="handleCommand">
                 <span class="el-dropdown-link">
-                        <img class="user-logo" src="../../../static/img/img.jpg">
+                        <img class="user-logo" src="../../assest/static/img/img.jpg">
                         {{username}}
                     </span>
                 <el-dropdown-menu slot="dropdown">

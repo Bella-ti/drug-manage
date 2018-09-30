@@ -62,7 +62,11 @@ export default {
         username: this.ruleForm.username,
         password: this.ruleForm.password,
         type: 1,
-        information: null,
+        information: {
+          phone: 0,
+          address: '',
+          sayAs:''
+        },
         array: [],
         isAdmin: true
       }).then((res) => {

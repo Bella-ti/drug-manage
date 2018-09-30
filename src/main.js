@@ -3,8 +3,11 @@ import App from './App';
 import store from './store'
 import router from './router';
 import ElementUI from 'element-ui';
-import '../static/css/theme-green/index.css';       // 浅绿色主题
+import './assest/static/css/theme-green/index.css';       // 浅绿色主题
 const VueResource = require('vue-resource');
+
+const axios = require('axios')
+Vue.prototype.$http = Vue.http = axios
 Vue.use(VueResource);
 Vue.use(ElementUI);
 new Vue({

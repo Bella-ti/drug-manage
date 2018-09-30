@@ -6,6 +6,7 @@ router.get('/user', (req, res) => {
   User.find({})
     .sort({ update_at: -1 })
     .then(users => {
+      console.log(users)
       res.json(users)
     })
     .catch(err => {
