@@ -7,10 +7,10 @@
             </el-breadcrumb>
         </div>
         <el-form ref="form" :model="form" label-width="100px">
-          <el-form-item class="half" label="柜台总金额" style="width:50%" >
+          <el-form-item class="half" label="柜台总金额"style="width:50%" >
                 <el-input type='text' v-model="form.id"></el-input>
             </el-form-item>
-            <el-button type='primary' @click="dialoggStatus">交换班</el-button>
+            <el-button type='primary'@click="dialoggStatus">交换班</el-button>
         </el-form>
         <el-dialog title="交班信息" v-model="dialogVisible" size="tiny">
           <el-form ref="form" :model="handleInfo" label-width="80px">
@@ -33,25 +33,25 @@
 </template>
 
 <script>
-export default{
-  data() {
-    return {
-      form: {},
-      handleInfo: {
-        order: '',
-        name: '',
-        type: ''
+    export default{
+      data() {
+        return {
+          form: {},
+          handleInfo: {
+            order: '',
+            name: '',
+            type: ''
+          },
+          dialogVisible: false
+        }
       },
-      dialogVisible: false
+      methods: {
+        dialoggStatus() {
+          this.dialogVisible = true
+        },
+        handleChange() {
+          this.dialogVisible = false
+        }
+      }
     }
-  },
-  methods: {
-    dialoggStatus() {
-      this.dialogVisible = true
-    },
-    handleChange() {
-      this.dialogVisible = false
-    }
-  }
-}
 </script>

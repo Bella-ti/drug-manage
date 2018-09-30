@@ -101,248 +101,248 @@
                 </el-form-item>
         <el-button size='middle' type="primary" @click="addToTable">加入入库单</el-button>
         </el-form>
-
+        
         </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
-export default {
-  data() {
-    return {
-      value: '',
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() < Date.now() - 8.64e7
+import {mapState} from 'vuex'
+    export default {
+        data() {
+            return {
+              value: '',
+              pickerOptions: {
+                disabledDate(time) {
+                  return time.getTime() < Date.now() - 8.64e7;
+                }
+              },
+              dialogVisible:false,
+              form: {
+                id: '',
+                name: '',
+                orderNum: '',
+                storagePeriod: '',
+                renumber:'',
+                size: '',
+                deliveryUnit: '',
+                drugInfo: '',
+                totalNum: '',
+                approvalNumber: '',
+                batchNumber: '',
+                position: '',
+                comePrice: '',
+                comTotalPrice: '',
+                unitPrice:'',
+                validPeriod: '',
+                beginDate: '',
+                promotion: '',
+                type: '',
+                drugsType:'',
+                custom: '',
+                conclusion: '',
+                certificate: '',
+                quality: '',
+                checkPerson: '',
+                buyPerson: '',
+                positionSaid: '',
+                extra: ''
+              },
+              drugs: [
+                {
+                  id: 6754, // 商品ID
+                  name: '阿莫西林分散片', // 商用名
+                  rename: '阿莫西林分散片', // 通用名
+                  size: '0.25G*24片', // 规格
+                  factory: '太极集团', // 厂家
+                  approvalNumber: '国药准字H', // 批准文号
+                  batchNumber: '20120501', // 批号
+                  validPeriod: '2014-1-28', // 有效期
+                  position: 'G1', // 货位
+                  number: 100, // 数量
+                  storagePeriod: '2013-1-10', // 入库日期
+                  promotion: 0.2, // 促销提成
+                  deliveryUnit: '初期库存', // 供货单位
+                  type: '药品', // 商品分类
+                  renumber: 682302, // 助记码
+                  drugsType: '抗菌素', // 药品种类
+                  custom: '', // 自定义类
+                  unitPrice: 6.87, // 销售单价
+                  positionSaid: '', // 货位说明
+                  numberMe: 784738473 // 自编码
+                },
+                {
+                  id: 6798,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  approvalNumber: '国药准字H',
+                  batchNumber: '20120501',
+                  validPeriod: '2014-1-28',
+                  position: 'G1',
+                  number: 100,
+                  storagePeriod: '2013-1-10',
+                  promotion: 0.2,
+                  deliveryUnit: '初期库存',
+                  type: '药品',
+                  renumber: 682302,
+                  drugsType: '抗菌素',
+                  custom: '',
+                  unitPrice: 6.87,
+                  positionSaid: '',
+                  numberMe: 784738473
+                },
+                {
+                  id: 5678,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  approvalNumber: '国药准字H',
+                  batchNumber: '20120501',
+                  validPeriod: '2014-1-28',
+                  position: 'G1',
+                  number: 100,
+                  storagePeriod: '2013-1-10',
+                  promotion: 0.2,
+                  deliveryUnit: '初期库存',
+                  type: '药品',
+                  renumber: 682302,
+                  drugsType: '抗菌素',
+                  custom: '',
+                  unitPrice: 6.87,
+                  positionSaid: '',
+                  numberMe: 784738473
+                },
+                {
+                  id: 6823,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  approvalNumber: '国药准字H',
+                  batchNumber: '20120501',
+                  validPeriod: '2014-1-28',
+                  position: 'G1',
+                  number: 100,
+                  storagePeriod: '2013-1-10',
+                  promotion: 0.2,
+                  deliveryUnit: '初期库存',
+                  type: '药品',
+                  renumber: 682302,
+                  drugsType: '抗菌素',
+                  custom: '',
+                  unitPrice: 6.87,
+                  positionSaid: '',
+                  numberMe: 784738473
+                },
+                {
+                  id: 6438,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  approvalNumber: '国药准字H',
+                  batchNumber: '20120501',
+                  validPeriod: '2014-1-28',
+                  position: 'G1',
+                  number: 100,
+                  storagePeriod: '2013-1-10',
+                  promotion: 0.2,
+                  deliveryUnit: '初期库存',
+                  type: '药品',
+                  renumber: 682302,
+                  drugsType: '抗菌素',
+                  custom: '',
+                  unitPrice: 6.87,
+                  positionSaid: '',
+                  numberMe: 784738473
+                }
+              ],
+              currentSelection: {}
+            }
+        },
+        computed: {
+            ...mapState({
+                saleInfo: ({fetch}) => fetch.saleInfo
+            }),
+            initDate() {
+              this.value = this.getDateTime()
+            }
+        },
+        watch: {
+            allPrice(val, oldValue) {
+                this.saleInfo.total = val
+            },
+            allTo(val, oldValue) {
+                this.saleInfo.to = val
+            }
+        },
+        methods: {
+            addToTable() {
+              this.$http.post('/api/drug', {
+                  id: this.form.id,
+                  name: this.form.name,
+                  numberMe: this.form.numberMe,
+                  storagePeriod: this.form.storagePeriod,
+                  renumber: this.form.renumber,
+                  size: this.form.size,
+                  deliveryUnit: this.form.deliveryUnit,
+                  drugInfo: this.form.drugInfo,
+                  number: this.form.orderNum,
+                  approvalNumber: this.form.approvalNumber,
+                  batchNumber: this.form.batchNumber,
+                  position: this.form.position,
+                  comePrice: this.form.comePrice,
+                  comTotalPrice: this.form.comTotalPrice,
+                  unitPrice: this.form.validPeriod,
+                  validPeriod: this.form.validPeriod,
+                  beginDate: this.form.beginDate,
+                  promotion: this.form.promotion,
+                  type: this.form.type,
+                  drugsType: this.form.drugsType,
+                  custom: this.form.custom,
+                  conclusion: this.form.conclusion,
+                  certificate: this.form.certificate,
+                  quality: this.form.quality,
+                  checkPerson: this.form.checkPerson,
+                  buyPerson: this.form.buyPerson,
+                  positionSaid: this.form.positionSaid,
+                  extra: this.form.extra
+              }).then((res) => {
+                console.log(res)
+                this.dialogVisible = false
+                this.getBusiness
+              })
+            },
+           handleSelectionChange (val){
+               console.log(val)
+           },
+           handleCurrentChange(val){
+               this.dialogVisible = true
+               this.currentSelection = val
+           },
+           handleChange(index) {
+               this.dialogVisible= false
+               this.drugs[index] = this.deepCopy(this.currentSelection)
+           },
+            // 处理当前时间的函数（yyyy-MM-dd）
+          getDateTime: function () {
+            const date = new Date()
+            var seperator = '-'
+            var month = date.getMonth() + 1
+            var strDate = date.getDate()
+            if (month >= 1 && month <= 9) {
+              month = '0' + month
+            }
+            if (strDate >= 0 && strDate <= 9) {
+              strDate = '0' + strDate
+            }
+            var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+            return currentime
+          }
         }
-      },
-      dialogVisible: false,
-      form: {
-        id: '',
-        name: '',
-        orderNum: '',
-        storagePeriod: '',
-        renumber: '',
-        size: '',
-        deliveryUnit: '',
-        drugInfo: '',
-        totalNum: '',
-        approvalNumber: '',
-        batchNumber: '',
-        position: '',
-        comePrice: '',
-        comTotalPrice: '',
-        unitPrice: '',
-        validPeriod: '',
-        beginDate: '',
-        promotion: '',
-        type: '',
-        drugsType: '',
-        custom: '',
-        conclusion: '',
-        certificate: '',
-        quality: '',
-        checkPerson: '',
-        buyPerson: '',
-        positionSaid: '',
-        extra: ''
-      },
-      drugs: [
-        {
-          id: 6754, // 商品ID
-          name: '阿莫西林分散片', // 商用名
-          rename: '阿莫西林分散片', // 通用名
-          size: '0.25G*24片', // 规格
-          factory: '太极集团', // 厂家
-          approvalNumber: '国药准字H', // 批准文号
-          batchNumber: '20120501', // 批号
-          validPeriod: '2014-1-28', // 有效期
-          position: 'G1', // 货位
-          number: 100, // 数量
-          storagePeriod: '2013-1-10', // 入库日期
-          promotion: 0.2, // 促销提成
-          deliveryUnit: '初期库存', // 供货单位
-          type: '药品', // 商品分类
-          renumber: 682302, // 助记码
-          drugsType: '抗菌素', // 药品种类
-          custom: '', // 自定义类
-          unitPrice: 6.87, // 销售单价
-          positionSaid: '', // 货位说明
-          numberMe: 784738473 // 自编码
-        },
-        {
-          id: 6798,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          approvalNumber: '国药准字H',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          position: 'G1',
-          number: 100,
-          storagePeriod: '2013-1-10',
-          promotion: 0.2,
-          deliveryUnit: '初期库存',
-          type: '药品',
-          renumber: 682302,
-          drugsType: '抗菌素',
-          custom: '',
-          unitPrice: 6.87,
-          positionSaid: '',
-          numberMe: 784738473
-        },
-        {
-          id: 5678,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          approvalNumber: '国药准字H',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          position: 'G1',
-          number: 100,
-          storagePeriod: '2013-1-10',
-          promotion: 0.2,
-          deliveryUnit: '初期库存',
-          type: '药品',
-          renumber: 682302,
-          drugsType: '抗菌素',
-          custom: '',
-          unitPrice: 6.87,
-          positionSaid: '',
-          numberMe: 784738473
-        },
-        {
-          id: 6823,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          approvalNumber: '国药准字H',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          position: 'G1',
-          number: 100,
-          storagePeriod: '2013-1-10',
-          promotion: 0.2,
-          deliveryUnit: '初期库存',
-          type: '药品',
-          renumber: 682302,
-          drugsType: '抗菌素',
-          custom: '',
-          unitPrice: 6.87,
-          positionSaid: '',
-          numberMe: 784738473
-        },
-        {
-          id: 6438,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          approvalNumber: '国药准字H',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          position: 'G1',
-          number: 100,
-          storagePeriod: '2013-1-10',
-          promotion: 0.2,
-          deliveryUnit: '初期库存',
-          type: '药品',
-          renumber: 682302,
-          drugsType: '抗菌素',
-          custom: '',
-          unitPrice: 6.87,
-          positionSaid: '',
-          numberMe: 784738473
-        }
-      ],
-      currentSelection: {}
     }
-  },
-  computed: {
-    ...mapState({
-      saleInfo: ({ fetch }) => fetch.saleInfo
-    }),
-    initDate() {
-      this.value = this.getDateTime()
-    }
-  },
-  watch: {
-    allPrice(val, oldValue) {
-      this.saleInfo.total = val
-    },
-    allTo(val, oldValue) {
-      this.saleInfo.to = val
-    }
-  },
-  methods: {
-    addToTable() {
-      this.$http.post('/api/drug', {
-        id: this.form.id,
-        name: this.form.name,
-        numberMe: this.form.numberMe,
-        storagePeriod: this.form.storagePeriod,
-        renumber: this.form.renumber,
-        size: this.form.size,
-        deliveryUnit: this.form.deliveryUnit,
-        drugInfo: this.form.drugInfo,
-        number: this.form.orderNum,
-        approvalNumber: this.form.approvalNumber,
-        batchNumber: this.form.batchNumber,
-        position: this.form.position,
-        comePrice: this.form.comePrice,
-        comTotalPrice: this.form.comTotalPrice,
-        unitPrice: this.form.validPeriod,
-        validPeriod: this.form.validPeriod,
-        beginDate: this.form.beginDate,
-        promotion: this.form.promotion,
-        type: this.form.type,
-        drugsType: this.form.drugsType,
-        custom: this.form.custom,
-        conclusion: this.form.conclusion,
-        certificate: this.form.certificate,
-        quality: this.form.quality,
-        checkPerson: this.form.checkPerson,
-        buyPerson: this.form.buyPerson,
-        positionSaid: this.form.positionSaid,
-        extra: this.form.extra
-      }).then((res) => {
-        console.log(res)
-        this.dialogVisible = false
-        return this.getBusiness
-      })
-    },
-    handleSelectionChange(val) {
-      console.log(val)
-    },
-    handleCurrentChange(val) {
-      this.dialogVisible = true
-      this.currentSelection = val
-    },
-    handleChange(index) {
-      this.dialogVisible = false
-      this.drugs[index] = this.deepCopy(this.currentSelection)
-    },
-    // 处理当前时间的函数（yyyy-MM-dd）
-    getDateTime: function() {
-      const date = new Date()
-      var seperator = '-'
-      var month = date.getMonth() + 1
-      var strDate = date.getDate()
-      if (month >= 1 && month <= 9) {
-        month = '0' + month
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
-      }
-      var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-      return currentime
-    }
-  }
-}
 </script>
 <style>
   .sales .el-table .cell {
@@ -352,7 +352,7 @@ export default {
   .sales .el-table .cell,.sales .el-table th>div {
     padding:0
   }
-
+  
   .sales .form-condition {
     display: flex;
     flex-direction: row;

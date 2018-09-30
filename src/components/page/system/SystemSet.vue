@@ -175,7 +175,7 @@ export default {
       // })
     },
     // 处理当前时间的函数（yyyy-MM-dd）
-    getDateTime: function() {
+    getDateTime: function () {
       const date = new Date()
       var seperator1 = '/'
       var seperator2 = ':'
@@ -189,7 +189,7 @@ export default {
       }
       var currentime = '' + date.getFullYear() + seperator1 + month + seperator1 + strDate + ' ' + date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds()
       return currentime
-    }
+    },
   }
 }
 </script>
@@ -287,6 +287,70 @@ export default {
 .system .save .save-btn {
   padding: 10px 20px
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*表单*/
 

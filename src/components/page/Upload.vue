@@ -41,35 +41,35 @@
 </template>
 
 <script>
-import VueCoreImageUpload from 'vue-core-image-upload'
-export default {
-  data: function() {
-    return {
-      src: '../../../static/img/img.jpg',
-      fileList: []
+    import VueCoreImageUpload  from 'vue-core-image-upload';
+    export default {
+        data: function(){
+            return {
+                src: '../../../static/img/img.jpg',
+                fileList: []
+            }
+        },
+        components: {
+                VueCoreImageUpload
+        },
+        methods:{
+            imageuploaded(res) {
+                console.log(res)
+            },
+            handleRemove(file, fileList) {
+                console.log(file, fileList);
+            },
+            handlePreview(file) {
+                console.log(file);
+            },
+            handleError(){
+                this.$notify.error({
+                    title: '上传失败',
+                    message: '图片上传接口上传失败，可更改为自己的服务器接口'
+                });
+            }
+        }
     }
-  },
-  components: {
-    VueCoreImageUpload
-  },
-  methods: {
-    imageuploaded(res) {
-      console.log(res)
-    },
-    handleRemove(file, fileList) {
-      console.log(file, fileList)
-    },
-    handlePreview(file) {
-      console.log(file)
-    },
-    handleError() {
-      this.$notify.error({
-        title: '上传失败',
-        message: '图片上传接口上传失败，可更改为自己的服务器接口'
-      })
-    }
-  }
-}
 </script>
 
 <style scoped>

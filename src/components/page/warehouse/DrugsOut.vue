@@ -37,7 +37,7 @@
                   <el-input class='query' v-model="form.salePrice"></el-input>
               </el-form-item>
               <div style='width: 10%;margin-top:3px;margin-left:20px;float:right'>
-                <el-button size='small' type="primary" @click="addToTable">生成出库单</el-button>
+                <el-button size='small' type="primary" @click="addToTable">生成出库单</el-button>              
               </div>
         </el-form>
           <el-table :data="drugs" border style="width: 100%">
@@ -57,144 +57,143 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-export default {
-  data() {
-    return {
-      value: '',
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() < Date.now() - 8.64e7
+import {mapState} from 'vuex'
+    export default {
+        data() {
+            return {
+              value: '',
+              pickerOptions: {
+                disabledDate(time) {
+                  return time.getTime() < Date.now() - 8.64e7;
+                }
+              },
+              dialogVisible:false,
+              form: {
+                id: 'CH-1',
+                price: 12,
+                number: 2,
+                info: '',
+                salePrice: 12,
+                who: '',
+                total: 0,
+                from: 0,
+                to: 0
+              },
+              drugs: [
+                {
+                  id: 6754, // 商品ID
+                  name: '阿莫西林分散片', // 商用名
+                  rename: '阿莫西林分散片', // 通用名
+                  size: '0.25G*24片', // 规格
+                  factory: '太极集团', // 厂家
+                  batchNumber: '20120501', // 批号
+                  validPeriod: '2014-1-28', // 有效期
+                  number: 100, // 数量
+                  outPrice: 5,
+                  toastPrice:3245,
+                  unitPrice: 6.87 // 销售单价
+                },
+                {
+                  id: 6754,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  batchNumber: '20120501',
+                  validPeriod: '2014-1-28',
+                  number: 100,
+                  outPrice: 5,
+                  toastPrice:3245,
+                  unitPrice: 6.87
+                },
+                {
+                  id: 6754,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  batchNumber: '20120501',
+                  validPeriod: '2014-1-28',
+                  number: 100,
+                  outPrice: 5,
+                  toastPrice:3245,
+                  unitPrice: 6.87
+                },
+                {
+                  id: 6754,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  batchNumber: '20120501',
+                  validPeriod: '2014-1-28',
+                  number: 100,
+                  outPrice: 5,
+                  toastPrice:3245,
+                  unitPrice: 6.87
+                },
+                {
+                  id: 6754,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  batchNumber: '20120501',
+                  validPeriod: '2014-1-28',
+                  number: 100,
+                  outPrice: 5,
+                  toastPrice:3245,
+                  unitPrice: 6.87
+                }
+              ],
+              currentSelection: {}
+            }
+        },
+        computed: {
+            ...mapState({
+                saleInfo: ({fetch}) => fetch.saleInfo
+                // drugs: ({storage}) => storage.drugs
+            }),
+            initDate() {
+              this.value = this.getDateTime()
+            }
+        },
+        watch: {
+            allPrice(val, oldValue) {
+                this.saleInfo.total = val
+            },
+            allTo(val, oldValue) {
+                this.saleInfo.to = val
+            }
+        },
+        methods: {
+          addToTable() {
+            this.outList.push(this.drugs)
+          },
+          findAll(){
+            for(var i =0;i<this.drugs.length;i++) {
+              if(this.drugs[i].name == this.outList.name) {
+                this.outList.push(this.drugs[i])
+              }
+            }
+          },
+            // 处理当前时间的函数（yyyy-MM-dd）
+          getDateTime: function () {
+            const date = new Date()
+            var seperator = '-'
+            var month = date.getMonth() + 1
+            var strDate = date.getDate()
+            if (month >= 1 && month <= 9) {
+              month = '0' + month
+            }
+            if (strDate >= 0 && strDate <= 9) {
+              strDate = '0' + strDate
+            }
+            var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+            return currentime
+          }
         }
-      },
-      dialogVisible: false,
-      form: {
-        id: 'CH-1',
-        price: 12,
-        number: 2,
-        info: '',
-        salePrice: 12,
-        who: '',
-        total: 0,
-        from: 0,
-        to: 0
-      },
-      drugs: [
-        {
-          id: 6754, // 商品ID
-          name: '阿莫西林分散片', // 商用名
-          rename: '阿莫西林分散片', // 通用名
-          size: '0.25G*24片', // 规格
-          factory: '太极集团', // 厂家
-          batchNumber: '20120501', // 批号
-          validPeriod: '2014-1-28', // 有效期
-          number: 100, // 数量
-          outPrice: 5,
-          toastPrice: 3245,
-          unitPrice: 6.87 // 销售单价
-        },
-        {
-          id: 6754,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          number: 100,
-          outPrice: 5,
-          toastPrice: 3245,
-          unitPrice: 6.87
-        },
-        {
-          id: 6754,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          number: 100,
-          outPrice: 5,
-          toastPrice: 3245,
-          unitPrice: 6.87
-        },
-        {
-          id: 6754,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          number: 100,
-          outPrice: 5,
-          toastPrice: 3245,
-          unitPrice: 6.87
-        },
-        {
-          id: 6754,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          number: 100,
-          outPrice: 5,
-          toastPrice: 3245,
-          unitPrice: 6.87
-        }
-      ],
-      currentSelection: {}
     }
-  },
-  computed: {
-    ...mapState({
-      saleInfo: ({ fetch }) => fetch.saleInfo
-      // drugs: ({storage}) => storage.drugs
-    }),
-    initDate() {
-      this.value = this.getDateTime()
-      return this.value
-    }
-  },
-  watch: {
-    allPrice(val, oldValue) {
-      this.saleInfo.total = val
-    },
-    allTo(val, oldValue) {
-      this.saleInfo.to = val
-    }
-  },
-  methods: {
-    addToTable() {
-      this.outList.push(this.drugs)
-    },
-    findAll() {
-      for (var i = 0; i < this.drugs.length; i++) {
-        if (this.drugs[i].name === this.outList.name) {
-          this.outList.push(this.drugs[i])
-        }
-      }
-    },
-    // 处理当前时间的函数（yyyy-MM-dd）
-    getDateTime: function() {
-      const date = new Date()
-      var seperator = '-'
-      var month = date.getMonth() + 1
-      var strDate = date.getDate()
-      if (month >= 1 && month <= 9) {
-        month = '0' + month
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
-      }
-      var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-      return currentime
-    }
-  }
-}
 </script>
 <style>
   .sales .el-table .cell {

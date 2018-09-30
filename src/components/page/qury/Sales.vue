@@ -65,209 +65,209 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-  data() {
-    return {
-      value: '',
-      currentime: '',
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() >= Date.now() - 8.64e7
+    data() {
+        return {
+            value: '',
+            currentime: '',
+            pickerOptions: {
+                disabledDate(time) {
+                    return time.getTime() >= Date.now() - 8.64e7;
+                }
+            },
+            record: [{
+                order: '',
+                id: '',
+                name: '',
+                time: '',
+                type: '',
+                size: ''
+            }],
+            dialogVisible: false,
+            form: {
+                value: '',
+                position: '',
+                type: ''
+            },
+            drugs: [
+                {
+                    "_id": ObjectId("58eb2fa12a35aaaf1a78ed3e"),//数据库数据
+                    "id": 6823,
+                    "name": "阿莫西林分散片",
+                    "rename": "阿莫西林分散片",
+                    "size": "0.25G*24片",
+                    "factory": "太极集团",
+                    "approvalNumber": "国药准字H",
+                    "batchNumber": "20120501",
+                    "validPeriod": "2014-1-28",
+                    "position": "G1",
+                    "number": 100,
+                    "storagePeriod": "2013-1-10",
+                    "promotion": 0.2,
+                    "deliveryUnit": "初期库存",
+                    "type": "药品",
+                    "renumber": 682302,
+                    "drugsType": "抗菌素",
+                    "custom": "",
+                    "unitPrice": 6.87,
+                    "positionSaid": "",
+                    "numberMe": 784738473
+                },
+                {
+                    id: 6823, // 商品ID
+                    name: '阿莫西林分散片', // 商用名
+                    rename: '阿莫西林分散片', // 通用名
+                    size: '0.25G*24片', // 规格
+                    factory: '太极集团', // 厂家
+                    approvalNumber: '国药准字H', // 批准文号
+                    batchNumber: '20120501', // 批号
+                    validPeriod: '2014-1-28', // 有效期
+                    position: 'G1', // 货位
+                    number: 100, // 数量
+                    storagePeriod: '2013-1-10', // 销售日期
+                    promotion: 0.2, // 促销提成
+                    deliveryUnit: '初期库存', // 供货单位
+                    type: '药品', // 商品分类
+                    renumber: 682302, // 助记码
+                    drugsType: '抗菌素', // 药品种类
+                    custom: '', // 自定义类
+                    unitPrice: 6.87, // 销售单价
+                    positionSaid: '', // 货位说明
+                    numberMe: 784738473 // 自编码
+                },
+                {
+                    id: 6823,
+                    name: '阿莫西林分散片',
+                    rename: '阿莫西林分散片',
+                    size: '0.25G*24片',
+                    factory: '太极集团',
+                    approvalNumber: '国药准字H',
+                    batchNumber: '20120501',
+                    validPeriod: '2014-1-28',
+                    position: 'G1',
+                    number: 100,
+                    storagePeriod: '2013-1-10',
+                    promotion: 0.2,
+                    deliveryUnit: '初期库存',
+                    type: '药品',
+                    renumber: 682302,
+                    drugsType: '抗菌素',
+                    custom: '',
+                    unitPrice: 6.87,
+                    positionSaid: '',
+                    numberMe: 784738473
+                },
+                {
+                    id: 6823,
+                    name: '阿莫西林分散片',
+                    rename: '阿莫西林分散片',
+                    size: '0.25G*24片',
+                    factory: '太极集团',
+                    approvalNumber: '国药准字H',
+                    batchNumber: '20120501',
+                    validPeriod: '2014-1-28',
+                    position: 'G1',
+                    number: 100,
+                    storagePeriod: '2013-1-10',
+                    promotion: 0.2,
+                    deliveryUnit: '初期库存',
+                    type: '药品',
+                    renumber: 682302,
+                    drugsType: '抗菌素',
+                    custom: '',
+                    unitPrice: 6.87,
+                    positionSaid: '',
+                    numberMe: 784738473
+                },
+                {
+                    id: 6823,
+                    name: '阿莫西林分散片',
+                    rename: '阿莫西林分散片',
+                    size: '0.25G*24片',
+                    factory: '太极集团',
+                    approvalNumber: '国药准字H',
+                    batchNumber: '20120501',
+                    validPeriod: '2014-1-28',
+                    position: 'G1',
+                    number: 100,
+                    storagePeriod: '2013-1-10',
+                    promotion: 0.2,
+                    deliveryUnit: '初期库存',
+                    type: '药品',
+                    renumber: 682302,
+                    drugsType: '抗菌素',
+                    custom: '',
+                    unitPrice: 6.87,
+                    positionSaid: '',
+                    numberMe: 784738473
+                },
+                {
+                    id: 6823,
+                    name: '阿莫西林分散片',
+                    rename: '阿莫西林分散片',
+                    size: '0.25G*24片',
+                    factory: '太极集团',
+                    approvalNumber: '国药准字H',
+                    batchNumber: '20120501',
+                    validPeriod: '2014-1-28',
+                    position: 'G1',
+                    number: 100,
+                    storagePeriod: '2013-1-10',
+                    promotion: 0.2,
+                    deliveryUnit: '初期库存',
+                    type: '药品',
+                    renumber: 682302,
+                    drugsType: '抗菌素',
+                    custom: '',
+                    unitPrice: 6.87,
+                    positionSaid: '',
+                    numberMe: 784738473
+                }
+            ],
+            index: '',
+            currentSelection: {}
         }
-      },
-      record: [{
-        order: '',
-        id: '',
-        name: '',
-        time: '',
-        type: '',
-        size: ''
-      }],
-      dialogVisible: false,
-      form: {
-        value: '',
-        position: '',
-        type: ''
-      },
-      drugs: [
-        {
-          '_id': '58eb2fa12a35aaaf1a78ed3e', // 数据库数据
-          'id': 6823,
-          'name': '阿莫西林分散片',
-          'rename': '阿莫西林分散片',
-          'size': '0.25G*24片',
-          'factory': '太极集团',
-          'approvalNumber': '国药准字H',
-          'batchNumber': '20120501',
-          'validPeriod': '2014-1-28',
-          'position': 'G1',
-          'number': 100,
-          'storagePeriod': '2013-1-10',
-          'promotion': 0.2,
-          'deliveryUnit': '初期库存',
-          'type': '药品',
-          'renumber': 682302,
-          'drugsType': '抗菌素',
-          'custom': '',
-          'unitPrice': 6.87,
-          'positionSaid': '',
-          'numberMe': 784738473
-        },
-        {
-          id: 6823, // 商品ID
-          name: '阿莫西林分散片', // 商用名
-          rename: '阿莫西林分散片', // 通用名
-          size: '0.25G*24片', // 规格
-          factory: '太极集团', // 厂家
-          approvalNumber: '国药准字H', // 批准文号
-          batchNumber: '20120501', // 批号
-          validPeriod: '2014-1-28', // 有效期
-          position: 'G1', // 货位
-          number: 100, // 数量
-          storagePeriod: '2013-1-10', // 销售日期
-          promotion: 0.2, // 促销提成
-          deliveryUnit: '初期库存', // 供货单位
-          type: '药品', // 商品分类
-          renumber: 682302, // 助记码
-          drugsType: '抗菌素', // 药品种类
-          custom: '', // 自定义类
-          unitPrice: 6.87, // 销售单价
-          positionSaid: '', // 货位说明
-          numberMe: 784738473 // 自编码
-        },
-        {
-          id: 6823,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          approvalNumber: '国药准字H',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          position: 'G1',
-          number: 100,
-          storagePeriod: '2013-1-10',
-          promotion: 0.2,
-          deliveryUnit: '初期库存',
-          type: '药品',
-          renumber: 682302,
-          drugsType: '抗菌素',
-          custom: '',
-          unitPrice: 6.87,
-          positionSaid: '',
-          numberMe: 784738473
-        },
-        {
-          id: 6823,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          approvalNumber: '国药准字H',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          position: 'G1',
-          number: 100,
-          storagePeriod: '2013-1-10',
-          promotion: 0.2,
-          deliveryUnit: '初期库存',
-          type: '药品',
-          renumber: 682302,
-          drugsType: '抗菌素',
-          custom: '',
-          unitPrice: 6.87,
-          positionSaid: '',
-          numberMe: 784738473
-        },
-        {
-          id: 6823,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          approvalNumber: '国药准字H',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          position: 'G1',
-          number: 100,
-          storagePeriod: '2013-1-10',
-          promotion: 0.2,
-          deliveryUnit: '初期库存',
-          type: '药品',
-          renumber: 682302,
-          drugsType: '抗菌素',
-          custom: '',
-          unitPrice: 6.87,
-          positionSaid: '',
-          numberMe: 784738473
-        },
-        {
-          id: 6823,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          approvalNumber: '国药准字H',
-          batchNumber: '20120501',
-          validPeriod: '2014-1-28',
-          position: 'G1',
-          number: 100,
-          storagePeriod: '2013-1-10',
-          promotion: 0.2,
-          deliveryUnit: '初期库存',
-          type: '药品',
-          renumber: 682302,
-          drugsType: '抗菌素',
-          custom: '',
-          unitPrice: 6.87,
-          positionSaid: '',
-          numberMe: 784738473
+    },
+    computed: {
+        ...mapState({
+            state: ({ fetch }) => fetch.state
+        })
+    },
+    create: {
+        getDateTime() {
+            const date = new Date()
+            var seperator = '/'
+            var month = date.getMonth() + 1
+            var strDate = date.getDate()
+            if (month >= 1 && month <= 9) {
+                month = '0' + month
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = '0' + strDate
+            }
+            this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+            return this.currentime
         }
-      ],
-      index: '',
-      currentSelection: {}
-    }
-  },
-  computed: {
-    ...mapState({
-      state: ({ fetch }) => fetch.state
-    })
-  },
-  create: {
-    getDateTime() {
-      const date = new Date()
-      var seperator = '/'
-      var month = date.getMonth() + 1
-      var strDate = date.getDate()
-      if (month >= 1 && month <= 9) {
-        month = '0' + month
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
-      }
-      this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-      return this.currentime
-    }
-  },
-  methods: {
-    handlerFetch() {
+    },
+    methods: {
+        handlerFetch() {
 
-    },
-    // 编辑
-    handleEdit(index, row) {
-      this.dialogVisible = true
-      this.form = JSON.parse(JSON.stringify(row))
-      this.index = index
-    },
-    // 删除
-    handleDelete(e, index, row) {
-      this.record.splice(index, 1)
-    },
-    addCompanyTrue() {
-      this.dialogVisible = false
-      this.record[this.index] = JSON.parse(JSON.stringify(this.form))
-      return this.record
+        },
+        // 编辑
+        handleEdit(index, row) {
+            this.dialogVisible = true
+            this.form = JSON.parse(JSON.stringify(row))
+            this.index = index
+        },
+        // 删除
+        handleDelete(e, index, row) {
+            this.record.splice(index, 1)
+        },
+        addCompanyTrue() {
+            this.dialogVisible = false
+            this.record[this.index] = JSON.parse(JSON.stringify(this.form))
+            return this.record
+        }
     }
-  }
 }
 </script>
 <style>

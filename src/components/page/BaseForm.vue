@@ -58,25 +58,25 @@
 </template>
 
 <script>
-export default {
-  data: function() {
-    return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: true,
-        type: ['步步高'],
-        resource: '小天才',
-        desc: ''
-      }
+    export default {
+        data: function(){
+            return {
+                form: {
+                    name: '',
+                    region: '',
+                    date1: '',
+                    date2: '',
+                    delivery: true,
+                    type: ['步步高'],
+                    resource: '小天才',
+                    desc: ''
+                }
+            }
+        },
+        methods: {
+            onSubmit() {
+                this.$message.success('提交成功！');
+            }
+        }
     }
-  },
-  methods: {
-    onSubmit() {
-      this.$message.success('提交成功！')
-    }
-  }
-}
 </script>

@@ -20,12 +20,12 @@
               <el-form-item label="药品信息">
                   <el-input class='query' v-model="form.info"></el-input>
               </el-form-item>
-
+              
               <el-form-item label="实际售价">
                   <el-input class='query' v-model="form.salePrice"></el-input>
                   <span>元</span>
               </el-form-item>
-
+              
               <el-form-item label="销售员">
                   <el-input class='query' v-model="form.who"></el-input>
               </el-form-item>
@@ -59,115 +59,115 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-export default {
-  data() {
-    return {
-      dialogVisible: false,
-      form: {
-        id: 'CH-1',
-        price: 12,
-        number: 2,
-        info: '该药品用与清热泻火',
-        salePrice: 12,
-        who: '张oo',
-        total: 0,
-        from: 0,
-        to: 0
-      },
-      drugs: [
-        {
-          id: 6754, // 商品ID
-          name: '阿莫西林分散片', // 商用名
-          rename: '阿莫西林分散片', // 通用名
-          size: '0.25G*24片', // 规格
-          factory: '太极集团', // 厂商
-          batchNumber: '20120501', // 批号
-          number: 100, // 数量
-          unit: '克', // 促销提成
-          price: 6.87 // 销售单价
+import {mapState} from 'vuex'
+    export default {
+        data() {
+            return {
+              dialogVisible:false,
+              form: {
+                id: 'CH-1',
+                price: 12,
+                number: 2,
+                info: '该药品用与清热泻火',
+                salePrice: 12,
+                who: '张oo',
+                total: 0,
+                from: 0,
+                to: 0
+              },
+              drugs: [
+                {
+                  id: 6754, // 商品ID
+                  name: '阿莫西林分散片', // 商用名
+                  rename: '阿莫西林分散片', // 通用名
+                  size: '0.25G*24片', // 规格
+                  factory: '太极集团', // 厂商
+                  batchNumber: '20120501', // 批号
+                  number: 100, // 数量
+                  unit: '克', // 促销提成
+                  price: 6.87, // 销售单价
+                },
+                {
+                  id: 6754,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  batchNumber: '20120501',
+                  number: 100,
+                  unit: '克',
+                  price: 6.87,
+                },
+                {
+                   id: 6754,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  batchNumber: '20120501',
+                  number: 100,
+                  unit: '克',
+                  price: 6.87,
+                },
+                {
+                   id: 6754,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  batchNumber: '20120501',
+                  number: 100,
+                  unit: '克',
+                  price: 6.87,
+                },
+                {
+                   id: 6754,
+                  name: '阿莫西林分散片',
+                  rename: '阿莫西林分散片',
+                  size: '0.25G*24片',
+                  factory: '太极集团',
+                  batchNumber: '20120501',
+                  number: 100,
+                  unit: '克',
+                  price: 6.87,
+                }
+              ],
+              currentSelection: {}
+            }
         },
-        {
-          id: 6754,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          batchNumber: '20120501',
-          number: 100,
-          unit: '克',
-          price: 6.87
+        computed: {
+            ...mapState({
+                saleInfo: ({fetch}) => fetch.saleInfo
+            }),
+            totalPrice() {
+                return this.saleInfo.total = parseInt(this.saleInfo.salePrice) * parseInt(this.saleInfo.number)
+            },
+            monTo() {
+                return this.saleInfo.to = parseInt(this.saleInfo.from) - parseInt(this.saleInfo.total)
+            }
         },
-        {
-          id: 6754,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          batchNumber: '20120501',
-          number: 100,
-          unit: '克',
-          price: 6.87
+        watch: {
+            allPrice(val, oldValue) {
+                this.saleInfo.total = val
+            },
+            allTo(val, oldValue) {
+                this.saleInfo.to = val
+            }
         },
-        {
-          id: 6754,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          batchNumber: '20120501',
-          number: 100,
-          unit: '克',
-          price: 6.87
-        },
-        {
-          id: 6754,
-          name: '阿莫西林分散片',
-          rename: '阿莫西林分散片',
-          size: '0.25G*24片',
-          factory: '太极集团',
-          batchNumber: '20120501',
-          number: 100,
-          unit: '克',
-          price: 6.87
+        methods: {
+           handleSelectionChange (val){
+               console.log(val)
+           },
+           handleCurrentChange(val){
+               this.dialogVisible = true
+               this.currentSelection = val
+           },
+           handleChange(index) {
+               this.dialogVisible= false
+               this.drugs[index] = this.deepCopy(this.currentSelection)
+           }
         }
-      ],
-      currentSelection: {}
     }
-  },
-  computed: {
-    ...mapState({
-      saleInfo: ({ fetch }) => fetch.saleInfo
-    }),
-    totalPrice() {
-      return this.saleInfo.total = parseInt(this.saleInfo.salePrice) * parseInt(this.saleInfo.number)
-    },
-    monTo() {
-      return this.saleInfo.to = parseInt(this.saleInfo.from) - parseInt(this.saleInfo.total)
-    }
-  },
-  watch: {
-    allPrice(val, oldValue) {
-      this.saleInfo.total = val
-    },
-    allTo(val, oldValue) {
-      this.saleInfo.to = val
-    }
-  },
-  methods: {
-    handleSelectionChange(val) {
-      console.log(val)
-    },
-    handleCurrentChange(val) {
-      this.dialogVisible = true
-      this.currentSelection = val
-    },
-    handleChange(index) {
-      this.dialogVisible = false
-      this.drugs[index] = this.deepCopy(this.currentSelection)
-    }
-  }
-}
 </script>
 <style>
   .sales .el-table .cell {

@@ -89,7 +89,7 @@
 </template>
 
 <script>
-// import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -114,11 +114,13 @@ export default {
     }
   },
   created() {
-    return this.getBusiness
+    this.getBusiness
   },
   computed: {
     getBusiness() {
-      this.changeBusie()
+      this.$http.get('/api/manufacturer').then((res) => {
+        this.company = res.data
+      })
       return this.company
     }
   },
@@ -128,27 +130,20 @@ export default {
     }
   },
   methods: {
-    changeBusie() {
-      this.$http.get('/api/manufacturer').then((res) => {
-        this.company = res.data
-      }).catch((err) => {
-        console.log(err)
-      })
-    },
     // 查询
     addToTable() {
       const arr = []
-      this.$http.get('/api/manufacturer').then((res) => {
-        if (this.form.buisNum === '') {
-          this.company = res.data
-          return
-        }
-        for (var i = 0; i < res.data.length; i++) {
-          if (res.data[i].id === this.form.buisNum) {
-            arr.push(res.data[i])
-          }
-        }
-        this.company = arr
+       this.$http.get('/api/manufacturer').then((res) => {
+         if(this.form.buisNum == '') {
+           this.company = res.data
+           return
+         }
+         for(var i=0;i<res.data.length;i++) {
+           if(res.data[i].id == this.form.buisNum) {
+             arr.push(res.data[i])
+           }
+         }
+          this.company = arr
       }).catch((error) => {
         console.log(error)
       })
@@ -173,7 +168,7 @@ export default {
         address: this.form.address
       }).then((res) => {
         console.log(res)
-        return this.getAllUser
+        this.getAllUser
       }).catch((err) => {
         console.log(err)
       })
@@ -201,7 +196,7 @@ export default {
       }).then((res) => {
         console.log(res)
         this.dialogVisible = false
-        return this.getBusiness
+        this.getBusiness
       })
     },
     // 编辑
@@ -209,9 +204,9 @@ export default {
       this.dialogVisible = true
       this.isChange = true
       this.tips = ''
-      const obj = JSON.parse(JSON.stringify(row))
-      for (var i in obj) {
-        if (obj[i] === undefined) {
+       const obj = JSON.parse(JSON.stringify(row))
+      for(var i in obj) {
+        if(obj[i] == undefined) {
           obj[i] = ''
         }
       }
@@ -221,7 +216,7 @@ export default {
     handleDelete(e, index, row) {
       const id = this.company[index]._id
       this.$http.delete(`/api/manufacturer/${id}`).then(() => {
-        return this.getBusiness
+        this.getBusiness
       })
     }
   }

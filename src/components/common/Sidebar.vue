@@ -45,13 +45,13 @@
 </template>
 
 <script>
-export default {
-  computed: {
-    onRoutes() {
-      return this.$route.path.replace('/', '')
+    export default {
+        computed:{
+            onRoutes(){
+                return this.$route.path.replace('/','');
+            }
+        }
     }
-  }
-}
 </script>
 
 <style>

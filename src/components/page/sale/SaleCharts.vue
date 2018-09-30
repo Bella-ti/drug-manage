@@ -54,38 +54,38 @@
 </template>
 
 <script>
-import IEcharts from 'vue-echarts-v3'
-export default {
-  data: function() {
-    return {
-      singleSelect: 1,
-      year: '',
-      month: '',
-      date: '',
-      dateRange: '',
-      mix: {
-        color: ['#20a0ff', '#F7BA2A', '#F7BA2A', '#FF4949', '#61a0a8'],
-        legend: {
-          data: ['销售额']
+    import IEcharts from 'vue-echarts-v3';
+    export default {
+        data: function(){
+            return {
+                singleSelect:1,
+                year: '',
+                month: '',
+                date: '',
+                dateRange: '',
+                mix:{
+                    color:["#20a0ff","#F7BA2A","#F7BA2A","#FF4949","#61a0a8"],
+                    legend: {
+                        data:['销售额']
+                    },
+                    xAxis: {
+                        data: ['8:00','10:00','12:00','14:00','16:00','18:00','20:00']
+                    },
+                    yAxis:{},
+                    series: [
+                        {
+                            name: "销售额",
+                            type: "line", // bar
+                            data: [6, 15, 20, 46, 28, 20, 4]
+                        }
+                    ]
+                }
+            }
         },
-        xAxis: {
-          data: ['8:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00']
-        },
-        yAxis: {},
-        series: [
-          {
-            name: '销售额',
-            type: 'line', // bar
-            data: [6, 15, 20, 46, 28, 20, 4]
-          }
-        ]
-      }
+        components: {
+            IEcharts
+        }
     }
-  },
-  components: {
-    IEcharts
-  }
-}
 </script>
 
 <style scoped>

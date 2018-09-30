@@ -6,15 +6,14 @@
         <el-breadcrumb-item>操作员权限管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-
+  
     <el-table :data="userInfo" border style="width: 100%">
       <el-table-column prop='order' label="编号" width="150">
       </el-table-column>
       <el-table-column prop='username' label="姓名">
       </el-table-column>
       <el-table-column label="是否管理员" width="180">
-        <!-- scope="scope" -->
-        <template >
+        <template scope="scope">
           <el-checkbox :checked='userInfo.type === "1"'></el-checkbox>
         </template>
       </el-table-column>
@@ -69,16 +68,10 @@ export default {
     }
   },
   created() {
-    return this.getAllUser
+    this.getAllUser
   },
   computed: {
     getAllUser() {
-      this.changeUser()
-      return this.userInfo
-    }
-  },
-  methods: {
-    changeUser() {
       this.$http.get('/api/user').then((res) => {
         console.log(res.data)
         // var userList = []
@@ -98,22 +91,23 @@ export default {
         //   userList.push(user)
         // }
         this.userInfo = res.data
-      }).catch((err) => {
-        console.log(err)
       })
-    },
+      return this.userInfo
+    }
+  },
+  methods: {
     // deep copy
     deepCopy(p, c) {
-      c = c || {}
+      var c = c || {};
       for (var i in p) {
         if (typeof p[i] === 'object') {
-          c[i] = (p[i].constructor === Array) ? [] : {}
-          this.deepCopy(p[i], c[i])
+          c[i] = (p[i].constructor === Array) ? [] : {};
+          deepCopy(p[i], c[i]);
         } else {
-          c[i] = p[i]
+          c[i] = p[i];
         }
       }
-      return c
+      return c;
     },
     // 编辑
     handleEdit(index, row) {

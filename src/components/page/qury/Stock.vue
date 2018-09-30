@@ -50,7 +50,7 @@
                   style="width: 100%"
                   @selection-change="handleSelectionChange"
                   @current-change="handleCurrentChange">
-
+    
             <el-table-column prop="id"
                              label="商品ID"
                              width='auto'></el-table-column>
@@ -174,7 +174,7 @@
                 <el-form-item label="自定义分类">
                     <el-input v-model="currentSelection.custom"></el-input>
                 </el-form-item>
-
+    
                 <el-form-item label="有效期">
                     <el-input v-model="currentSelection.validPeriod"></el-input>
                 </el-form-item>
@@ -207,7 +207,7 @@
                               width='100px'>
                     <el-input v-model="currentSelection.number"></el-input>
                 </el-form-item>
-
+    
                 <el-form-item label="供货单位"
                               width='100px'>
                     <el-input v-model="currentSelection.deliveryUnit"></el-input>
@@ -249,125 +249,122 @@
 
 <script>
 export default {
-  data() {
-    return {
-      dialogVisible: false,
-      form: {
-        id: '',
-        position: '',
-        type: ''
-      },
-      drugs: [
-      ],
-      currentSelection: {}
-    }
-  },
-  mounted() {
-    return this.getAllDrugs
-  },
-  computed: {
-    getAllDrugs() {
-      this.changeDrug()
-      return this.drugs
-    }
-  },
-  methods: {
-    changeDrug() {
-      this.$http.get('/api/drug').then((res) => {
-        this.drugs = res.data
-      })
-    },
-    deepCopy(p, c) {
-      c = c || {}
-      for (var i in p) {
-        if (typeof p[i] === 'object') {
-          c[i] = (p[i].constructor === Array) ? [] : {}
-          this.deepCopy(p[i], c[i])
-        } else {
-          c[i] = p[i]
+    data() {
+        return {
+            dialogVisible: false,
+            form: {
+                id: '',
+                position: '',
+                type: ''
+            },
+            drugs: [
+            ],
+            currentSelection: {}
         }
-      }
-      return c
     },
-    handleSelectionChange(val) {
-      console.log(val)
+    mounted() {
+        this.getAllDrugs
     },
-    handleCurrentChange(val) {
-      this.dialogVisible = true
-      this.currentSelection = val
+    computed: {
+        getAllDrugs() {
+            this.$http.get('/api/drug').then((res) => {
+                this.drugs = res.data
+            })
+            return this.drugs
+        }
     },
-    handleChange(index) {
-      this.dialogVisible = false
-      this.drugs[index] = this.deepCopy(this.currentSelection)
-    },
-    searchMenu() {
-      var arr = []
-      if (this.form.id !== '') {
-        this.$http.get('/api/drug').then((res) => {
-          for (var i in res.data) {
-            if (res.data[i].id === this.form.id) {
-              arr.push(res.data[i])
+    methods: {
+        deepCopy(p, c) {
+            var c = c || {};
+            for (var i in p) {
+                if (typeof p[i] === 'object') {
+                    c[i] = (p[i].constructor === Array) ? [] : {};
+                    deepCopy(p[i], c[i]);
+                } else {
+                    c[i] = p[i];
+                }
             }
-          }
-          this.drugs = arr
-        })
-        return
-      }
-      var position = ''
-      switch (this.form.position) {
-        case 'bbk':
-          position = 'G1'
-          break
-        case 'xtc':
-          position = 'G2'
-          break
-        case 'imoo':
-          position = 'G3'
-          break
-        default:
-          position = ''
-      }
-      if (position) {
-        this.$http.get('/api/drug').then((res) => {
-          for (var i in res.data) {
-            if (res.data[i].position === position) {
-              arr.push(res.data[i])
+            return c;
+        },
+        handleSelectionChange(val) {
+            console.log(val)
+        },
+        handleCurrentChange(val) {
+            this.dialogVisible = true
+            this.currentSelection = val
+        },
+        handleChange(index) {
+            this.dialogVisible = false
+            this.drugs[index] = this.deepCopy(this.currentSelection)
+        },
+        searchMenu() {
+            var arr = []
+            if(this.form.id != '') {
+                this.$http.get('/api/drug').then((res) => {
+                    for(var i in res.data) {
+                        if(res.data[i].id == this.form.id) {
+                            arr.push(res.data[i])
+                        }
+                    }
+                    this.drugs = arr
+                })
+                return
             }
-          }
-          this.drugs = arr
-        })
-        return
-      }
-      var type = ''
-      switch (this.form.type) {
-        case 'ry':
-          type = '日用'
-          break
-        case 'zy':
-          type = '重要'
-          break
-        case 'ylqx':
-          type = '医疗器械'
-          break
-        default:
-          type = ''
-      }
+            var position = ''
+            switch (this.form.position) {
+                case 'bbk':
+                    position = 'G1'
+                    break
+                case 'xtc':
+                    position = 'G2'
+                    break
+                case 'imoo':
+                    position = 'G3'
+                    break
+                default:
+                    position = ''
+            }
+            if(position) {
+                this.$http.get('/api/drug').then((res) => {
+                    for(var i in res.data) {
+                        if(res.data[i].position == position) {
+                            arr.push(res.data[i])
+                        }
+                    }
+                    this.drugs = arr
+                })
+                return
+            }
+            var type = ''
+            switch (this.form.type) {
+                case 'ry':
+                    type = '日用'
+                    break
+                case 'zy':
+                    type = '重要'
+                    break
+                case 'ylqx':
+                    type = '医疗器械'
+                    break
+                default:
+                    type = ''
+            }
 
-      if (type) {
-        this.$http.get('/api/drug').then((res) => {
-          for (var i in res.data) {
-            if (res.data[i].drugsType === type) {
-              arr.push(res.data[i])
+            if(type) {
+                this.$http.get('/api/drug').then((res) => {
+                    for(var i in res.data) {
+                        if(res.data[i].drugsType == type) {
+                            arr.push(res.data[i])
+                        }
+                    }
+                    this.drugs = arr
+                })
             }
-          }
-          this.drugs = arr
-        })
-      }
-      if (this.form.id === '' && this.form.type === '' && this.form.position === '') {
-        return this.getAllDrugs
-      }
+            if(this.form.id == '' && this.form.type == '' && this.form.position == '') {
+                this.getAllDrugs
+            }
+         }
     }
-  }
 }
 </script>
 <style>

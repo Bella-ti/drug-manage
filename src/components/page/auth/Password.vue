@@ -36,77 +36,77 @@
                 </el-form-item>
             </el-form>
         </div>
-
+    
     </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      form: {
-        password: '',
-        newPassword: '',
-        rePassword: ''
-      },
-      tips: '',
-      status: false
-    }
-  },
-  computed: {
-    curLogin() {
-      let curUser = localStorage.getItem('curLogin')
-      curUser = JSON.parse(curUser)
-      return curUser
-    }
-  },
-  methods: {
-    onSubmit() {
-      let id = this.curLogin._id
-      console.log(this.curLogin)
-      if (this.form.password !== this.curLogin.password) {
-        this.tips = '原密码输入错误!'
-        this.status = false
-        return
-      } else {
-        this.status = true
-      }
-      if (this.status) {
-        if (this.form.newPassword.length < 6) {
-          this.tips = '重设密码至少为6位!'
-          return
+    data() {
+        return {
+            form: {
+                password: '',
+                newPassword: '',
+                rePassword: ''
+            },
+            tips: '',
+            status: false
         }
-        if (this.form.newPassword !== this.form.rePassword) {
-          this.tips = '两次输入密码不一致!'
-        } else {
-          this.tips = ''
-          this.$http.put(`/api/user/${id}`, {
-            order: this.curLogin.order,
-            username: this.curLogin.username,
-            password: this.form.newPassword,
-            type: this.curLogin.type,
-            info: {
-              address: this.curLogin.info.address,
-              phone: this.curLogin.info.phone,
-              sayAs: this.curLogin.info.sayAs
-            }
-          }).then((res) => {
-            console.log(res)
-            this.$router.push('/login')
-          }).catch((err) => {
-            console.log(err)
-          })
-        }
-      }
     },
-    onCancel() {
-      this.tips = ''
-      this.form = {
-        password: '',
-        newPassword: '',
-        rePassword: ''
-      }
+    computed: {
+        curLogin() {
+            let curUser = localStorage.getItem('curLogin')
+            curUser = JSON.parse(curUser)
+            return curUser
+        }
+    },
+    methods: {
+        onSubmit() {
+            let id = this.curLogin._id
+            console.log(this.curLogin)
+            if (this.form.password != this.curLogin.password) {
+                this.tips = '原密码输入错误!'
+                this.status = false
+                return
+            } else {
+                this.status = true
+            }
+            if (this.status) {
+                if (this.form.newPassword.length < 6) {
+                    this.tips = '重设密码至少为6位!'
+                    return
+                }
+                if (this.form.newPassword != this.form.rePassword) {
+                    this.tips = '两次输入密码不一致!'
+                } else {
+                    this.tips = ''
+                    this.$http.put(`/api/user/${id}`, {
+                        order: this.curLogin.order,
+                        username: this.curLogin.username,
+                        password: this.form.newPassword,
+                        type: this.curLogin.type,
+                        info: {
+                            address: this.curLogin.info.address,
+                            phone: this.curLogin.info.phone,
+                            sayAs: this.curLogin.info.sayAs
+                        }
+                    }).then((res) => {
+                        console.log(res)
+                        this.$router.push('/login')
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+                }
+            }
+        },
+        onCancel() {
+            this.tips = ''
+            this.form = {
+                password: '',
+                newPassword: '',
+                rePassword: ''
+            }
+        }
     }
-  }
 }
 </script>
