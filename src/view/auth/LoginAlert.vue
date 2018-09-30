@@ -82,9 +82,9 @@ export default {
                 password: this.curLogin.password,
                 type: this.curLogin.type,
                 information: {
-                    address: this.curLogin.info.address,
-                    phone: this.curLogin.info.phone,
-                    sayAs: this.curLogin.info.sayAs
+                    address: this.curLogin.information.address,
+                    phone: this.curLogin.information.phone,
+                    sayAs: this.curLogin.information.sayAs
                 }
             }).then(() => {
                 localStorage.setItem('curLogin', JSON.stringify(this.curLogin))

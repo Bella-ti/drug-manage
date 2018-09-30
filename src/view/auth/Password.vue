@@ -84,10 +84,10 @@ export default {
                         username: this.curLogin.username,
                         password: this.form.newPassword,
                         type: this.curLogin.type,
-                        info: {
-                            address: this.curLogin.info.address,
-                            phone: this.curLogin.info.phone,
-                            sayAs: this.curLogin.info.sayAs
+                        information: {
+                            address: this.curLogin.information.address,
+                            phone: this.curLogin.information.phone,
+                            sayAs: this.curLogin.information.sayAs
                         }
                     }).then((res) => {
                         this.$router.push('/login')
