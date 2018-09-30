@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A system about drugs",
   "author": "yubeixin",
-  "private": false,
+  "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
