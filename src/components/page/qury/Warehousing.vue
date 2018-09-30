@@ -8,74 +8,61 @@
         </div>
         <el-form class='form-condition' ref="form" :model="form" label-width="100px">
             <el-form-item label="查询">
-                <el-input class='query' v-model="form.value" placeholder="请输入药品ID或入库时间"></el-input>
+                <el-input class='query' v-model="form.orderNum" placeholder="请输入入库单号"></el-input>
             </el-form-item>
             <el-form-item label="按药品ID">
-                <el-select v-model="form.position" placeholder="请选择">
-                    <el-option label="G1" value="bbk"></el-option>
-                    <el-option label="G2" value="xtc"></el-option>
-                    <el-option label="G3" value="imoo"></el-option>
-                </el-select>
+                <el-input class='query' v-model="form.id" placeholder="请输入药品ID"></el-input>
             </el-form-item>
             <el-form-item label="按入库时间">
                <el-date-picker
-                      v-model="currentime"
+                      v-model="form.storageDate"
                       type="date"
                       placeholder="选择日期"
                       :picker-options="pickerOptions">
                     </el-date-picker>
             </el-form-item>
-            <el-form-item>
              <el-button
                     size="small"
                     type="primary"
-                    @click="handlerFetch(scope.$index, scope.row)">查询</el-button>
-              </el-form-item>
+                    style="height:26px,margin-left:10px"
+                    @click="handlerFetch">查询</el-button>
         </el-form>
           <el-table :data="record" border style="width: 100%">
-            <el-table-column prop="order" label="入库单号" width='140px'></el-table-column>
+            <el-table-column prop="orderNum" label="入库单号" width='180px'></el-table-column>
             <el-table-column prop="id" label="商品ID" width='120px'></el-table-column>
-            <el-table-column prop="time" label="入库时间" width='140px'></el-table-column>
-            <el-table-column prop="type" label="入库类型" width='160px'></el-table-column>
-            <el-table-column prop="name" label="经手人" width='140px'></el-table-column>
-            <el-table-column prop="size" label="说明" width='130px'></el-table-column>
+            <el-table-column prop="storageDate" label="入库时间" width='140px'></el-table-column>
+            <el-table-column prop="storageType" label="入库类型" width='160px'></el-table-column>
+            <el-table-column prop="checkPerson" label="经手人" width='140px'></el-table-column>
             <el-table-column label="操作" width="auto">
                 <template scope="scope">
                   <el-button
                     size="small"
-                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    @click="handleEdit(scope.$index, scope.row)">查看</el-button>
                   <el-button
                     size="small"
                     type="danger"
-                    @click="handleDelete($event, scope.$index, scope.row)">删除</el-button>
+                    @click="handleDelete(scope.row)">删除</el-button>
                 </template>
             </el-table-column>
           </el-table>
-          <el-dialog title="添加供应商信息" v-model="dialogVisible" size="tiny">
+          <el-dialog title="修改入库信息" v-model="dialogVisible" size="tiny">
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="入库单号" width='100px'>
-                    <el-input type='text' v-model="form.order"></el-input>
+                    <el-input type='text' disabled v-model="form.orderNum"></el-input>
                 </el-form-item>
                 <el-form-item label="商品ID">
-                    <el-input type='text' v-model="form.id"></el-input>
+                    <el-input type='text' disabled v-model="form.id"></el-input>
                 </el-form-item>
                 <el-form-item label="入库时间">
-                    <el-input type='text' v-model="form.time"></el-input>
+                    <el-input type='text' disabled v-model="form.storageDate"></el-input>
                 </el-form-item>
                 <el-form-item label="入库类型">
-                    <el-input type='text' v-model="form.type"></el-input>
+                    <el-input type='text' disabled v-model="form.storageType"></el-input>
                 </el-form-item>
                 <el-form-item label="经手人">
-                    <el-input type='text' v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="说明">
-                    <el-input type='text' v-model="form.size"></el-input>
+                    <el-input type='text' disabled v-model="form.checkPerson"></el-input>
                 </el-form-item>
             </el-form>
-           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addCompanyTrue">确 定</el-button>
-          </span>
         </el-dialog>
     </div>
 </template>
@@ -102,130 +89,24 @@ import {mapState} from 'vuex'
               }],
               dialogVisible:false,
               form: {
-                value: '',
-                position: '',
-                type: ''
+                orderNum: '',
+                id: '',
+                storageDate: ''
               },
-              drugs: [
-                {
-                  id: 6823, // 商品ID
-                  name: '阿莫西林分散片', // 商用名
-                  rename: '阿莫西林分散片', // 通用名
-                  size: '0.25G*24片', // 规格
-                  factory: '太极集团', // 厂家
-                  approvalNumber: '国药准字H', // 批准文号
-                  batchNumber: '20120501', // 批号
-                  validPeriod: '2014-1-28', // 有效期
-                  position: 'G1', // 货位
-                  number: 100, // 数量
-                  storagePeriod: '2013-1-10', // 入库日期
-                  promotion: 0.2, // 促销提成
-                  deliveryUnit: '初期库存', // 供货单位
-                  type: '药品', // 商品分类
-                  renumber: 682302, // 助记码
-                  drugsType: '抗菌素', // 药品种类
-                  custom: '', // 自定义类
-                  unitPrice: 6.87, // 销售单价
-                  positionSaid: '', // 货位说明
-                  numberMe: 784738473 // 自编码
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                }
-              ],
               index: '',
               currentSelection: {}
             }
         },
+        created() {
+            this.getInStock
+        },
         computed: {
-            ...mapState({
-                state: ({fetch}) => fetch.state
-            })
+            getInStock() {
+                this.$http.get('/api/stockin').then(res => {
+                    this.record = res.data
+                })
+                    return this.record
+            }
         },
         create: {
            getDateTime() {
@@ -245,7 +126,27 @@ import {mapState} from 'vuex'
         },
         methods: {
           handlerFetch() {
-            
+            const arr = []
+            this.$http.get('/api/stockin').then(res => {
+                for(var i in res.data) {
+                    if(this.form.orderNum){
+                        if(this.form.orderNum == res.data[i].orderNum) {
+                            arr.push(res.data[i])
+                        }
+                    }
+                    if(this.form.id){
+                        if(this.form.id == res.data[i].id) {
+                            arr.push(res.data[i])
+                        }
+                    }
+                    if(this.form.storageDate){
+                        if(this.form.storageDate == res.data[i].storageDate) {
+                            arr.push(res.data[i])
+                        }
+                    }
+                }
+                this.record = arr
+            })
           },
            // 编辑
             handleEdit(index,row) {
@@ -254,18 +155,54 @@ import {mapState} from 'vuex'
               this.index = index
             },
             // 删除
-            handleDelete(e,index,row) {
-              this.record.splice(index,1)
+            handleDelete(row) {
+                const id = row._id
+                this.$http.delete(`/api/stockin/${id}`,{}).then((res) => {
+                  this.getInStock
+                })
             },
             addCompanyTrue () {
+                const id = this.form._id 
+                this.$http.put(`/api/stockin/${id}`, {
+                    orderNum: this.form.orderNum,
+                    storageDate: this.form.storageDate,
+                    storageType: this.form.storageType,
+                    name: this.form.name,
+                    id: this.form.id,
+                    rename: this.form.rename,
+                    size: this.form.size,
+                    approvalNumber: this.form.approvalNumber,
+                    batchNumber: this.form.batchNumber,
+                    position: this.form.position,
+                    stockNum: this.form.stockNum,
+                    unitPrice: this.form.unitPrice,
+                    bornDate: this.form.bornDate,
+                    validPeriod: this.form.validPeriod,
+                    deliveryUnit: this.form.deliveryUnit,
+                    factory: this.form.factory,
+                    type: this.form.type,
+                    drugType: this.form.drugType,
+                    custom: this.form.custom,
+                    certificate: this.form.certificate,
+                    quality: this.form.quality,
+                    conclusion: this.form.conclusion,
+                    checkPerson: this.form.checkPerson,
+                    buyPerson: this.form.buyPerson
+                  }).then(suc => {
+                    console.log(suc)
+                    this.getInStock
               this.dialogVisible = false
-              this.record[this.index] = JSON.parse(JSON.stringify(this.form))
-              return this.record
+                  }).catch(rereqq => {
+                    console.log(rereqq)
+                  })
             }
         }
     }
 </script>
 <style>
+.el-button--primary {
+    height:34px
+}
 .table .form-condition {
   display:flex;
   flex-direction: row

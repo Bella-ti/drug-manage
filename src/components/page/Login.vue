@@ -89,9 +89,7 @@ export default {
         submitForm(formName) {
             const self = this;
             self.$refs[formName].validate((valid) => {
-                console.log(self.userList)
                 for (var i = 0; i < self.userList.length; i++) {
-                    console.log(self.value == self.userList[i].type)
                     if (self.ruleForm.username === self.userList[i].username && self.ruleForm.password === self.userList[i].password) {
                         if (valid) {
                             if (self.value == self.userList[i].type) {

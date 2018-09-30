@@ -63,7 +63,8 @@ export default {
         password: this.ruleForm.password,
         type: 1,
         information: null,
-        array: []
+        array: [],
+        isAdmin: true
       }).then((res) => {
         console.log(res)
         this.$router.push('/login')

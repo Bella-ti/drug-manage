@@ -20,7 +20,6 @@
             </el-table-column>
             <el-table-column label="操作" width="180">
                 <template scope="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
                     <el-button size="small" type="danger" @click="handleDelete($event, scope.$index, scope.row)">删除</el-button>
                 </template>
             </el-table-column>
@@ -123,16 +122,8 @@ export default {
             }
             return info.type
         },
-        // 编辑
-        handleEdit(index, row) {
-            this.editOrder = index
-            this.dialogVisible = true
-            this.handleInfo = row
-            this.cancleInfo = JSON.parse(JSON.stringify(row))
-        },
         // 删除
         handleDelete(e, index, row) {
-            console.log(row)
             const id = row._id
             this.$http.delete(`/api/user/${id}`).then(() => {
                 this.getAllUser
@@ -164,7 +155,8 @@ export default {
                     address: this.handleInfo.info.address,
                     phone: this.handleInfo.info.phone,
                     sayAs: this.handleInfo.info.sayAs
-                }
+                },
+                isAdmin: false
             }).then((res) => {
                 console.log(res)
                 this.getAllUser
@@ -185,7 +177,7 @@ export default {
                 info: {
                     address: '',
                     phone: this.handleInfo.info.phone,
-                    sayAs: '......'
+                    sayAs: this.handleInfo.info.sayAs
                 }
             }).then((res) => {
                 console.log(res)

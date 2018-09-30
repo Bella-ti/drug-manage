@@ -69,14 +69,6 @@ export default new Router({
                     component: resolve => require(['../components/page/sale/DrugSales.vue'], resolve)
                 },
                 {
-                    path: '/settlement',
-                    component: resolve => require(['../components/page/sale/Settlement.vue'], resolve)
-                },
-                {
-                    path: '/turnover',
-                    component: resolve => require(['../components/page/sale/Turnover.vue'], resolve)
-                },
-                {
                     path: '/saleCharts',
                     component: resolve => require(['../components/page/sale/SaleCharts.vue'], resolve)
                 },
@@ -89,56 +81,10 @@ export default new Router({
                     path: '/storage',
                     component: resolve => require(['../components/page/warehouse/Storage.vue'], resolve)
                 },
-                // 仓库管理
-                {
-                    path: '/storageQuery',
-                    component: resolve => require(['../components/page/storage/StorageQuery.vue'], resolve)
-                },
-                {
-                    path: '/resultTable',
-                    component: resolve => require(['../components/page/storage/ResultTable.vue'], resolve)
-                },
                 // 基本信息
                 {
                     path: '/manuFactore',
                     component: resolve => require(['../components/page/baseinfo/ManuFactore.vue'], resolve)
-                },
-                // 图表
-                {
-                    path: '/tableList',
-                    component: resolve => require(['../components/page/tables/TableList.vue'], resolve)
-                },
-                {
-                    path: '/basetable',
-                    component: resolve => require(['../components/page/BaseTable.vue'], resolve)
-                },
-                {
-                    path: '/readme',
-                    component: resolve => require(['../components/page/Readme.vue'], resolve)
-                },
-                {
-                    path: '/vuetable',
-                    component: resolve => require(['../components/page/VueTable.vue'], resolve)     // vue-datasource组件
-                },
-                {
-                    path: '/baseform',
-                    component: resolve => require(['../components/page/BaseForm.vue'], resolve)
-                },
-                {
-                    path: '/vueeditor',
-                    component: resolve => require(['../components/page/VueEditor.vue'], resolve)    // Vue-Quill-Editor组件
-                },
-                {
-                    path: '/upload',
-                    component: resolve => require(['../components/page/Upload.vue'], resolve)       // Vue-Core-Image-Upload组件
-                },
-                {
-                    path: '/basecharts',
-                    component: resolve => require(['../components/page/BaseCharts.vue'], resolve)   // vue-echarts-v3组件
-                },
-                {
-                    path: '/mixcharts',
-                    component: resolve => require(['../components/page/MixCharts.vue'], resolve)    // vue-echarts-v3组件
                 }
             ]
         },

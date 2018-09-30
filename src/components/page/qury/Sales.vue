@@ -12,53 +12,22 @@
                 </el-date-picker>
             </el-form-item>
             <el-form-item>
-                <el-button size="small" type="primary" @click="handlerFetch(scope.$index, scope.row)">查询</el-button>
+                <el-button size="small" type="primary" @click="handlerFetch">查询</el-button>
             </el-form-item>
         </el-form>
-        <el-table :data="record" border style="width: 100%">
-            <el-table-column prop="order" label="销售单号" width='140px'></el-table-column>
-            <el-table-column prop="id" label="销售单" width='120px'></el-table-column>
-            <el-table-column label="销售时间" width='140px'>
-                <el-table-column prop="time" label="年" width="110"></el-table-column>
-                <el-table-column prop="time" label="月" width="110"></el-table-column>
-                <el-table-column prop="time" label="日" width="110"></el-table-column>
-            </el-table-column>
-            <el-table-column prop="type" label="销售金额" width='140px'></el-table-column>
-            <el-table-column prop="name" label="经手人" width='110px'></el-table-column>
+        <el-table :data="record" border style="width: q00%">
+            <el-table-column prop="orderNumber" label="销售单号" width='160px'></el-table-column>
+            <el-table-column prop="saleTime" label="销售时间" width='140px'></el-table-column>
+            <el-table-column prop="saleMoney" label="销售金额" width='140px'></el-table-column>
+            <el-table-column prop="saleDrug" show-overflow-tooltip label="销售药品" width='auto'></el-table-column>
+            <el-table-column prop="seller" label="经手人" width='110px'></el-table-column>
             <el-table-column prop="size" label="说明" width='110px'></el-table-column>
-            <el-table-column label="操作" width="auto">
+            <el-table-column label="操作" width="160px">
                 <template scope="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button size="small" type="danger" @click="handleDelete($event, scope.$index, scope.row)">删除</el-button>
+                    <el-button size="small" type="danger" @click="handleDelete(scope.row)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog title="添加供应商信息" v-model="dialogVisible" size="tiny">
-            <el-form ref="form" :model="form" label-width="80px">
-                <el-form-item label="销售单号" width='100px'>
-                    <el-input type='text' v-model="form.order"></el-input>
-                </el-form-item>
-                <el-form-item label="商品ID">
-                    <el-input type='text' v-model="form.id"></el-input>
-                </el-form-item>
-                <el-form-item label="销售时间">
-                    <el-input type='text' v-model="form.time"></el-input>
-                </el-form-item>
-                <el-form-item label="销售类型">
-                    <el-input type='text' v-model="form.type"></el-input>
-                </el-form-item>
-                <el-form-item label="经手人">
-                    <el-input type='text' v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="说明">
-                    <el-input type='text' v-model="form.size"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addCompanyTrue">确 定</el-button>
-                  </span>
-        </el-dialog>
     </div>
 </template>
 
@@ -67,205 +36,82 @@ import { mapState } from 'vuex'
 export default {
     data() {
         return {
-            value: '',
             currentime: '',
             pickerOptions: {
                 disabledDate(time) {
-                    return time.getTime() >= Date.now() - 8.64e7;
+                    return time.getTime() >= Date.now()
                 }
             },
-            record: [{
-                order: '',
-                id: '',
-                name: '',
-                time: '',
-                type: '',
-                size: ''
-            }],
-            dialogVisible: false,
+            record: [],
             form: {
                 value: '',
                 position: '',
                 type: ''
             },
-            drugs: [
-                {
-                    "_id": ObjectId("58eb2fa12a35aaaf1a78ed3e"),//数据库数据
-                    "id": 6823,
-                    "name": "阿莫西林分散片",
-                    "rename": "阿莫西林分散片",
-                    "size": "0.25G*24片",
-                    "factory": "太极集团",
-                    "approvalNumber": "国药准字H",
-                    "batchNumber": "20120501",
-                    "validPeriod": "2014-1-28",
-                    "position": "G1",
-                    "number": 100,
-                    "storagePeriod": "2013-1-10",
-                    "promotion": 0.2,
-                    "deliveryUnit": "初期库存",
-                    "type": "药品",
-                    "renumber": 682302,
-                    "drugsType": "抗菌素",
-                    "custom": "",
-                    "unitPrice": 6.87,
-                    "positionSaid": "",
-                    "numberMe": 784738473
-                },
-                {
-                    id: 6823, // 商品ID
-                    name: '阿莫西林分散片', // 商用名
-                    rename: '阿莫西林分散片', // 通用名
-                    size: '0.25G*24片', // 规格
-                    factory: '太极集团', // 厂家
-                    approvalNumber: '国药准字H', // 批准文号
-                    batchNumber: '20120501', // 批号
-                    validPeriod: '2014-1-28', // 有效期
-                    position: 'G1', // 货位
-                    number: 100, // 数量
-                    storagePeriod: '2013-1-10', // 销售日期
-                    promotion: 0.2, // 促销提成
-                    deliveryUnit: '初期库存', // 供货单位
-                    type: '药品', // 商品分类
-                    renumber: 682302, // 助记码
-                    drugsType: '抗菌素', // 药品种类
-                    custom: '', // 自定义类
-                    unitPrice: 6.87, // 销售单价
-                    positionSaid: '', // 货位说明
-                    numberMe: 784738473 // 自编码
-                },
-                {
-                    id: 6823,
-                    name: '阿莫西林分散片',
-                    rename: '阿莫西林分散片',
-                    size: '0.25G*24片',
-                    factory: '太极集团',
-                    approvalNumber: '国药准字H',
-                    batchNumber: '20120501',
-                    validPeriod: '2014-1-28',
-                    position: 'G1',
-                    number: 100,
-                    storagePeriod: '2013-1-10',
-                    promotion: 0.2,
-                    deliveryUnit: '初期库存',
-                    type: '药品',
-                    renumber: 682302,
-                    drugsType: '抗菌素',
-                    custom: '',
-                    unitPrice: 6.87,
-                    positionSaid: '',
-                    numberMe: 784738473
-                },
-                {
-                    id: 6823,
-                    name: '阿莫西林分散片',
-                    rename: '阿莫西林分散片',
-                    size: '0.25G*24片',
-                    factory: '太极集团',
-                    approvalNumber: '国药准字H',
-                    batchNumber: '20120501',
-                    validPeriod: '2014-1-28',
-                    position: 'G1',
-                    number: 100,
-                    storagePeriod: '2013-1-10',
-                    promotion: 0.2,
-                    deliveryUnit: '初期库存',
-                    type: '药品',
-                    renumber: 682302,
-                    drugsType: '抗菌素',
-                    custom: '',
-                    unitPrice: 6.87,
-                    positionSaid: '',
-                    numberMe: 784738473
-                },
-                {
-                    id: 6823,
-                    name: '阿莫西林分散片',
-                    rename: '阿莫西林分散片',
-                    size: '0.25G*24片',
-                    factory: '太极集团',
-                    approvalNumber: '国药准字H',
-                    batchNumber: '20120501',
-                    validPeriod: '2014-1-28',
-                    position: 'G1',
-                    number: 100,
-                    storagePeriod: '2013-1-10',
-                    promotion: 0.2,
-                    deliveryUnit: '初期库存',
-                    type: '药品',
-                    renumber: 682302,
-                    drugsType: '抗菌素',
-                    custom: '',
-                    unitPrice: 6.87,
-                    positionSaid: '',
-                    numberMe: 784738473
-                },
-                {
-                    id: 6823,
-                    name: '阿莫西林分散片',
-                    rename: '阿莫西林分散片',
-                    size: '0.25G*24片',
-                    factory: '太极集团',
-                    approvalNumber: '国药准字H',
-                    batchNumber: '20120501',
-                    validPeriod: '2014-1-28',
-                    position: 'G1',
-                    number: 100,
-                    storagePeriod: '2013-1-10',
-                    promotion: 0.2,
-                    deliveryUnit: '初期库存',
-                    type: '药品',
-                    renumber: 682302,
-                    drugsType: '抗菌素',
-                    custom: '',
-                    unitPrice: 6.87,
-                    positionSaid: '',
-                    numberMe: 784738473
-                }
-            ],
-            index: '',
-            currentSelection: {}
+            drugs: [],
+            index: ''
         }
     },
     computed: {
-        ...mapState({
-            state: ({ fetch }) => fetch.state
-        })
-    },
-    create: {
-        getDateTime() {
-            const date = new Date()
-            var seperator = '/'
-            var month = date.getMonth() + 1
-            var strDate = date.getDate()
-            if (month >= 1 && month <= 9) {
-                month = '0' + month
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = '0' + strDate
-            }
-            this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-            return this.currentime
+        getSales() {
+             this.$http.get(`/api/drugsale`).then(res => {
+                 for(var i in res.data){
+                const arr = []
+                     res.data[i].saleTime = res.data[i].saleTime.slice(0,10)
+                     for(var j in res.data[i].saleInfo) {
+                         arr.push(res.data[i].saleInfo[j].name)
+                     }
+                     res.data[i].saleDrug = arr.join(',')
+                 }
+                 this.record = res.data
+                 return this.record
+             }).catch(err => {
+                this.$message.error('获取信息失败！')
+             })
         }
+    },
+    created() {
+        this.getSales
     },
     methods: {
         handlerFetch() {
-
+            if(this.currentime == '' || this.currentime == undefined) {
+                this.getSales
+                return
+            }
+            var arr = []
+            const currentime = this.getDateTime(this.currentime)
+            for(var i in this.record) {
+                if(currentime == this.record[i].saleTime) {
+                    arr.push(this.record[i])
+                }
+            }
+            this.record = arr
         },
-        // 编辑
-        handleEdit(index, row) {
-            this.dialogVisible = true
-            this.form = JSON.parse(JSON.stringify(row))
-            this.index = index
-        },
+         getDateTime (curDate) {
+                const date = curDate
+                var seperator = '-'
+                var month = date.getMonth() + 1
+                var strDate = date.getDate()
+                if (month >= 1 && month <= 9) {
+                month = '0' + month
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                strDate = '0' + strDate
+                }
+                var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+                return currentime
+            },
+        
         // 删除
-        handleDelete(e, index, row) {
-            this.record.splice(index, 1)
-        },
-        addCompanyTrue() {
-            this.dialogVisible = false
-            this.record[this.index] = JSON.parse(JSON.stringify(this.form))
-            return this.record
+        handleDelete(row) {
+            const id = row._id
+            this.$http.delete(`/api/drugsale/${id}`,{}).then(res => {
+                this.getSales
+                this.$message.success('删除成功！')
+            }).catch(err => {
+                 this.$message.success('删除失败！')
+            })
         }
     }
 }

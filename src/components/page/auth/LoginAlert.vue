@@ -28,7 +28,6 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">保存</el-button>
-                    <el-button @click="onCancel">取消</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -42,7 +41,6 @@ export default {
         curLogin() {
             let curUser = localStorage.getItem('curLogin')
             curUser = JSON.parse(curUser)
-            console.log(curUser)
             switch (curUser.type) {
                 case 1:
                     curUser.type = '管理员'
@@ -78,7 +76,6 @@ export default {
             if (this.curLogin.type === '') {
                 return
             }
-            console.log(this.curLogin.type)
             this.$http.put(`/api/user/${id}`, {
                 order: this.curLogin.order,
                 username: this.curLogin.username,
@@ -89,16 +86,12 @@ export default {
                     phone: this.curLogin.info.phone,
                     sayAs: this.curLogin.info.sayAs
                 }
-            }).then((res) => {
-                console.log(res)
+            }).then(() => {
                 localStorage.setItem('curLogin', JSON.stringify(this.curLogin))
-                this.$message.success('提交成功！')
-            }).catch((err) => {
-                console.log(err)
+                this.$message.success('修改成功！')
+            }).catch(() => {
+                this.$message.error('修改出错！')
             })
-        },
-        onCancel() {
-            this.curLogin = this.curLogin
         }
     }
 }

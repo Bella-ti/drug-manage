@@ -10,6 +10,9 @@ const drug = require('./router/drug')
 const user = require('./router/user')
 const system = require('./router/system')
 const manufacturer = require('./router/manufacturer')
+const outstock = require('./router/outstock')
+const drugsale = require('./router/drugsale')
+const stockin = require('./router/stockin')
 
 mongoose.connect(config.mongodb)
 mongoose.Promise = global.Promise
@@ -19,7 +22,6 @@ const port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use(favicon(__dirname + '/src/assets/favicon.ico'))
 app.use(express.static('server'))
 app.use('/', index)
 
@@ -27,6 +29,9 @@ app.use('/api', drug)
 app.use('/api', user)
 app.use('/api', system)
 app.use('/api', manufacturer)
+app.use('/api', outstock)
+app.use('/api', drugsale)
+app.use('/api', stockin)
 
 app.listen(port, () => {
   console.log(`${pkg.name} listening on port ${port}`)

@@ -6,53 +6,55 @@
                 <el-breadcrumb-item>药品出库</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <el-form class='form-condition' ref="form" :model="form" label-width="100px">
-             <div style='width: 20%'>
-                <el-form-item label="出库单号">
-                    <el-input class='query' v-model="form.who"></el-input>
-                </el-form-item>
-              </div>
-              <div style='width: 35%'>
-                <el-form-item label="出库日期">
-                    <el-date-picker
-                      v-model="value"
-                      type="date"
-                      placeholder="value"
-                      :picker-options="pickerOptions">
-                    </el-date-picker>
-                </el-form-item>
-              </div>
-              <div style='width: 30%;margin-right:20px'>
-              <el-form-item label="出库类型">
-                  <el-input v-model="form.price"></el-input>
-              </el-form-item>
-              </div>
-              <el-form-item label="药品名称">
-                <el-input class='query' v-model="form.price"></el-input>
-              </el-form-item>
-              <el-form-item label="药品信息">
-                <el-input class='query' v-model="form.salePrice"></el-input>
-              </el-form-item>
-              <el-form-item label="合计数量">
-                  <el-input class='query' v-model="form.salePrice"></el-input>
-              </el-form-item>
-              <div style='width: 10%;margin-top:3px;margin-left:20px;float:right'>
-                <el-button size='small' type="primary" @click="addToTable">生成出库单</el-button>              
-              </div>
-        </el-form>
-          <el-table :data="drugs" border style="width: 100%">
-            <el-table-column prop="id" label="商品ID" width='auto'></el-table-column>
-            <el-table-column prop="name" label="商用名" width='140px'></el-table-column>
-            <el-table-column prop="size" label="规格" width='115px'></el-table-column>
+        
+          <el-table :data="drugs" border style="width: 100%" @current-change="handleCurrentChange">
+            <el-table-column prop="id" label="药品ID" width='120px'></el-table-column>
+            <el-table-column prop="name" label="药品名称" width='140px'></el-table-column>
+            <el-table-column prop="size" label="剂型" width='115px'></el-table-column>
             <el-table-column prop="factory" label="厂家" width='120px'></el-table-column>
             <el-table-column prop="batchNumber" label="批号" width='115px'></el-table-column>
-            <el-table-column prop="validPeriod" label="有效期" width='110px'></el-table-column>
-            <el-table-column prop="number" label="数量" width='auto'></el-table-column>
+            <el-table-column prop="validPeriod" label="有效期" width='130px'></el-table-column>
+            <el-table-column prop="salePrice" label="销售单价" width='100px'></el-table-column>
             <el-table-column prop="number" label="库存量" width='auto'></el-table-column>
-            <el-table-column prop="outPrice" label="出库单价" width='100px'></el-table-column>
-            <el-table-column prop="toastPrice" label="出库金额" width='95px'></el-table-column>
-            <el-table-column prop="unitPrice" label="销售单价" width='100px'></el-table-column>
           </el-table>
+          <el-dialog title="生成出库单"
+                   v-model="dialogVisible"
+                   size="small">
+            <el-form class='dialog-form'
+                     ref="form"
+                     :model="form"
+                     label-width="80px">
+                <el-form-item label="出库单号">
+                    <el-input class='query' v-model="newInfo.outNum"></el-input>
+                </el-form-item>
+              <el-form-item label="药品名称">
+                <el-input class='query' v-model="form.name"></el-input>
+              </el-form-item>
+              <el-form-item label="药品ID">
+                <el-input class='query' v-model="form.id"></el-input>
+              </el-form-item>
+              <el-form-item label="出库类型">
+                  <el-input v-model="newInfo.outType"></el-input>
+              </el-form-item>
+              <el-form-item label="批号">
+                <el-input class='query' v-model="form.batchNumber"></el-input>
+              </el-form-item>
+              <el-form-item label="生产厂商">
+                <el-input class='query' v-model="form.factory"></el-input>
+              </el-form-item>
+              <el-form-item label="出库数量">
+                  <el-input class='query' v-model="form.outNumber"></el-input>
+              </el-form-item> 
+              <el-form-item label="操作人">
+                <el-input class='query' v-model="newInfo.operator"></el-input>
+              </el-form-item> 
+            </el-form>
+            <span slot="footer"
+                  class="dialog-footer">
+                    <el-button size='small' @click="dialogVisible = false">取 消</el-button>
+                    <el-button size='small' type="primary" @click="addToTable">确 定</el-button>
+                  </span>
+        </el-dialog>
     </div>
 </template>
 
@@ -67,130 +69,120 @@ import {mapState} from 'vuex'
                   return time.getTime() < Date.now() - 8.64e7;
                 }
               },
+              operator: '',
               dialogVisible:false,
+              newInfo: {},
               form: {
-                id: 'CH-1',
-                price: 12,
-                number: 2,
-                info: '',
-                salePrice: 12,
-                who: '',
-                total: 0,
-                from: 0,
-                to: 0
+                outNum: '',
+                name: '',
+                outType: '',
+                batchNumber: '',
+                factory: '',
+                number: '',
+                operator:''
               },
-              drugs: [
-                {
-                  id: 6754, // 商品ID
-                  name: '阿莫西林分散片', // 商用名
-                  rename: '阿莫西林分散片', // 通用名
-                  size: '0.25G*24片', // 规格
-                  factory: '太极集团', // 厂家
-                  batchNumber: '20120501', // 批号
-                  validPeriod: '2014-1-28', // 有效期
-                  number: 100, // 数量
-                  outPrice: 5,
-                  toastPrice:3245,
-                  unitPrice: 6.87 // 销售单价
-                },
-                {
-                  id: 6754,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  number: 100,
-                  outPrice: 5,
-                  toastPrice:3245,
-                  unitPrice: 6.87
-                },
-                {
-                  id: 6754,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  number: 100,
-                  outPrice: 5,
-                  toastPrice:3245,
-                  unitPrice: 6.87
-                },
-                {
-                  id: 6754,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  number: 100,
-                  outPrice: 5,
-                  toastPrice:3245,
-                  unitPrice: 6.87
-                },
-                {
-                  id: 6754,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  number: 100,
-                  outPrice: 5,
-                  toastPrice:3245,
-                  unitPrice: 6.87
-                }
-              ],
+              drugs: [],
               currentSelection: {}
             }
         },
         computed: {
-            ...mapState({
-                saleInfo: ({fetch}) => fetch.saleInfo
-                // drugs: ({storage}) => storage.drugs
-            }),
-            initDate() {
-              this.value = this.getDateTime()
+           getAllDrugs() {
+              this.$http.get('/api/drug').then((res) => {
+                  this.drugs = res.data
+              })
+              return this.drugs
             }
         },
-        watch: {
-            allPrice(val, oldValue) {
-                this.saleInfo.total = val
-            },
-            allTo(val, oldValue) {
-                this.saleInfo.to = val
-            }
+        created() {
+            this.getAllDrugs
         },
         methods: {
-          addToTable() {
-            this.outList.push(this.drugs)
-          },
-          findAll(){
-            for(var i =0;i<this.drugs.length;i++) {
-              if(this.drugs[i].name == this.outList.name) {
-                this.outList.push(this.drugs[i])
+            getOrder() {
+              const r1=parseInt(Math.random()*(10))
+              const r2=parseInt(Math.random()*(10))
+              const now = (new Date()).valueOf()
+              const paymentID =String(r1)+String(r2)+String(now)
+              this.newInfo.outNum = paymentID
+            },
+           getDateTime() {
+              const date = new Date()
+              var seperator = '/'
+              var month = date.getMonth() + 1
+              var strDate = date.getDate()
+              if (month >= 1 && month <= 9) {
+                month = '0' + month
               }
-            }
+              if (strDate >= 0 && strDate <= 9) {
+                strDate = '0' + strDate
+              }
+              
+              this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+              return this.currentime
+            },
+          addToTable() {
+            const form = this.form
+            const id = form._id
+            console.log(Number(form.number),Number(form.outNumber))
+              const number = Number(form.number)-Number(form.outNumber)
+              if(isNaN(number)) {
+                this.$message.success('非法数字')
+                return
+              }
+              if(number<0) {
+                this.$message.success('库存不足')
+                return
+              }
+            this.$http.put(`/api/drug/${id}`,{
+                    id: form.id,
+                    name: form.name,
+                    rename: form.rename,
+                    size: form.size,
+                    approvalNumber: form.approvalNumber,
+                    batchNumber: form.batchNumber,
+                    position: form.position,
+                    number: number,
+                    unitPrice: form.unitPrice,
+                    salePrice: form.salePrice,
+                    promotion: form.promotion,
+                    bornDate: form.bornDate,
+                    validPeriod: form.validPeriod,
+                    deliveryUnit: form.deliveryUnit,
+                    factory: form.factory,
+                    type: form.type,
+                    drugsType: form.drugsType,
+                    custom: form.custom
+                }).then(res => {
+                  console.log(res)
+                  this.getAllDrugs
+                }).catch(err => {
+                  console.log(err)
+                })
+            const time = this.getDateTime()
+            console.log(form.name)
+            this.$http.post(`/api/outstock`, {
+              outNum: this.newInfo.outNum,
+              name: form.name,
+              drugId: form.id,
+              outType: this.newInfo.outType,
+              batchNumber: form.batchNumber,
+              factory: form.factory,
+              totalNum: Number(form.number),
+              operator: this.newInfo.operator,
+              guige: form.size,
+              saleUnitPrice: form.unitPrice,
+              validDate: form.validPeriod,
+              outTime: time
+            }).then(res => {
+                this.dialogVisible = false
+                console.log(form.name)
+            }).catch(err => {
+              console.log(err)
+            })
           },
-            // 处理当前时间的函数（yyyy-MM-dd）
-          getDateTime: function () {
-            const date = new Date()
-            var seperator = '-'
-            var month = date.getMonth() + 1
-            var strDate = date.getDate()
-            if (month >= 1 && month <= 9) {
-              month = '0' + month
-            }
-            if (strDate >= 0 && strDate <= 9) {
-              strDate = '0' + strDate
-            }
-            var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-            return currentime
+          handleCurrentChange(val){
+            this.dialogVisible = true
+            this.form = val
+            this.getOrder()
           }
         }
     }
@@ -203,23 +195,17 @@ import {mapState} from 'vuex'
   .sales .el-table .cell,.sales .el-table th>div {
     padding:0
   }
-  .sales .query {
-    width: 60px
-  }
-  .sales .form-condition {
-    display: flex;
-    flex-direction: row;
-    flex-wrap:wrap
-  }
+  
   .sales .el-input__inner {
     height: 30px
   }
-  .sales .result {
-    display:flex;
-    flex-direction:row;
-    margin-top:15px
-  }
-   .sales .result .total {
-     width:100px
+  
+   .sales .el-form-item {
+     width:300px;
+     float:left
+   }
+   .sales .el-dialog__footer {
+     padding:5px 55px 15px;
+     float:right
    }
 </style>

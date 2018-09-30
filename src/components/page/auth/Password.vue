@@ -63,7 +63,6 @@ export default {
     methods: {
         onSubmit() {
             let id = this.curLogin._id
-            console.log(this.curLogin)
             if (this.form.password != this.curLogin.password) {
                 this.tips = '原密码输入错误!'
                 this.status = false
@@ -91,10 +90,9 @@ export default {
                             sayAs: this.curLogin.info.sayAs
                         }
                     }).then((res) => {
-                        console.log(res)
                         this.$router.push('/login')
                     }).catch((err) => {
-                        console.log(err)
+                        this.$message.error('修改失败！')
                     })
                 }
             }

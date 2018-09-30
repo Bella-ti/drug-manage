@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
   type: Number,
   information: Object,
   array: Object,
+  isAdmin: Boolean,
   created_at: { type: Date, default: Date.now },
   update_at: { type: Date, default: Date.now }
 })

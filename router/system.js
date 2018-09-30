@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const System = require('../models/system')
 
-// 查询系统设置信息
 router.get('/system', (req, res) => {
     System.find({})
         .then(system => {
@@ -12,7 +11,7 @@ router.get('/system', (req, res) => {
             res.json(err)
         })
 })
-// 通过ObjectId查询单个药品
+
 router.get('/system/:id', (req, res) => {
     System.findById(req.params.id)
         .then(system => {
@@ -22,17 +21,8 @@ router.get('/system/:id', (req, res) => {
             res.json(err)
         })
 })
-// 添加系统的配置
+
 router.post('/system', (req, res) => {
-    //使用System model上的create方法储存数据
-    // System.create(req.body, (err, system) => {
-    //     if (err) {
-    //         res.json(err)
-    //     } else {
-    //         res.json(system)
-    //     }
-    // })
-    //使用实例的save方法存储数据
     let system = new System({
         order: req.body.order,
         dateTime: req.body.dateTime,
@@ -66,7 +56,7 @@ router.post('/system', (req, res) => {
         }
     })
 })
-//更新系统配置信息
+
 router.put('/system', (req, res) => {
     System.findOneAndUpdate({}
         , {
@@ -96,7 +86,7 @@ router.put('/system', (req, res) => {
         .then(system => res.json(system))
         .catch(err => res.json(err))
 })
-//删除一个药品
+
 router.delete('/system/:id', (req, res) => {
     System.findOneAndRemove({})
         .then(system => res.send(`${system.order}删除成功`))

@@ -37,13 +37,13 @@
       <p>销售设置</p>
       <div class='saling'>
         <el-checkbox class='one'
-                     :checked="param.allowTab"
+                     v-model="param.allowTab"
                      @change='pAlTa'>销售时，只允许销售柜台上的药，不允许销售库房的药</el-checkbox>
-        <el-checkbox :checked="param.wordAlarm">销售时，处方药文字提醒</el-checkbox>
-        <el-checkbox :checked="param.limitYellow">销售时，查询药品数量小于下限，黄色显示</el-checkbox>
-        <el-checkbox :checked="param.limitDayDone">销售时，查询药品已过保质期，红色显示</el-checkbox>
-        <el-checkbox :checked="param.asTime">销售时，查询药品时显示顺序按入库时间排序</el-checkbox>
-        <el-checkbox :checked="param.calculateAgain">销售时，实际销售价小于预售价，提醒重新计算</el-checkbox>
+        <el-checkbox v-model="param.wordAlarm">销售时，处方药文字提醒</el-checkbox>
+        <el-checkbox v-model="param.limitYellow">销售时，查询药品数量小于下限，黄色显示</el-checkbox>
+        <el-checkbox v-model="param.limitDayDone">销售时，查询药品已过保质期，红色显示</el-checkbox>
+        <el-checkbox v-model="param.asTime">销售时，查询药品时显示顺序按入库时间排序</el-checkbox>
+        <el-checkbox v-model="param.calculateAgain">销售时，实际销售价小于预售价，提醒重新计算</el-checkbox>
       </div>
     </div>
     <div class='integral'>
@@ -56,16 +56,16 @@
         会员积分 = 消费金额 x 积分参数
       </div>
       <el-checkbox class='one'
-                   :checked="param.checkedInt">积分只取整数，小于整数 1 时不计积分</el-checkbox>
+                   v-model="param.checkedInt">积分只取整数，小于整数 1 时不计积分</el-checkbox>
     </div>
     <div class='next-shift'>
       <p>交班条内容</p>
       <div class='twing'>
         <el-checkbox class='one'
-                     :checked="param.allMoney">当天总营业额</el-checkbox>
-        <el-checkbox :checked="param.salesPar">当天促销药品及促销数量</el-checkbox>
-        <el-checkbox :checked="param.changeTime">交班时间</el-checkbox>
-        <el-checkbox :checked="param.changeWho">换班人员</el-checkbox>
+                     v-model="param.allMoney">当天总营业额</el-checkbox>
+        <el-checkbox v-model="param.salesPar">当天促销药品及促销数量</el-checkbox>
+        <el-checkbox v-model="param.changeTime">交班时间</el-checkbox>
+        <el-checkbox v-model="param.changeWho">换班人员</el-checkbox>
       </div>
     </div>
     <div class='save'>
@@ -104,12 +104,10 @@ export default {
   },
   created() {
     this.$http.get('/api/system').then((res) => {
-      console.log(res, res.body[0])
       this.param = res.body[0]
     }).catch((err) => {
       console.log(err)
     })
-    console.log(this.param)
   },
   methods: {
     onChange() {
@@ -143,36 +141,11 @@ export default {
           salesPar: this.param.salesPar,
           changeTime: this.param.changeTime
         })
-      }).then((res) => {
-        console.log(res)
+      }).then(() => {
+        this.$message.success('设置成功')
       }).catch((err) => {
-        console.log(err)
+        this.$message.error('设置出错')
       })
-      // this.$http.put(`/api/system/${id}`, {
-      //   order: this.system.order,
-      //   dateTime: this.system.dateTime,
-      //   cardLength: this.system.cardLength,
-      //   limitDay: this.system.limitDay,
-      //   copyPath: this.system.copyPath,
-      //   copyDay: this.system.copyDay,
-      //   saveGrade: this.system.saveGrade,
-      //   checkedInt: this.system.checkedInt,
-      //   allowTab: this.system.allowTab,
-      //   wordAlarm: this.system.wordAlarm,
-      //   limitYellow: this.system.limitYellow,
-      //   limitDayDone: this.system.limitDayDone,
-      //   asTime: this.system.asTime,
-      //   calculateAgain: this.system.calculateAgain,
-      //   allMoney: this.system.allMoney,
-      //   changeWho: this.system.changeWho,
-      //   salesPar: this.system.salesPar,
-      //   changeTime: this.system.changeTime
-      // }).then((res) => {
-      //   console.log(res)
-      //   this.SYSTEM_SET(this.system)
-      // }).catch((err) => {
-      //   console.log(err)
-      // })
     },
     // 处理当前时间的函数（yyyy-MM-dd）
     getDateTime: function () {

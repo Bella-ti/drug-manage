@@ -7,37 +7,39 @@
             </el-breadcrumb>
         </div>
         <el-form class='form-condition' ref="form" :model="form" label-width="100px">
-                <el-form-item label="药品名称">
-                  <el-input class='query' v-model="form.name"></el-input>
-                </el-form-item>
-              <el-form-item label="商品ID">
-                  <el-input class='query' v-model="form.id"></el-input>
-                </el-form-item>
                 <el-form-item label="入库单号">
-                    <el-input class='query' v-model="form.orderNum"></el-input>
+                    <el-input class='query' disabled v-model="stockIn.orderNum"></el-input>
+                    <span class='tips'>*</span>
                 </el-form-item>
                 <el-form-item label="入库日期">
                     <el-date-picker
-                      v-model="form.storagePeriod"
+                      v-model="stockIn.storageDate"
                       type="date"
                       placeholder="入库日期"
                       :picker-options="pickerOptions">
                     </el-date-picker>
                 </el-form-item>
+                <el-form-item label="入库类型">
+                  <el-select size='small'
+                           v-model="stockIn.storageType"
+                           placeholder="请选择">
+                    <el-option v-for='item in stockTypes'
+                               :label="item.label"
+                               :value="item.value"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="药品名称">
+                  <el-input class='query' @change='checkName' v-model="form.name"></el-input>
+                </el-form-item>
+              <el-form-item label="商品ID">
+                  <el-input class='query' v-model="form.id"></el-input>
+                  <span class='tips'>{{tips}}</span>
+                </el-form-item>
                 <el-form-item label="拼音码">
-                    <el-input class='query' v-model="form.renumber"></el-input>
+                    <el-input class='query' v-model="form.rename"></el-input>
                 </el-form-item>
-                <el-form-item label="规格">
+                <el-form-item label="剂型">
                     <el-input class='query' v-model="form.size"></el-input>
-                </el-form-item>
-              <el-form-item label="供货单位">
-                  <el-input v-model="form.deliveryUnit"></el-input>
-              </el-form-item>
-                <el-form-item label="药品信息">
-                  <el-input class='query' v-model="form.drugInfo"></el-input>
-                </el-form-item>
-                <el-form-item label="合计数量">
-                    <el-input class='query' v-model="form.totalNum"></el-input>
                 </el-form-item>
                 <el-form-item label="批准文号">
                   <el-input class='query' v-model="form.approvalNumber"></el-input>
@@ -48,56 +50,70 @@
                 <el-form-item label="货位">
                     <el-input class='query' v-model="form.position"></el-input>
                 </el-form-item>
-                <el-form-item label="入库单价">
-                  <el-input class='query' v-model="form.comePrice"></el-input>
-                  <span>元</span>
+                <el-form-item label="入库数量">
+                    <el-input class='query' v-model="stockIn.stockNum"></el-input>
                 </el-form-item>
-                <el-form-item label="入库金额">
-                  <el-input class='query' v-model="form.comTotalPrice"></el-input>
-                  <span>元</span>
-                </el-form-item>
-                <el-form-item label="销售价">
+                <el-form-item label="进价">
                   <el-input class='query' v-model="form.unitPrice"></el-input>
                   <span>元</span>
+                </el-form-item>
+                <el-form-item label="生产日期">
+                    <el-input class='query' v-model="form.bornDate"></el-input>
                 </el-form-item>
                 <el-form-item label="有效日期">
                   <el-input class='query' v-model="form.validPeriod"></el-input>
                 </el-form-item>
-                <el-form-item label="生产日期">
-                    <el-input class='query' v-model="form.beginDate"></el-input>
+                <el-form-item label="供货单位">
+                    <el-input v-model="form.deliveryUnit"></el-input>
                 </el-form-item>
-                <el-form-item label="促销提成">
-                    <el-input class='query' v-model="form.promotion"></el-input>
+                <el-form-item label="厂家">
+                    <el-input v-model="form.factory"></el-input>
                 </el-form-item>
                 <el-form-item label="商品种类">
                   <el-input class='query' v-model="form.type"></el-input>
                 </el-form-item>
                 <el-form-item label="药品类别">
-                  <el-input class='query' v-model="form.drugsType"></el-input>
+                  <el-input class='query' v-model="form.drugType"></el-input>
                 </el-form-item>
                  <el-form-item label="自定义类">
                   <el-input class='query' v-model="form.custom"></el-input>
                 </el-form-item>
-                <el-form-item label="验收结论">
-                    <el-input class='query' v-model="form.conclusion"></el-input>
-                </el-form-item>
-                    <el-form-item label="合格证">
-                    <el-input class='query' v-model="form.certificate"></el-input>
+                <el-form-item label="合格证">
+                    <el-select size='small'
+                              v-model="stockIn.certificate"
+                              placeholder="请选择">
+                        <el-option label="有"
+                                   value='有'></el-option>
+                                   <el-option label="没有"
+                                   value='没有'></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="外观质量">
-                    <el-input class='query' v-model="form.quality"></el-input>
+                    <el-select size='small'
+                              v-model="stockIn.quality"
+                              placeholder="请选择">
+                        <el-option label="合格"
+                                   value='合格'></el-option>
+                        <el-option label="不合格"
+                                    value='不合格'></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="验收结论">
+                    <el-select size='small'
+                              v-model="stockIn.conclusion"
+                              placeholder="请选择">
+                        <el-option label="合格"
+                                   value='合格'></el-option>
+                        <el-option label="不合格"
+                                    value='不合格'></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="验收人">
-                  <el-input class='query' v-model="form.checkPerson"></el-input>
+                  <el-input class='query' v-model="stockIn.checkPerson"></el-input>
+                  <span class='tips'>*</span>
                 </el-form-item>
                 <el-form-item label="采购员">
-                    <el-input class='query' v-model="form.buyPerson"></el-input>
-                </el-form-item>
-                <el-form-item label="备注">
-                    <el-input class='query' :rows=1 type='textarea' v-model="form.extra"></el-input>
-                </el-form-item>
-                <el-form-item label="货位说明">
-                    <el-input class='query' :rows=1 type='textarea' v-model="form.positionSaid"></el-input>
+                    <el-input class='query' v-model="stockIn.buyPerson"></el-input>
                 </el-form-item>
         <el-button size='middle' type="primary" @click="addToTable">加入入库单</el-button>
         </el-form>
@@ -110,224 +126,56 @@ import {mapState} from 'vuex'
     export default {
         data() {
             return {
-              value: '',
               pickerOptions: {
                 disabledDate(time) {
-                  return time.getTime() < Date.now() - 8.64e7;
+                  return time.getTime() > Date.now()
                 }
               },
-              dialogVisible:false,
               form: {
-                id: '',
                 name: '',
-                orderNum: '',
-                storagePeriod: '',
-                renumber:'',
+                id: '',
+                rename: '',
                 size: '',
-                deliveryUnit: '',
-                drugInfo: '',
-                totalNum: '',
                 approvalNumber: '',
                 batchNumber: '',
                 position: '',
-                comePrice: '',
-                comTotalPrice: '',
-                unitPrice:'',
+                unitPrice: '',
+                bornDate:'',
                 validPeriod: '',
-                beginDate: '',
-                promotion: '',
+                deliveryUnit: '',
+                factory:'',
                 type: '',
-                drugsType:'',
-                custom: '',
-                conclusion: '',
+                drugType:'',
+                custom: ''
+              },
+              stockIn: {
+                orderNum: '',
+                storageDate: '',
+                storageType: '',
+                stockNum: '',
                 certificate: '',
                 quality: '',
+                conclusion: '',
                 checkPerson: '',
-                buyPerson: '',
-                positionSaid: '',
-                extra: ''
+                buyPerson: ''
               },
-              drugs: [
-                {
-                  id: 6754, // 商品ID
-                  name: '阿莫西林分散片', // 商用名
-                  rename: '阿莫西林分散片', // 通用名
-                  size: '0.25G*24片', // 规格
-                  factory: '太极集团', // 厂家
-                  approvalNumber: '国药准字H', // 批准文号
-                  batchNumber: '20120501', // 批号
-                  validPeriod: '2014-1-28', // 有效期
-                  position: 'G1', // 货位
-                  number: 100, // 数量
-                  storagePeriod: '2013-1-10', // 入库日期
-                  promotion: 0.2, // 促销提成
-                  deliveryUnit: '初期库存', // 供货单位
-                  type: '药品', // 商品分类
-                  renumber: 682302, // 助记码
-                  drugsType: '抗菌素', // 药品种类
-                  custom: '', // 自定义类
-                  unitPrice: 6.87, // 销售单价
-                  positionSaid: '', // 货位说明
-                  numberMe: 784738473 // 自编码
-                },
-                {
-                  id: 6798,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 5678,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 6438,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                }
-              ],
-              currentSelection: {}
+              tips: '',
+              drugs: [],
+              stockTypes: [{
+                value: '采购',
+                label: '采购'
+              }, {
+                value: '下架',
+                label: '下架'
+              }],
+              status: false
             }
+        },
+        created() {
+          this.getOrder()
         },
         computed: {
-            ...mapState({
-                saleInfo: ({fetch}) => fetch.saleInfo
-            }),
-            initDate() {
-              this.value = this.getDateTime()
-            }
-        },
-        watch: {
-            allPrice(val, oldValue) {
-                this.saleInfo.total = val
-            },
-            allTo(val, oldValue) {
-                this.saleInfo.to = val
-            }
-        },
-        methods: {
-            addToTable() {
-              this.$http.post('/api/drug', {
-                  id: this.form.id,
-                  name: this.form.name,
-                  numberMe: this.form.numberMe,
-                  storagePeriod: this.form.storagePeriod,
-                  renumber: this.form.renumber,
-                  size: this.form.size,
-                  deliveryUnit: this.form.deliveryUnit,
-                  drugInfo: this.form.drugInfo,
-                  number: this.form.orderNum,
-                  approvalNumber: this.form.approvalNumber,
-                  batchNumber: this.form.batchNumber,
-                  position: this.form.position,
-                  comePrice: this.form.comePrice,
-                  comTotalPrice: this.form.comTotalPrice,
-                  unitPrice: this.form.validPeriod,
-                  validPeriod: this.form.validPeriod,
-                  beginDate: this.form.beginDate,
-                  promotion: this.form.promotion,
-                  type: this.form.type,
-                  drugsType: this.form.drugsType,
-                  custom: this.form.custom,
-                  conclusion: this.form.conclusion,
-                  certificate: this.form.certificate,
-                  quality: this.form.quality,
-                  checkPerson: this.form.checkPerson,
-                  buyPerson: this.form.buyPerson,
-                  positionSaid: this.form.positionSaid,
-                  extra: this.form.extra
-              }).then((res) => {
-                console.log(res)
-                this.dialogVisible = false
-                this.getBusiness
-              })
-            },
-           handleSelectionChange (val){
-               console.log(val)
-           },
-           handleCurrentChange(val){
-               this.dialogVisible = true
-               this.currentSelection = val
-           },
-           handleChange(index) {
-               this.dialogVisible= false
-               this.drugs[index] = this.deepCopy(this.currentSelection)
-           },
-            // 处理当前时间的函数（yyyy-MM-dd）
-          getDateTime: function () {
+            getDateTime: function () {
             const date = new Date()
             var seperator = '-'
             var month = date.getMonth() + 1
@@ -341,6 +189,128 @@ import {mapState} from 'vuex'
             var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
             return currentime
           }
+        },
+        methods: {
+          checkName(value) {
+            this.$http.get('/api/drug').then((res) => {
+              for(var i in res.data) {
+                if(res.data[i].name == value) {
+                  this.form = res.data[i]
+                  this.status = true
+                }
+              }
+              
+            })
+          },
+          getOrder() {
+              const r1=parseInt(Math.random()*(10))
+              const r2=parseInt(Math.random()*(10))
+              const now = (new Date()).valueOf()
+              const paymentID =String(r1)+String(r2)+String(now)
+              this.form.id = paymentID.substring(paymentID.length-6,paymentID.length) 
+              this.stockIn.orderNum = paymentID
+          },
+            addToTable() {
+              for(var i in this.form) {
+                if(this.form[i] == undefined) {
+                  this.form[i] = ''
+                }
+              }
+              if(this.stockIn.checkPerson == '' || this.stockIn.orderNum == '' 
+              || this.stockIn.checkPerson == undefined || this.stockIn.orderNum ==undefined) {
+                return
+              }
+              if(this.form.id == '' || isNaN(Number(this.form.id))) {
+                this.tips = '*必填且必须为数字'
+                return
+              }
+              const id = this.form._id
+              const number = parseInt(this.form.number)+parseInt(this.stockIn.stockNum)
+              if(isNaN(number)) {
+                return
+              }
+              if(this.status) {
+                this.$http.put(`/api/drug/${id}`,{
+                    id: this.form.id,
+                    name: this.form.name,
+                    rename: this.form.rename,
+                    size: this.form.size,
+                    approvalNumber: this.form.approvalNumber,
+                    batchNumber: this.form.batchNumber,
+                    position: this.form.position,
+                    number: number,
+                    unitPrice: this.form.unitPrice,
+                    salePrice: this.form.salePrice,
+                    promotion: this.form.promotion,
+                    bornDate: this.form.bornDate,
+                    validPeriod: this.form.validPeriod,
+                    deliveryUnit: this.form.deliveryUnit,
+                    factory: this.form.factory,
+                    type: this.form.type,
+                    drugsType: this.form.drugsType,
+                    custom: this.form.custom
+                }).then(res => {
+                  console.log(res)
+                }).catch(err => {
+                  console.log(err)
+                })
+              } else{
+                this.$http.post('/api/drug',{
+                    id: this.form.id,
+                    name: this.form.name,
+                    rename: this.form.rename,
+                    size: this.form.size,
+                    approvalNumber: this.form.approvalNumber,
+                    batchNumber: this.form.batchNumber,
+                    position: this.form.position,
+                    number: parseInt(this.form.number)+parseInt(this.stockIn.stockNum),
+                    unitPrice: this.form.unitPrice,
+                    salePrice: this.form.salePrice,
+                    promotion: this.form.promotion,
+                    bornDate: this.form.bornDate,
+                    validPeriod: this.form.validPeriod,
+                    deliveryUnit: this.form.deliveryUnit,
+                    factory: this.form.factory,
+                    type: this.form.type,
+                    drugsType: this.form.drugsType,
+                    custom: this.form.custom
+                }).then(res => {
+                  console.log(res)
+                }).catch(err => {
+                  console.log(err)
+                })
+              }
+              this.$http.post('/api/stockin', {
+                    orderNum: this.stockIn.orderNum,
+                    storageDate: this.stockIn.storageDate,
+                    storageType: this.stockIn.storageType,
+                    name: this.form.name,
+                    id: this.form.id,
+                    rename: this.form.rename,
+                    size: this.form.size,
+                    approvalNumber: this.form.approvalNumber,
+                    batchNumber: this.form.batchNumber,
+                    position: this.form.position,
+                    stockNum: this.stockIn.stockNum,
+                    unitPrice: this.form.unitPrice,
+                    bornDate: this.form.bornDate,
+                    validPeriod: this.form.validPeriod,
+                    deliveryUnit: this.form.deliveryUnit,
+                    factory: this.form.factory,
+                    type: this.form.type,
+                    drugType: this.form.drugType,
+                    custom: this.form.custom,
+                    certificate: this.stockIn.certificate,
+                    quality: this.stockIn.quality,
+                    conclusion: this.stockIn.conclusion,
+                    checkPerson: this.stockIn.checkPerson,
+                    buyPerson: this.stockIn.buyPerson
+                  }).then(suc => {
+                    console.log(suc)
+                  }).catch(rereqq => {
+                    console.log(rereqq)
+                  })
+            }
         }
     }
 </script>
@@ -380,5 +350,9 @@ import {mapState} from 'vuex'
       float:right;
       height: 34px;
       margin-left: 187px
+   }
+   .sales .tips {
+     color:red;
+     float:left
    }
 </style>

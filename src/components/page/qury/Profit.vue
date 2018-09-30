@@ -7,15 +7,8 @@
             </el-breadcrumb>
         </div>
         <el-form class='form-condition' ref="form" :model="form" label-width="100px">
-            <el-form-item label="查询">
-                <el-input class='query' v-model="form.value" placeholder="请输入药品ID或出库时间或出库类型"></el-input>
-            </el-form-item>
             <el-form-item label="按药品ID">
-                <el-select v-model="form.position" placeholder="请选择">
-                    <el-option label="G1" value="bbk"></el-option>
-                    <el-option label="G2" value="xtc"></el-option>
-                    <el-option label="G3" value="imoo"></el-option>
-                </el-select>
+                <el-input class='query' v-model="form.value" placeholder="请输入药品ID"></el-input>
             </el-form-item>
             <el-form-item label="按出库时间">
                <el-date-picker
@@ -29,24 +22,24 @@
              <el-button
                     size="small"
                     type="primary"
-                    @click="handlerFetch(scope.$index, scope.row)">查询</el-button>
+                    @click="handlerFetch">查询</el-button>
               </el-form-item>
         </el-form>
           <el-table :data="record" border style="width: 100%">
-            <el-table-column prop="order" label="出库单号" width='100px'></el-table-column>
-            <el-table-column prop="id" label="药品ID" width='90px'></el-table-column>
-            <el-table-column prop="id" label="有效期" width='110px'></el-table-column>
-            <el-table-column prop="id" label="剩余库存量" width='110px'></el-table-column>
-            <el-table-column prop="time" label="出库时间" width='110px'></el-table-column>
-            <el-table-column prop="id" label="出库单价" width='95px'></el-table-column>
-            <el-table-column prop="type" label="出库类型" width='110px'></el-table-column>
-            <el-table-column prop="name" label="经手人" width='90px'></el-table-column>
-            <el-table-column prop="size" label="说明" width='103px'></el-table-column>
+            <el-table-column prop="outNum" label="出库单号" width='100px'></el-table-column>
+            <el-table-column prop="drugId" label="药品ID" width='90px'></el-table-column>
+            <el-table-column prop="validDate" label="有效期" width='110px'></el-table-column>
+            <el-table-column prop="totalNum" label="剩余库存量" width='110px'></el-table-column>
+            <el-table-column prop="outTime" label="出库时间" width='115px'></el-table-column>
+            <el-table-column prop="saleUnitPrice" label="出库单价" width='95px'></el-table-column>
+            <el-table-column prop="outType" label="出库类型" width='110px'></el-table-column>
+            <el-table-column prop="operator" label="经手人" width='90px'></el-table-column>
+            <el-table-column prop="size" label="说明" width='98px'></el-table-column>
             <el-table-column label="操作" width="140px">
                 <template scope="scope">
                   <el-button
                     size="small"
-                    @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                    @click="handleEdit(scope.$index, scope.row)">查看</el-button>
                   <el-button
                     size="small"
                     type="danger"
@@ -57,28 +50,24 @@
           <el-dialog title="添加供应商信息" v-model="dialogVisible" size="tiny">
             <el-form ref="form" :model="form" label-width="80px">
                 <el-form-item label="出库单号" width='100px'>
-                    <el-input type='text' v-model="form.order"></el-input>
+                    <el-input type='text' disabled v-model="form.outNum"></el-input>
                 </el-form-item>
                 <el-form-item label="商品ID">
-                    <el-input type='text' v-model="form.id"></el-input>
+                    <el-input type='text'disabled v-model="form.drugId"></el-input>
                 </el-form-item>
                 <el-form-item label="出库时间">
-                    <el-input type='text' v-model="form.time"></el-input>
+                    <el-input type='text'disabled v-model="form.outTime"></el-input>
                 </el-form-item>
                 <el-form-item label="出库类型">
-                    <el-input type='text' v-model="form.type"></el-input>
+                    <el-input type='text'disabled v-model="form.outType"></el-input>
                 </el-form-item>
                 <el-form-item label="经手人">
-                    <el-input type='text' v-model="form.name"></el-input>
+                    <el-input type='text'disabled v-model="form.operator"></el-input>
                 </el-form-item>
                 <el-form-item label="说明">
-                    <el-input type='text' v-model="form.size"></el-input>
+                    <el-input type='text'disabled v-model="form.size"></el-input>
                 </el-form-item>
             </el-form>
-           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="addCompanyTrue">确 定</el-button>
-          </span>
         </el-dialog>
     </div>
 </template>
@@ -90,11 +79,6 @@ import {mapState} from 'vuex'
             return {
               value: '',
               currentime: '',
-               pickerOptions: {
-                disabledDate(time) {
-                  return time.getTime() >= Date.now() - 8.64e7;
-                }
-              },
               record: [{
                 order: '',
                 id: '',
@@ -109,131 +93,60 @@ import {mapState} from 'vuex'
                 position: '',
                 type: ''
               },
-              drugs: [
-                {
-                  id: 6823, // 商品ID
-                  name: '阿莫西林分散片', // 商用名
-                  rename: '阿莫西林分散片', // 通用名
-                  size: '0.25G*24片', // 规格
-                  factory: '太极集团', // 厂家
-                  approvalNumber: '国药准字H', // 批准文号
-                  batchNumber: '20120501', // 批号
-                  validPeriod: '2014-1-28', // 有效期
-                  position: 'G1', // 货位
-                  number: 100, // 数量
-                  storagePeriod: '2013-1-10', // 入库日期
-                  promotion: 0.2, // 促销提成
-                  deliveryUnit: '初期库存', // 供货单位
-                  type: '药品', // 商品分类
-                  renumber: 682302, // 助记码
-                  drugsType: '抗菌素', // 药品种类
-                  custom: '', // 自定义类
-                  unitPrice: 6.87, // 销售单价
-                  positionSaid: '', // 货位说明
-                  numberMe: 784738473 // 自编码
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                },
-                {
-                  id: 6823,
-                  name: '阿莫西林分散片',
-                  rename: '阿莫西林分散片',
-                  size: '0.25G*24片',
-                  factory: '太极集团',
-                  approvalNumber: '国药准字H',
-                  batchNumber: '20120501',
-                  validPeriod: '2014-1-28',
-                  position: 'G1',
-                  number: 100,
-                  storagePeriod: '2013-1-10',
-                  promotion: 0.2,
-                  deliveryUnit: '初期库存',
-                  type: '药品',
-                  renumber: 682302,
-                  drugsType: '抗菌素',
-                  custom: '',
-                  unitPrice: 6.87,
-                  positionSaid: '',
-                  numberMe: 784738473
-                }
-              ],
+              drugs: [],
               index: '',
-              currentSelection: {}
+              currentSelection: {},
+              pickerOptions: {
+                disabledDate(time) {
+                  return time.getTime() > Date.now()
+                }
+              },
             }
         },
         computed: {
-            ...mapState({
-                state: ({fetch}) => fetch.state
+            getOutRecord() {
+            this.$http.get('/api/outstock').then((res) => {
+                this.record = res.data
+                for(var i in this.record) {
+                    this.record[i].outTime = this.record[i].outTime.slice(0,10)
+                }
             })
+            return this.record
+            }
         },
-        create: {
-           getDateTime() {
-              const date = new Date()
-              var seperator = '/'
+        created() {
+            this.getOutRecord
+        },
+        methods: {
+          handlerFetch() {
+            var arr = []
+            if(this.form.value !== '') {
+                 this.$http.get('/api/outstock').then((res) => {
+                     for(var i in res.data) {
+                         if(this.form.value == res.data[i].drugId) {
+                             arr.push(res.data[i])
+                         }
+                     }
+                    this.record = arr
+                })
+                return
+            }
+            if(this.currentime !== '') {
+               this.$http.get('/api/outstock').then((res) => {
+                    const curDate = this.getDateTime(this.currentime)
+                     for(var i in res.data) {
+                         var outTime = res.data[i].outTime.slice(0,10)
+                         if(curDate == outTime) {
+                             arr.push(res.data[i])
+                         }
+                     }
+                    this.record = arr
+                })  
+            }
+          },
+           getDateTime(curdate) {
+              const date = curdate
+              var seperator = '-'
               var month = date.getMonth() + 1
               var strDate = date.getDate()
               if (month >= 1 && month <= 9) {
@@ -242,14 +155,9 @@ import {mapState} from 'vuex'
               if (strDate >= 0 && strDate <= 9) {
                 strDate = '0' + strDate
               }
-              this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-              return this.currentime
-            }
-        },
-        methods: {
-          handlerFetch() {
-            
-          },
+              const currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+              return currentime
+            },
            // 编辑
             handleEdit(index,row) {
               this.dialogVisible = true
@@ -258,8 +166,12 @@ import {mapState} from 'vuex'
             },
             // 删除
             handleDelete(e,index,row) {
-              this.record.splice(index,1)
+                const id = row._id
+                this.$http.delete(`/api/outstock/${id}`,{}).then(() => {
+                    this.getOutRecord
+                })
             },
+            // 确认修改
             addCompanyTrue () {
               this.dialogVisible = false
               this.record[this.index] = JSON.parse(JSON.stringify(this.form))
