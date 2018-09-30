@@ -18,13 +18,13 @@
                     <el-input disabled v-model="curLogin.type"></el-input>
                 </el-form-item>
                 <el-form-item label="联系方式">
-                    <el-input v-model="curLogin.info.phone"></el-input>
+                    <el-input v-model="curLogin.information.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="详细住址">
-                    <el-input v-model="curLogin.info.address"></el-input>
+                    <el-input v-model="curLogin.information.address"></el-input>
                 </el-form-item>
                 <el-form-item label="说明">
-                    <el-input type="textarea" v-model="curLogin.info.sayAs"></el-input>
+                    <el-input type="textarea" v-model="curLogin.information.sayAs"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="onSubmit">保存</el-button>
@@ -81,7 +81,7 @@ export default {
                 username: this.curLogin.username,
                 password: this.curLogin.password,
                 type: this.curLogin.type,
-                info: {
+                information: {
                     address: this.curLogin.info.address,
                     phone: this.curLogin.info.phone,
                     sayAs: this.curLogin.info.sayAs

@@ -69,6 +69,10 @@ export default new Router({
                     component: resolve => require(['../view/sale/DrugSales.vue'], resolve)
                 },
                 {
+                    path: '/settlement',
+                    component: resolve => require(['../view/sale/Settlement.vue'], resolve)
+                },
+                {
                     path: '/saleCharts',
                     component: resolve => require(['../view/sale/SaleCharts.vue'], resolve)
                 },
@@ -80,6 +84,15 @@ export default new Router({
                 {
                     path: '/storage',
                     component: resolve => require(['../view/warehouse/Storage.vue'], resolve)
+                },
+                // 仓库管理
+                {
+                    path: '/storageQuery',
+                    component: resolve => require(['../view/storage/StorageQuery.vue'], resolve)
+                },
+                {
+                    path: '/resultTable',
+                    component: resolve => require(['../view/storage/ResultTable.vue'], resolve)
                 },
                 // 基本信息
                 {

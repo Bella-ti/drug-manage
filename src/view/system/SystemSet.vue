@@ -7,7 +7,7 @@
         <el-input class='dateInput'
                   v-model="param.dateTime"></el-input>
         <el-button type="primary"
-                   @click="onChange">改为今天</el-button>
+                   @click="onChange">改为当前</el-button>
       </div>
       <div class='member-card'>
         <span>会员卡卡号长度</span>
@@ -80,31 +80,12 @@
 export default {
   data() {
     return {
-      param: {
-        // order: 'zero',
-        // dateTime: '2017/03/04 09:08:07',
-        // cardLength: 11,
-        // limitDay: '2',
-        // copyPath: '',
-        // copyDay: '3',
-        // saveGrade: '',
-        // checkedInt: true,
-        // allowTab: false,
-        // wordAlarm: true,
-        // limitYellow: true,
-        // limitDayDone: true,
-        // asTime: true,
-        // calculateAgain: true,
-        // allMoney: true,
-        // changeWho: true,
-        // salesPar: true,
-        // changeTime: true
-      }
+      param: {}
     }
   },
   created() {
     this.$http.get('/api/system').then((res) => {
-      this.param = res.body[0]
+      this.param = res.data[0]
     }).catch((err) => {
       console.log(err)
     })
@@ -172,7 +153,7 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
 
 .system .normal-set,
@@ -180,14 +161,14 @@ export default {
 .system .integral,
 .system .next-shift {
   width: 46%;
-  padding: 0 20px 20px 20px
+  padding: 0 20px 20px 20px;
 }
 
 .system .normal-set:hover p,
 .system .sale-set:hover p,
 .system .integral:hover p,
 .system .next-shift:hover p {
-  color: #00d1b2
+  color: #00d1b2;
 }
 
 .system .normal-set p,
@@ -208,15 +189,15 @@ export default {
 
 .system .dateInput {
   width: 152px;
-  font-size: 12px
+  font-size: 12px;
 }
 
 .system .card-length {
-  width: 50px
+  width: 50px;
 }
 
 .system .date-length {
-  width: 150px
+  width: 150px;
 }
 
 .system .saling,
@@ -229,109 +210,45 @@ export default {
 .system .saling .one,
 .system .integral .one,
 .system .twing .one {
-  margin-left: 15px
+  margin-left: 15px;
 }
 
 .system .el-checkbox {
-  margin-bottom: 15px
+  margin-bottom: 15px;
 }
 
 .system .param-length {
-  width: 40px
+  width: 40px;
 }
 
 .system .tips {
-  font-size: 12px
+  font-size: 12px;
 }
 
 .system .param {
-  padding: 20px 20px 0 20px
+  padding: 20px 20px 0 20px;
 }
 
 .system .tips {
-  padding: 15px 20px
+  padding: 15px 20px;
 }
 
 .system .save {
   width: 100%;
-  padding-left: 30px
+  padding-left: 30px;
 }
 
 .system .save .save-btn {
-  padding: 10px 20px
+  padding: 10px 20px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*表单*/
 
 .system .el-input__inner {
-  height: 26px
+  height: 26px;
 }
 
 .system .el-button {
-  padding: 5px 10px
+  padding: 5px 10px;
 }
 </style>

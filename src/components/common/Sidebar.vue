@@ -24,12 +24,18 @@
                 <el-menu-item index="drugSales">药品销售</el-menu-item>
                 <el-menu-item style='display:none' index="cashierHand">收银员交班</el-menu-item>
                 <el-menu-item style='display:none' index="drugRegist">处方药含麻药登记</el-menu-item>
-                <el-menu-item index="saleCharts">销售额查询</el-menu-item>
+                <el-menu-item index="settlement">药品销售应收结算</el-menu-item>
+                <el-menu-item index="saleCharts">销售营业额</el-menu-item>
             </el-submenu>
             <el-submenu v-show='curUser.type != 3' index="4">
                 <template slot="title"><i class="el-icon-date"></i>入库出库管理</template>
                 <el-menu-item index="storage">药品入库</el-menu-item>
                 <el-menu-item index="drugsOut">药品出库</el-menu-item>
+            </el-submenu>
+            <el-submenu index="5">
+                <template slot="title"><i class="el-icon-date"></i>仓库管理</template>
+                <el-menu-item index="storageQuery">库存盘点单</el-menu-item>
+                <el-menu-item index="resultTable">损益单</el-menu-item>
             </el-submenu>
             <el-submenu index="6">
                 <template slot="title"><i class="el-icon-date"></i>基本信息</template>
