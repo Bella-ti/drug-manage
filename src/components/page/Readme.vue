@@ -26,8 +26,6 @@
                 <br>
                 <el-checkbox disabled checked>富文本编辑器</el-checkbox>
                 <br>
-                <el-checkbox disabled checked>markdown编辑器</el-checkbox>
-                <br>
                 <el-checkbox disabled checked>图片拖拽/裁剪上传</el-checkbox>
                 <br>
                 <el-checkbox disabled checked>支持切换主题色</el-checkbox>
