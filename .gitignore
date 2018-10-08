@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+build/
 server/config/
 server/index.html
 npm-debug.log

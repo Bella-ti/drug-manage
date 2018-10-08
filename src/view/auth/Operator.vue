@@ -6,7 +6,7 @@
         <el-breadcrumb-item>操作员权限管理</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-  
+
     <el-table ref='multipleTable' :data="userInfo" border style="width: 100%">
       <el-table-column prop='order' label="编号" width="150">
       </el-table-column>
@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       userInfo: [{
-        id:'',
+        id: '',
         order: '',
         name: '',
         type: '',
@@ -66,30 +66,30 @@ export default {
     }
   },
   methods: {
-    isNotAdmin(selection){
+    isNotAdmin(selection) {
       const status = selection.isAdmin
       var type = selection.type
-      if(status == true) {
+      if (status == true) {
         type = 1
       }
       const id = selection.id
-      for(var i in this.putUser){
-        if(this.putUser[i]._id == id) {
+      for (var i in this.putUser) {
+        if (this.putUser[i]._id == id) {
           var user = this.putUser[i]
         }
       }
       this.$http.put(`/api/user/${id}`, {
-                order: user.order,
-                username: user.username,
-                password: user.password,
-                type: type,
-                isAdmin:status
-            }).then((res) => {
-                console.log(res)
-                this.getAllUser
-            }).catch((err) => {
-                console.log(err)
-            })
+        order: user.order,
+        username: user.username,
+        password: user.password,
+        type: type,
+        isAdmin: status
+      }).then((res) => {
+        console.log(res)
+        this.getAllUser
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   }
 }

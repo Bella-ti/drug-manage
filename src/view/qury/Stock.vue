@@ -95,7 +95,7 @@
                              width='100px'></el-table-column>
             <el-table-column prop="custom"
                              label="自定义类"
-                             width='100px'></el-table-column> 
+                             width='100px'></el-table-column>
         </el-table>
         <el-dialog title="查看药品信息"
                    v-model="dialogVisible"
@@ -162,7 +162,7 @@
                 <el-form-item label="自定义分类">
                     <el-input v-model="currentSelection.custom"></el-input>
                 </el-form-item>
-    
+
                 <el-form-item label="有效期">
                     <el-input v-model="currentSelection.validPeriod"></el-input>
                 </el-form-item>
@@ -182,163 +182,163 @@
 
 <script>
 export default {
-    data() {
-        return {
-            dialogVisible: false,
-            form: {
-                id: '',
-                position: '',
-                type: ''
-            },
-            drugs: [
-            ],
-            drugTypes:[{
-                value: '感冒清热解毒',
-                label: '感冒清热解毒'
-                }, {
-                value: '心脑血管类',
-                label: '心脑血管类'
-                }, {
-                value: '外用药类',
-                label: '外用药类'
-                }, {
-                value: '呼吸系统类',
-                label: '呼吸系统类'
-                }, {
-                value: '内分泌类',
-                label: '内分泌类'
-                }, {
-                value: '胃肠系统类',
-                label: '胃肠系统类'
-                }, {
-                value: '补益类',
-                label: '补益类'
-                }, {
-                value: '维生素矿物质',
-                label: '维生素矿物质'
-                }, {
-                value: '抗生素',
-                label: '抗生素'
-                }, {
-                value: '抗风湿类',
-                label: '抗风湿类'
-                }, {
-                value: '五官科类',
-                label: '五官科类'
-                }, {
-                value: '妇科用药类',
-                label: '妇科用药类'
-                }, {
-                value: '中药类',
-                label: '中药类'
-                }, {
-                value: '计生用品',
-                label: '计生用品'
-                }, {
-                value: '儿科',
-                label: '儿科'
-                }, {
-                value: '清热镇痛类',
-                label: '清热镇痛类'
-                }, {
-                value: '保健品',
-                label: '保健品'
-                }, {
-                value: '非药品',
-                label: '非药品'
-                }, {
-                value: '泌尿系统',
-                label: '泌尿系统'
-                }, {
-                value: '其他处方类',
-                label: '其他处方类'
-                }, {
-                value: '肝胆类',
-                label: '肝胆类'
-                }, {
-                value: '注射液',
-                label: '注射液'
-                }, {
-                value: '风湿类',
-                label: '风湿类'
-            }],
-            currentSelection: {}
-        }
-    },
-    mounted() {
-        this.getAllDrugs
-    },
-    computed: {
-        getAllDrugs() {
-            this.$http.get('/api/drug').then((res) => {
-                this.drugs = res.data
-            })
-            return this.drugs
-        }
-    },
-    methods: {
-        deepCopy(p, c) {
-            var c = c || {};
-            for (var i in p) {
-                if (typeof p[i] === 'object') {
-                    c[i] = (p[i].constructor === Array) ? [] : {};
-                    deepCopy(p[i], c[i]);
-                } else {
-                    c[i] = p[i];
-                }
-            }
-            return c;
-        },
-        handleSelectionChange(val) {
-            console.log(val)
-        },
-        handleCurrentChange(val) {
-            this.dialogVisible = true
-            this.currentSelection = val
-        },
-        handleChange(index) {
-            this.dialogVisible = false
-            this.drugs[index] = this.deepCopy(this.currentSelection)
-        },
-        searchMenu() {
-            var arr = []
-            if(this.form.id != '') {
-                this.$http.get('/api/drug').then((res) => {
-                    for(var i in res.data) {
-                        if(res.data[i].id == this.form.id) {
-                            arr.push(res.data[i])
-                        }
-                    }
-                    this.drugs = arr
-                })
-                return
-            }
-            if(this.form.name) {
-                this.$http.get('/api/drug').then((res) => {
-                    for(var i in res.data) {
-                        if(res.data[i].name == this.form.name) {
-                            arr.push(res.data[i])
-                        }
-                    }
-                    this.drugs = arr
-                })
-                return
-            }
-            if(this.form.type) {
-                this.$http.get('/api/drug').then((res) => {
-                    for(var i in res.data) {
-                        if(res.data[i].drugsType == this.form.type) {
-                            arr.push(res.data[i])
-                        }
-                    }
-                    this.drugs = arr
-                })
-            }
-            if(this.form.id == '' && this.form.type == '' && this.form.position == '') {
-                this.getAllDrugs
-            }
-         }
+  data() {
+    return {
+      dialogVisible: false,
+      form: {
+        id: '',
+        position: '',
+        type: ''
+      },
+      drugs: [
+      ],
+      drugTypes: [{
+        value: '感冒清热解毒',
+        label: '感冒清热解毒'
+      }, {
+        value: '心脑血管类',
+        label: '心脑血管类'
+      }, {
+        value: '外用药类',
+        label: '外用药类'
+      }, {
+        value: '呼吸系统类',
+        label: '呼吸系统类'
+      }, {
+        value: '内分泌类',
+        label: '内分泌类'
+      }, {
+        value: '胃肠系统类',
+        label: '胃肠系统类'
+      }, {
+        value: '补益类',
+        label: '补益类'
+      }, {
+        value: '维生素矿物质',
+        label: '维生素矿物质'
+      }, {
+        value: '抗生素',
+        label: '抗生素'
+      }, {
+        value: '抗风湿类',
+        label: '抗风湿类'
+      }, {
+        value: '五官科类',
+        label: '五官科类'
+      }, {
+        value: '妇科用药类',
+        label: '妇科用药类'
+      }, {
+        value: '中药类',
+        label: '中药类'
+      }, {
+        value: '计生用品',
+        label: '计生用品'
+      }, {
+        value: '儿科',
+        label: '儿科'
+      }, {
+        value: '清热镇痛类',
+        label: '清热镇痛类'
+      }, {
+        value: '保健品',
+        label: '保健品'
+      }, {
+        value: '非药品',
+        label: '非药品'
+      }, {
+        value: '泌尿系统',
+        label: '泌尿系统'
+      }, {
+        value: '其他处方类',
+        label: '其他处方类'
+      }, {
+        value: '肝胆类',
+        label: '肝胆类'
+      }, {
+        value: '注射液',
+        label: '注射液'
+      }, {
+        value: '风湿类',
+        label: '风湿类'
+      }],
+      currentSelection: {}
     }
+  },
+  mounted() {
+    this.getAllDrugs
+  },
+  computed: {
+    getAllDrugs() {
+      this.$http.get('/api/drug').then((res) => {
+        this.drugs = res.data
+      })
+      return this.drugs
+    }
+  },
+  methods: {
+    deepCopy(p, c) {
+      var c = c || {}
+      for (var i in p) {
+        if (typeof p[i] === 'object') {
+          c[i] = (p[i].constructor === Array) ? [] : {}
+          deepCopy(p[i], c[i])
+        } else {
+          c[i] = p[i]
+        }
+      }
+      return c
+    },
+    handleSelectionChange(val) {
+      console.log(val)
+    },
+    handleCurrentChange(val) {
+      this.dialogVisible = true
+      this.currentSelection = val
+    },
+    handleChange(index) {
+      this.dialogVisible = false
+      this.drugs[index] = this.deepCopy(this.currentSelection)
+    },
+    searchMenu() {
+      var arr = []
+      if (this.form.id != '') {
+        this.$http.get('/api/drug').then((res) => {
+          for (var i in res.data) {
+            if (res.data[i].id == this.form.id) {
+              arr.push(res.data[i])
+            }
+          }
+          this.drugs = arr
+        })
+        return
+      }
+      if (this.form.name) {
+        this.$http.get('/api/drug').then((res) => {
+          for (var i in res.data) {
+            if (res.data[i].name == this.form.name) {
+              arr.push(res.data[i])
+            }
+          }
+          this.drugs = arr
+        })
+        return
+      }
+      if (this.form.type) {
+        this.$http.get('/api/drug').then((res) => {
+          for (var i in res.data) {
+            if (res.data[i].drugsType == this.form.type) {
+              arr.push(res.data[i])
+            }
+          }
+          this.drugs = arr
+        })
+      }
+      if (this.form.id == '' && this.form.type == '' && this.form.position == '') {
+        this.getAllDrugs
+      }
+    }
+  }
 }
 </script>
 <style>

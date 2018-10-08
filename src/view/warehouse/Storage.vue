@@ -117,202 +117,201 @@
                 </el-form-item>
         <el-button size='middle' type="primary" @click="addToTable">加入入库单</el-button>
         </el-form>
-        
+
         </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
-    export default {
-        data() {
-            return {
-              pickerOptions: {
-                disabledDate(time) {
-                  return time.getTime() > Date.now()
-                }
-              },
-              form: {
-                name: '',
-                id: '',
-                rename: '',
-                size: '',
-                approvalNumber: '',
-                batchNumber: '',
-                position: '',
-                unitPrice: '',
-                bornDate:'',
-                validPeriod: '',
-                deliveryUnit: '',
-                factory:'',
-                type: '',
-                drugType:'',
-                custom: ''
-              },
-              stockIn: {
-                orderNum: '',
-                storageDate: '',
-                storageType: '',
-                stockNum: '',
-                certificate: '',
-                quality: '',
-                conclusion: '',
-                checkPerson: '',
-                buyPerson: ''
-              },
-              tips: '',
-              drugs: [],
-              stockTypes: [{
-                value: '采购',
-                label: '采购'
-              }, {
-                value: '下架',
-                label: '下架'
-              }],
-              status: false
-            }
-        },
-        created() {
-          this.getOrder()
-        },
-        computed: {
-            getDateTime: function () {
-            const date = new Date()
-            var seperator = '-'
-            var month = date.getMonth() + 1
-            var strDate = date.getDate()
-            if (month >= 1 && month <= 9) {
-              month = '0' + month
-            }
-            if (strDate >= 0 && strDate <= 9) {
-              strDate = '0' + strDate
-            }
-            var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-            return currentime
-          }
-        },
-        methods: {
-          checkName(value) {
-            this.$http.get('/api/drug').then((res) => {
-              for(var i in res.data) {
-                if(res.data[i].name == value) {
-                  this.form = res.data[i]
-                  this.status = true
-                }
-              }
-              
-            })
-          },
-          getOrder() {
-              const r1=parseInt(Math.random()*(10))
-              const r2=parseInt(Math.random()*(10))
-              const now = (new Date()).valueOf()
-              const paymentID =String(r1)+String(r2)+String(now)
-              this.form.id = paymentID.substring(paymentID.length-6,paymentID.length) 
-              this.stockIn.orderNum = paymentID
-          },
-            addToTable() {
-              for(var i in this.form) {
-                if(this.form[i] == undefined) {
-                  this.form[i] = ''
-                }
-              }
-              if(this.stockIn.checkPerson == '' || this.stockIn.orderNum == '' 
-              || this.stockIn.checkPerson == undefined || this.stockIn.orderNum ==undefined) {
-                return
-              }
-              if(this.form.id == '' || isNaN(Number(this.form.id))) {
-                this.tips = '*必填且必须为数字'
-                return
-              }
-              const id = this.form._id
-              const number = parseInt(this.form.number)+parseInt(this.stockIn.stockNum)
-              if(isNaN(number)) {
-                return
-              }
-              if(this.status) {
-                this.$http.put(`/api/drug/${id}`,{
-                    id: this.form.id,
-                    name: this.form.name,
-                    rename: this.form.rename,
-                    size: this.form.size,
-                    approvalNumber: this.form.approvalNumber,
-                    batchNumber: this.form.batchNumber,
-                    position: this.form.position,
-                    number: number,
-                    unitPrice: this.form.unitPrice,
-                    salePrice: this.form.salePrice,
-                    promotion: this.form.promotion,
-                    bornDate: this.form.bornDate,
-                    validPeriod: this.form.validPeriod,
-                    deliveryUnit: this.form.deliveryUnit,
-                    factory: this.form.factory,
-                    type: this.form.type,
-                    drugsType: this.form.drugsType,
-                    custom: this.form.custom
-                }).then(res => {
-                  console.log(res)
-                }).catch(err => {
-                  console.log(err)
-                })
-              } else{
-                this.$http.post('/api/drug',{
-                    id: this.form.id,
-                    name: this.form.name,
-                    rename: this.form.rename,
-                    size: this.form.size,
-                    approvalNumber: this.form.approvalNumber,
-                    batchNumber: this.form.batchNumber,
-                    position: this.form.position,
-                    number: parseInt(this.form.number)+parseInt(this.stockIn.stockNum),
-                    unitPrice: this.form.unitPrice,
-                    salePrice: this.form.salePrice,
-                    promotion: this.form.promotion,
-                    bornDate: this.form.bornDate,
-                    validPeriod: this.form.validPeriod,
-                    deliveryUnit: this.form.deliveryUnit,
-                    factory: this.form.factory,
-                    type: this.form.type,
-                    drugsType: this.form.drugsType,
-                    custom: this.form.custom
-                }).then(res => {
-                  console.log(res)
-                }).catch(err => {
-                  console.log(err)
-                })
-              }
-              this.$http.post('/api/stockin', {
-                    orderNum: this.stockIn.orderNum,
-                    storageDate: this.stockIn.storageDate,
-                    storageType: this.stockIn.storageType,
-                    name: this.form.name,
-                    id: this.form.id,
-                    rename: this.form.rename,
-                    size: this.form.size,
-                    approvalNumber: this.form.approvalNumber,
-                    batchNumber: this.form.batchNumber,
-                    position: this.form.position,
-                    stockNum: this.stockIn.stockNum,
-                    unitPrice: this.form.unitPrice,
-                    bornDate: this.form.bornDate,
-                    validPeriod: this.form.validPeriod,
-                    deliveryUnit: this.form.deliveryUnit,
-                    factory: this.form.factory,
-                    type: this.form.type,
-                    drugType: this.form.drugType,
-                    custom: this.form.custom,
-                    certificate: this.stockIn.certificate,
-                    quality: this.stockIn.quality,
-                    conclusion: this.stockIn.conclusion,
-                    checkPerson: this.stockIn.checkPerson,
-                    buyPerson: this.stockIn.buyPerson
-                  }).then(suc => {
-                    console.log(suc)
-                  }).catch(rereqq => {
-                    console.log(rereqq)
-                  })
-            }
+import { mapState } from 'vuex'
+export default {
+  data() {
+    return {
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now()
         }
+      },
+      form: {
+        name: '',
+        id: '',
+        rename: '',
+        size: '',
+        approvalNumber: '',
+        batchNumber: '',
+        position: '',
+        unitPrice: '',
+        bornDate: '',
+        validPeriod: '',
+        deliveryUnit: '',
+        factory: '',
+        type: '',
+        drugType: '',
+        custom: ''
+      },
+      stockIn: {
+        orderNum: '',
+        storageDate: '',
+        storageType: '',
+        stockNum: '',
+        certificate: '',
+        quality: '',
+        conclusion: '',
+        checkPerson: '',
+        buyPerson: ''
+      },
+      tips: '',
+      drugs: [],
+      stockTypes: [{
+        value: '采购',
+        label: '采购'
+      }, {
+        value: '下架',
+        label: '下架'
+      }],
+      status: false
     }
+  },
+  created() {
+    this.getOrder()
+  },
+  computed: {
+    getDateTime: function() {
+      const date = new Date()
+      var seperator = '-'
+      var month = date.getMonth() + 1
+      var strDate = date.getDate()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+      return currentime
+    }
+  },
+  methods: {
+    checkName(value) {
+      this.$http.get('/api/drug').then((res) => {
+        for (var i in res.data) {
+          if (res.data[i].name == value) {
+            this.form = res.data[i]
+            this.status = true
+          }
+        }
+      })
+    },
+    getOrder() {
+      const r1 = parseInt(Math.random() * (10))
+      const r2 = parseInt(Math.random() * (10))
+      const now = (new Date()).valueOf()
+      const paymentID = String(r1) + String(r2) + String(now)
+      this.form.id = paymentID.substring(paymentID.length - 6, paymentID.length)
+      this.stockIn.orderNum = paymentID
+    },
+    addToTable() {
+      for (var i in this.form) {
+        if (this.form[i] == undefined) {
+          this.form[i] = ''
+        }
+      }
+      if (this.stockIn.checkPerson == '' || this.stockIn.orderNum == '' ||
+              this.stockIn.checkPerson == undefined || this.stockIn.orderNum == undefined) {
+        return
+      }
+      if (this.form.id == '' || isNaN(Number(this.form.id))) {
+        this.tips = '*必填且必须为数字'
+        return
+      }
+      const id = this.form._id
+      const number = parseInt(this.form.number) + parseInt(this.stockIn.stockNum)
+      if (isNaN(number)) {
+        return
+      }
+      if (this.status) {
+        this.$http.put(`/api/drug/${id}`, {
+          id: this.form.id,
+          name: this.form.name,
+          rename: this.form.rename,
+          size: this.form.size,
+          approvalNumber: this.form.approvalNumber,
+          batchNumber: this.form.batchNumber,
+          position: this.form.position,
+          number: number,
+          unitPrice: this.form.unitPrice,
+          salePrice: this.form.salePrice,
+          promotion: this.form.promotion,
+          bornDate: this.form.bornDate,
+          validPeriod: this.form.validPeriod,
+          deliveryUnit: this.form.deliveryUnit,
+          factory: this.form.factory,
+          type: this.form.type,
+          drugsType: this.form.drugsType,
+          custom: this.form.custom
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
+      } else {
+        this.$http.post('/api/drug', {
+          id: this.form.id,
+          name: this.form.name,
+          rename: this.form.rename,
+          size: this.form.size,
+          approvalNumber: this.form.approvalNumber,
+          batchNumber: this.form.batchNumber,
+          position: this.form.position,
+          number: parseInt(this.form.number) + parseInt(this.stockIn.stockNum),
+          unitPrice: this.form.unitPrice,
+          salePrice: this.form.salePrice,
+          promotion: this.form.promotion,
+          bornDate: this.form.bornDate,
+          validPeriod: this.form.validPeriod,
+          deliveryUnit: this.form.deliveryUnit,
+          factory: this.form.factory,
+          type: this.form.type,
+          drugsType: this.form.drugsType,
+          custom: this.form.custom
+        }).then(res => {
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+      this.$http.post('/api/stockin', {
+        orderNum: this.stockIn.orderNum,
+        storageDate: this.stockIn.storageDate,
+        storageType: this.stockIn.storageType,
+        name: this.form.name,
+        id: this.form.id,
+        rename: this.form.rename,
+        size: this.form.size,
+        approvalNumber: this.form.approvalNumber,
+        batchNumber: this.form.batchNumber,
+        position: this.form.position,
+        stockNum: this.stockIn.stockNum,
+        unitPrice: this.form.unitPrice,
+        bornDate: this.form.bornDate,
+        validPeriod: this.form.validPeriod,
+        deliveryUnit: this.form.deliveryUnit,
+        factory: this.form.factory,
+        type: this.form.type,
+        drugType: this.form.drugType,
+        custom: this.form.custom,
+        certificate: this.stockIn.certificate,
+        quality: this.stockIn.quality,
+        conclusion: this.stockIn.conclusion,
+        checkPerson: this.stockIn.checkPerson,
+        buyPerson: this.stockIn.buyPerson
+      }).then(suc => {
+        console.log(suc)
+      }).catch(rereqq => {
+        console.log(rereqq)
+      })
+    }
+  }
+}
 </script>
 <style>
   .sales .el-table .cell {
@@ -322,7 +321,7 @@ import {mapState} from 'vuex'
   .sales .el-table .cell,.sales .el-table th>div {
     padding:0
   }
-  
+
   .sales .form-condition {
     display: flex;
     flex-direction: row;

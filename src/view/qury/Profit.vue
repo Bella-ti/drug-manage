@@ -73,112 +73,112 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-    export default {
-        data() {
-            return {
-              value: '',
-              currentime: '',
-              record: [{
-                order: '',
-                id: '',
-                name: '',
-                time: '',
-                type: '',
-                size: ''
-              }],
-              dialogVisible:false,
-              form: {
-                value: '',
-                position: '',
-                type: ''
-              },
-              drugs: [],
-              index: '',
-              currentSelection: {},
-              pickerOptions: {
-                disabledDate(time) {
-                  return time.getTime() > Date.now()
-                }
-              },
-            }
-        },
-        computed: {
-            getOutRecord() {
-            this.$http.get('/api/outstock').then((res) => {
-                this.record = res.data
-                for(var i in this.record) {
-                    this.record[i].outTime = this.record[i].outTime.slice(0,10)
-                }
-            })
-            return this.record
-            }
-        },
-        created() {
-            this.getOutRecord
-        },
-        methods: {
-          handlerFetch() {
-            var arr = []
-            if(this.form.value !== '') {
-                 this.$http.get('/api/outstock').then((res) => {
-                     for(var i in res.data) {
-                         if(this.form.value == res.data[i].drugId) {
-                             arr.push(res.data[i])
-                         }
-                     }
-                    this.record = arr
-                })
-                return
-            }
-            if(this.currentime !== '') {
-               this.$http.get('/api/outstock').then((res) => {
-                    const curDate = this.getDateTime(this.currentime)
-                     for(var i in res.data) {
-                         var outTime = res.data[i].outTime.slice(0,10)
-                         if(curDate == outTime) {
-                             arr.push(res.data[i])
-                         }
-                     }
-                    this.record = arr
-                })  
-            }
-          },
-           getDateTime(curdate) {
-              const date = curdate
-              var seperator = '-'
-              var month = date.getMonth() + 1
-              var strDate = date.getDate()
-              if (month >= 1 && month <= 9) {
-                month = '0' + month
-              }
-              if (strDate >= 0 && strDate <= 9) {
-                strDate = '0' + strDate
-              }
-              const currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-              return currentime
-            },
-           // 编辑
-            handleEdit(index,row) {
-              this.dialogVisible = true
-              this.form = JSON.parse(JSON.stringify(row))
-              this.index = index
-            },
-            // 删除
-            handleDelete(e,index,row) {
-                const id = row._id
-                this.$http.delete(`/api/outstock/${id}`,{}).then(() => {
-                    this.getOutRecord
-                })
-            },
-            // 确认修改
-            addCompanyTrue () {
-              this.dialogVisible = false
-              this.record[this.index] = JSON.parse(JSON.stringify(this.form))
-              return this.record
-            }
+import { mapState } from 'vuex'
+export default {
+  data() {
+    return {
+      value: '',
+      currentime: '',
+      record: [{
+        order: '',
+        id: '',
+        name: '',
+        time: '',
+        type: '',
+        size: ''
+      }],
+      dialogVisible: false,
+      form: {
+        value: '',
+        position: '',
+        type: ''
+      },
+      drugs: [],
+      index: '',
+      currentSelection: {},
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() > Date.now()
         }
+      }
     }
+  },
+  computed: {
+    getOutRecord() {
+      this.$http.get('/api/outstock').then((res) => {
+        this.record = res.data
+        for (var i in this.record) {
+          this.record[i].outTime = this.record[i].outTime.slice(0, 10)
+        }
+      })
+      return this.record
+    }
+  },
+  created() {
+    this.getOutRecord
+  },
+  methods: {
+    handlerFetch() {
+      var arr = []
+      if (this.form.value !== '') {
+        this.$http.get('/api/outstock').then((res) => {
+          for (var i in res.data) {
+            if (this.form.value == res.data[i].drugId) {
+              arr.push(res.data[i])
+            }
+          }
+          this.record = arr
+        })
+        return
+      }
+      if (this.currentime !== '') {
+        this.$http.get('/api/outstock').then((res) => {
+          const curDate = this.getDateTime(this.currentime)
+          for (var i in res.data) {
+            var outTime = res.data[i].outTime.slice(0, 10)
+            if (curDate == outTime) {
+              arr.push(res.data[i])
+            }
+          }
+          this.record = arr
+        })
+      }
+    },
+    getDateTime(curdate) {
+      const date = curdate
+      var seperator = '-'
+      var month = date.getMonth() + 1
+      var strDate = date.getDate()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      const currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+      return currentime
+    },
+    // 编辑
+    handleEdit(index, row) {
+      this.dialogVisible = true
+      this.form = JSON.parse(JSON.stringify(row))
+      this.index = index
+    },
+    // 删除
+    handleDelete(e, index, row) {
+      const id = row._id
+      this.$http.delete(`/api/outstock/${id}`, {}).then(() => {
+        this.getOutRecord
+      })
+    },
+    // 确认修改
+    addCompanyTrue() {
+      this.dialogVisible = false
+      this.record[this.index] = JSON.parse(JSON.stringify(this.form))
+      return this.record
+    }
+  }
+}
 </script>
 <style>
 .table .form-condition {

@@ -1,17 +1,17 @@
-import Vue from 'vue';
-import App from './App';
+import Vue from 'vue'
+import App from './App'
 import store from './store'
-import router from './router';
-import ElementUI from 'element-ui';
-import './assest/static/css/theme-green/index.css';       // 浅绿色主题
-const VueResource = require('vue-resource');
+import router from './router'
+import ElementUI from 'element-ui'
+import './assest/static/css/theme-green/index.css' // 浅绿色主题
+const VueResource = require('vue-resource')
 
 const axios = require('axios')
 Vue.prototype.$http = Vue.http = axios
-Vue.use(VueResource);
-Vue.use(ElementUI);
+Vue.use(VueResource)
+Vue.use(ElementUI)
 new Vue({
-    router,
-    store,
-    ...App
-}).$mount('#app');
+  router,
+  store,
+  ...App
+}).$mount('#app')

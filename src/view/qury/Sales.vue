@@ -34,86 +34,86 @@
 <script>
 import { mapState } from 'vuex'
 export default {
-    data() {
-        return {
-            currentime: '',
-            pickerOptions: {
-                disabledDate(time) {
-                    return time.getTime() >= Date.now()
-                }
-            },
-            record: [],
-            form: {
-                value: '',
-                position: '',
-                type: ''
-            },
-            drugs: [],
-            index: ''
+  data() {
+    return {
+      currentime: '',
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() >= Date.now()
         }
-    },
-    computed: {
-        getSales() {
-             this.$http.get(`/api/drugsale`).then(res => {
-                 for(var i in res.data){
-                const arr = []
-                     res.data[i].saleTime = res.data[i].saleTime.slice(0,10)
-                     for(var j in res.data[i].saleInfo) {
-                         arr.push(res.data[i].saleInfo[j].name)
-                     }
-                     res.data[i].saleDrug = arr.join(',')
-                 }
-                 this.record = res.data
-                 return this.record
-             }).catch(err => {
-                this.$message.error('获取信息失败！')
-             })
-        }
-    },
-    created() {
-        this.getSales
-    },
-    methods: {
-        handlerFetch() {
-            if(this.currentime == '' || this.currentime == undefined) {
-                this.getSales
-                return
-            }
-            var arr = []
-            const currentime = this.getDateTime(this.currentime)
-            for(var i in this.record) {
-                if(currentime == this.record[i].saleTime) {
-                    arr.push(this.record[i])
-                }
-            }
-            this.record = arr
-        },
-         getDateTime (curDate) {
-                const date = curDate
-                var seperator = '-'
-                var month = date.getMonth() + 1
-                var strDate = date.getDate()
-                if (month >= 1 && month <= 9) {
-                month = '0' + month
-                }
-                if (strDate >= 0 && strDate <= 9) {
-                strDate = '0' + strDate
-                }
-                var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-                return currentime
-            },
-        
-        // 删除
-        handleDelete(row) {
-            const id = row._id
-            this.$http.delete(`/api/drugsale/${id}`,{}).then(res => {
-                this.getSales
-                this.$message.success('删除成功！')
-            }).catch(err => {
-                 this.$message.success('删除失败！')
-            })
-        }
+      },
+      record: [],
+      form: {
+        value: '',
+        position: '',
+        type: ''
+      },
+      drugs: [],
+      index: ''
     }
+  },
+  computed: {
+    getSales() {
+      this.$http.get(`/api/drugsale`).then(res => {
+        for (var i in res.data) {
+          const arr = []
+          res.data[i].saleTime = res.data[i].saleTime.slice(0, 10)
+          for (var j in res.data[i].saleInfo) {
+            arr.push(res.data[i].saleInfo[j].name)
+          }
+          res.data[i].saleDrug = arr.join(',')
+        }
+        this.record = res.data
+        return this.record
+      }).catch(err => {
+        this.$message.error('获取信息失败！')
+      })
+    }
+  },
+  created() {
+    this.getSales
+  },
+  methods: {
+    handlerFetch() {
+      if (this.currentime == '' || this.currentime == undefined) {
+        this.getSales
+        return
+      }
+      var arr = []
+      const currentime = this.getDateTime(this.currentime)
+      for (var i in this.record) {
+        if (currentime == this.record[i].saleTime) {
+          arr.push(this.record[i])
+        }
+      }
+      this.record = arr
+    },
+    getDateTime(curDate) {
+      const date = curDate
+      var seperator = '-'
+      var month = date.getMonth() + 1
+      var strDate = date.getDate()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+      return currentime
+    },
+
+    // 删除
+    handleDelete(row) {
+      const id = row._id
+      this.$http.delete(`/api/drugsale/${id}`, {}).then(res => {
+        this.getSales
+        this.$message.success('删除成功！')
+      }).catch(err => {
+        this.$message.success('删除失败！')
+      })
+    }
+  }
 }
 </script>
 <style>

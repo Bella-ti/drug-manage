@@ -65,7 +65,7 @@ export default {
         information: {
           phone: 0,
           address: '',
-          sayAs:''
+          sayAs: ''
         },
         array: [],
         isAdmin: true

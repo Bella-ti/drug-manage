@@ -31,68 +31,68 @@
                 </el-form-item>
             </el-form>
         </div>
-    
+
     </div>
 </template>
 
 <script>
 export default {
-    computed: {
-        curLogin() {
-            let curUser = localStorage.getItem('curLogin')
-            curUser = JSON.parse(curUser)
-            switch (curUser.type) {
-                case 1:
-                    curUser.type = '管理员'
-                    break
-                case 2:
-                    curUser.type = '仓库管理员'
-                    break
-                case 3:
-                    curUser.type = '操作员'
-                    break
-                default:
-                    curUser.type = '非工作人员'
-            }
-            return curUser
-        }
-    },
-    methods: {
-        onSubmit() {
-            let id = this.curLogin._id
-            switch (this.curLogin.type) {
-                case '管理员':
-                    this.curLogin.type = 1
-                    break
-                case '仓库管理员':
-                    this.curLogin.type = 2
-                    break
-                case '操作员':
-                    this.curLogin.type = 3
-                    break
-                default:
-                    this.curLogin.type = ''
-            }
-            if (this.curLogin.type === '') {
-                return
-            }
-            this.$http.put(`/api/user/${id}`, {
-                order: this.curLogin.order,
-                username: this.curLogin.username,
-                password: this.curLogin.password,
-                type: this.curLogin.type,
-                information: {
-                    address: this.curLogin.information.address,
-                    phone: this.curLogin.information.phone,
-                    sayAs: this.curLogin.information.sayAs
-                }
-            }).then(() => {
-                localStorage.setItem('curLogin', JSON.stringify(this.curLogin))
-                this.$message.success('修改成功！')
-            }).catch(() => {
-                this.$message.error('修改出错！')
-            })
-        }
+  computed: {
+    curLogin() {
+      let curUser = localStorage.getItem('curLogin')
+      curUser = JSON.parse(curUser)
+      switch (curUser.type) {
+        case 1:
+          curUser.type = '管理员'
+          break
+        case 2:
+          curUser.type = '仓库管理员'
+          break
+        case 3:
+          curUser.type = '操作员'
+          break
+        default:
+          curUser.type = '非工作人员'
+      }
+      return curUser
     }
+  },
+  methods: {
+    onSubmit() {
+      let id = this.curLogin._id
+      switch (this.curLogin.type) {
+        case '管理员':
+          this.curLogin.type = 1
+          break
+        case '仓库管理员':
+          this.curLogin.type = 2
+          break
+        case '操作员':
+          this.curLogin.type = 3
+          break
+        default:
+          this.curLogin.type = ''
+      }
+      if (this.curLogin.type === '') {
+        return
+      }
+      this.$http.put(`/api/user/${id}`, {
+        order: this.curLogin.order,
+        username: this.curLogin.username,
+        password: this.curLogin.password,
+        type: this.curLogin.type,
+        information: {
+          address: this.curLogin.information.address,
+          phone: this.curLogin.information.phone,
+          sayAs: this.curLogin.information.sayAs
+        }
+      }).then(() => {
+        localStorage.setItem('curLogin', JSON.stringify(this.curLogin))
+        this.$message.success('修改成功！')
+      }).catch(() => {
+        this.$message.error('修改出错！')
+      })
+    }
+  }
 }
 </script>

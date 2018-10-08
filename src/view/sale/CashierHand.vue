@@ -33,25 +33,25 @@
 </template>
 
 <script>
-    export default{
-      data() {
-        return {
-          form: {},
-          handleInfo: {
-            order: '',
-            name: '',
-            type: ''
-          },
-          dialogVisible: false
-        }
+export default{
+  data() {
+    return {
+      form: {},
+      handleInfo: {
+        order: '',
+        name: '',
+        type: ''
       },
-      methods: {
-        dialoggStatus() {
-          this.dialogVisible = true
-        },
-        handleChange() {
-          this.dialogVisible = false
-        }
-      }
+      dialogVisible: false
     }
+  },
+  methods: {
+    dialoggStatus() {
+      this.dialogVisible = true
+    },
+    handleChange() {
+      this.dialogVisible = false
+    }
+  }
+}
 </script>

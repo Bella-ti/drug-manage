@@ -46,21 +46,21 @@
 </template>
 
 <script>
-    export default {
-        data() {
-            return{
-                curUser:{}
-            }
-        },
-        computed:{
-            onRoutes(){
-                return this.$route.path.replace('/','');
-            }
-        },
-        created() {
-            this.curUser = JSON.parse(localStorage.getItem('curLogin'))
-        },
+export default {
+  data() {
+    return {
+      curUser: {}
     }
+  },
+  computed: {
+    onRoutes() {
+      return this.$route.path.replace('/', '')
+    }
+  },
+  created() {
+    this.curUser = JSON.parse(localStorage.getItem('curLogin'))
+  }
+}
 </script>
 
 <style>

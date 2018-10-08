@@ -17,26 +17,26 @@
 </template>
 <script>
 export default {
-    data() {
-        return {
-            name: 'none'
-        }
-    },
-    computed: {
-        username() {
-            let userinfo = localStorage.getItem('curLogin')
-            userinfo = JSON.parse(userinfo)
-            return userinfo ? userinfo.username : this.name;
-        }
-    },
-    methods: {
-        handleCommand(command) {
-            if (command == 'loginout') {
-                localStorage.removeItem('curLogin')
-                this.$router.push('/login');
-            }
-        }
+  data() {
+    return {
+      name: 'none'
     }
+  },
+  computed: {
+    username() {
+      let userinfo = localStorage.getItem('curLogin')
+      userinfo = JSON.parse(userinfo)
+      return userinfo ? userinfo.username : this.name
+    }
+  },
+  methods: {
+    handleCommand(command) {
+      if (command == 'loginout') {
+        localStorage.removeItem('curLogin')
+        this.$router.push('/login')
+      }
+    }
+  }
 }
 </script>
 <style scoped>

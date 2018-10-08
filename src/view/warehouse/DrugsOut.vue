@@ -6,7 +6,7 @@
                 <el-breadcrumb-item>药品出库</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        
+
           <el-table :data="drugs" border style="width: 100%" @current-change="handleCurrentChange">
             <el-table-column prop="id" label="药品ID" width='120px'></el-table-column>
             <el-table-column prop="name" label="药品名称" width='140px'></el-table-column>
@@ -44,10 +44,10 @@
               </el-form-item>
               <el-form-item label="出库数量">
                   <el-input class='query' v-model="form.outNumber"></el-input>
-              </el-form-item> 
+              </el-form-item>
               <el-form-item label="操作人">
                 <el-input class='query' v-model="newInfo.operator"></el-input>
-              </el-form-item> 
+              </el-form-item>
             </el-form>
             <span slot="footer"
                   class="dialog-footer">
@@ -59,133 +59,133 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-    export default {
-        data() {
-            return {
-              value: '',
-              pickerOptions: {
-                disabledDate(time) {
-                  return time.getTime() < Date.now() - 8.64e7;
-                }
-              },
-              operator: '',
-              dialogVisible:false,
-              newInfo: {},
-              form: {
-                outNum: '',
-                name: '',
-                outType: '',
-                batchNumber: '',
-                factory: '',
-                number: '',
-                operator:''
-              },
-              drugs: [],
-              currentSelection: {}
-            }
-        },
-        computed: {
-           getAllDrugs() {
-              this.$http.get('/api/drug').then((res) => {
-                  this.drugs = res.data
-              })
-              return this.drugs
-            }
-        },
-        created() {
-            this.getAllDrugs
-        },
-        methods: {
-            getOrder() {
-              const r1=parseInt(Math.random()*(10))
-              const r2=parseInt(Math.random()*(10))
-              const now = (new Date()).valueOf()
-              const paymentID =String(r1)+String(r2)+String(now)
-              this.newInfo.outNum = paymentID
-            },
-           getDateTime() {
-              const date = new Date()
-              var seperator = '/'
-              var month = date.getMonth() + 1
-              var strDate = date.getDate()
-              if (month >= 1 && month <= 9) {
-                month = '0' + month
-              }
-              if (strDate >= 0 && strDate <= 9) {
-                strDate = '0' + strDate
-              }
-              
-              this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-              return this.currentime
-            },
-          addToTable() {
-            const form = this.form
-            const id = form._id
-            console.log(Number(form.number),Number(form.outNumber))
-              const number = Number(form.number)-Number(form.outNumber)
-              if(isNaN(number)) {
-                this.$message.success('非法数字')
-                return
-              }
-              if(number<0) {
-                this.$message.success('库存不足')
-                return
-              }
-            this.$http.put(`/api/drug/${id}`,{
-                    id: form.id,
-                    name: form.name,
-                    rename: form.rename,
-                    size: form.size,
-                    approvalNumber: form.approvalNumber,
-                    batchNumber: form.batchNumber,
-                    position: form.position,
-                    number: number,
-                    unitPrice: form.unitPrice,
-                    salePrice: form.salePrice,
-                    promotion: form.promotion,
-                    bornDate: form.bornDate,
-                    validPeriod: form.validPeriod,
-                    deliveryUnit: form.deliveryUnit,
-                    factory: form.factory,
-                    type: form.type,
-                    drugsType: form.drugsType,
-                    custom: form.custom
-                }).then(res => {
-                  console.log(res)
-                  this.getAllDrugs
-                }).catch(err => {
-                  console.log(err)
-                })
-            const time = this.getDateTime()
-            console.log(form.name)
-            this.$http.post(`/api/outstock`, {
-              outNum: this.newInfo.outNum,
-              name: form.name,
-              drugId: form.id,
-              outType: this.newInfo.outType,
-              batchNumber: form.batchNumber,
-              factory: form.factory,
-              totalNum: Number(form.number),
-              operator: this.newInfo.operator,
-              guige: form.size,
-              saleUnitPrice: form.unitPrice,
-              validDate: form.validPeriod,
-              outTime: time
-            }).then(res => {
-                this.dialogVisible = false
-                console.log(form.name)
-            }).catch(err => {
-              console.log(err)
-            })
-          },
-          handleCurrentChange(val){
-            this.dialogVisible = true
-            this.form = val
-            this.getOrder()
-          }
+import { mapState } from 'vuex'
+export default {
+  data() {
+    return {
+      value: '',
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() < Date.now() - 8.64e7
         }
+      },
+      operator: '',
+      dialogVisible: false,
+      newInfo: {},
+      form: {
+        outNum: '',
+        name: '',
+        outType: '',
+        batchNumber: '',
+        factory: '',
+        number: '',
+        operator: ''
+      },
+      drugs: [],
+      currentSelection: {}
     }
+  },
+  computed: {
+    getAllDrugs() {
+      this.$http.get('/api/drug').then((res) => {
+        this.drugs = res.data
+      })
+      return this.drugs
+    }
+  },
+  created() {
+    this.getAllDrugs
+  },
+  methods: {
+    getOrder() {
+      const r1 = parseInt(Math.random() * (10))
+      const r2 = parseInt(Math.random() * (10))
+      const now = (new Date()).valueOf()
+      const paymentID = String(r1) + String(r2) + String(now)
+      this.newInfo.outNum = paymentID
+    },
+    getDateTime() {
+      const date = new Date()
+      var seperator = '/'
+      var month = date.getMonth() + 1
+      var strDate = date.getDate()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+
+      this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+      return this.currentime
+    },
+    addToTable() {
+      const form = this.form
+      const id = form._id
+      console.log(Number(form.number), Number(form.outNumber))
+      const number = Number(form.number) - Number(form.outNumber)
+      if (isNaN(number)) {
+        this.$message.success('非法数字')
+        return
+      }
+      if (number < 0) {
+        this.$message.success('库存不足')
+        return
+      }
+      this.$http.put(`/api/drug/${id}`, {
+        id: form.id,
+        name: form.name,
+        rename: form.rename,
+        size: form.size,
+        approvalNumber: form.approvalNumber,
+        batchNumber: form.batchNumber,
+        position: form.position,
+        number: number,
+        unitPrice: form.unitPrice,
+        salePrice: form.salePrice,
+        promotion: form.promotion,
+        bornDate: form.bornDate,
+        validPeriod: form.validPeriod,
+        deliveryUnit: form.deliveryUnit,
+        factory: form.factory,
+        type: form.type,
+        drugsType: form.drugsType,
+        custom: form.custom
+      }).then(res => {
+        console.log(res)
+        this.getAllDrugs
+      }).catch(err => {
+        console.log(err)
+      })
+      const time = this.getDateTime()
+      console.log(form.name)
+      this.$http.post(`/api/outstock`, {
+        outNum: this.newInfo.outNum,
+        name: form.name,
+        drugId: form.id,
+        outType: this.newInfo.outType,
+        batchNumber: form.batchNumber,
+        factory: form.factory,
+        totalNum: Number(form.number),
+        operator: this.newInfo.operator,
+        guige: form.size,
+        saleUnitPrice: form.unitPrice,
+        validDate: form.validPeriod,
+        outTime: time
+      }).then(res => {
+        this.dialogVisible = false
+        console.log(form.name)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    handleCurrentChange(val) {
+      this.dialogVisible = true
+      this.form = val
+      this.getOrder()
+    }
+  }
+}
 </script>
 <style>
   .sales .el-table .cell {
@@ -195,11 +195,11 @@ import {mapState} from 'vuex'
   .sales .el-table .cell,.sales .el-table th>div {
     padding:0
   }
-  
+
   .sales .el-input__inner {
     height: 30px
   }
-  
+
    .sales .el-form-item {
      width:300px;
      float:left

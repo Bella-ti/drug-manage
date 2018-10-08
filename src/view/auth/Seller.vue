@@ -6,7 +6,7 @@
                 <el-breadcrumb-item>销售员管理</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-    
+
         <el-table :data="userList" border style="width: 100%">
             <el-table-column prop='order' label="编号" width="150">
             </el-table-column>
@@ -58,140 +58,140 @@
 
 <script>
 export default {
-    data() {
-        return {
-            dialogVisible: false,
-            userList: [
-            ],
-            handleInfo: {
-                info: {}
-            },
-            editOrder: 0,
-            cancleInfo: {},
-            isAdd: false,
-            value: '',
-            options: [
-                {
-                    value: '1',
-                    label: '管理员',
-                },
-                {
-                    value: '2',
-                    label: '销售员',
-                },
-                {
-                    value: '3',
-                    label: '仓库管理员'
-                }
-            ]
-        }
-    },
-    watch: {
-        sliderPos: (val, oldVal) => {
-            this.userInfo = val
-        }
-    },
-    created() {
-        this.getAllUser
-    },
-    computed: {
-        getAllUser() {
-            this.$http.get('/api/user').then((res) => {
-                this.userList = res.data
-                for (var i in this.userList) {
-                    this.userList[i].type = this.switchType(this.userList[i])
-                }
-            })
-            return this.userList
-        }
-    },
-    methods: {
-        switchType(info) {
-            switch (info.type) {
-                case 1:
-                    info.type = '管理员'
-                    break
-                case 2:
-                    info.type = '仓库管理员'
-                    break
-                case 3:
-                    info.type = '操作员'
-                    break
-                default:
-                    info.type = ''
-            }
-            return info.type
+  data() {
+    return {
+      dialogVisible: false,
+      userList: [
+      ],
+      handleInfo: {
+        info: {}
+      },
+      editOrder: 0,
+      cancleInfo: {},
+      isAdd: false,
+      value: '',
+      options: [
+        {
+          value: '1',
+          label: '管理员'
         },
-        // 删除
-        handleDelete(e, index, row) {
-            const id = row._id
-            this.$http.delete(`/api/user/${id}`).then(() => {
-                this.getAllUser
-            })
+        {
+          value: '2',
+          label: '销售员'
         },
-        // 确定修改
-        handleChange() {
-            let id = this.handleInfo._id
-            switch (this.handleInfo.type) {
-                case '管理员':
-                    this.handleInfo.type = 1
-                    break
-                case '仓库管理员':
-                    this.handleInfo.type = 2
-                    break
-                case '操作员':
-                    this.handleInfo.type = 3
-                    break
-                default:
-                    this.handleInfo.type = ''
-            }
-            this.dialogVisible = false
-            this.$http.put(`/api/user/${id}`, {
-                order: this.handleInfo.order,
-                username: this.handleInfo.username,
-                password: this.handleInfo.password,
-                type: this.handleInfo.type,
-                info: {
-                    address: this.handleInfo.info.address,
-                    phone: this.handleInfo.info.phone,
-                    sayAs: this.handleInfo.info.sayAs
-                },
-                isAdmin: false
-            }).then((res) => {
-                console.log(res)
-                this.getAllUser
-            }).catch((err) => {
-                console.log(err)
-            })
-        },
-        cancelChange() {
-            this.dialogVisible = false
-            this.getAllUser
-        },
-        addUser() {
-            this.$http.post('/api/user', {
-                order: this.handleInfo.order,
-                username: this.handleInfo.username,
-                password: 123456,
-                type: this.value,
-                info: {
-                    address: '',
-                    phone: this.handleInfo.info.phone,
-                    sayAs: this.handleInfo.info.sayAs
-                }
-            }).then((res) => {
-                console.log(res)
-                this.isAdd = false
-                this.dialogVisible = false
-                this.getAllUser()
-            }).catch((err) => {
-                console.log(err)
-                this.handleInfo = {
-                    info: {}
-                }
-            })
+        {
+          value: '3',
+          label: '仓库管理员'
         }
+      ]
     }
+  },
+  watch: {
+    sliderPos: (val, oldVal) => {
+      this.userInfo = val
+    }
+  },
+  created() {
+    this.getAllUser
+  },
+  computed: {
+    getAllUser() {
+      this.$http.get('/api/user').then((res) => {
+        this.userList = res.data
+        for (var i in this.userList) {
+          this.userList[i].type = this.switchType(this.userList[i])
+        }
+      })
+      return this.userList
+    }
+  },
+  methods: {
+    switchType(info) {
+      switch (info.type) {
+        case 1:
+          info.type = '管理员'
+          break
+        case 2:
+          info.type = '仓库管理员'
+          break
+        case 3:
+          info.type = '操作员'
+          break
+        default:
+          info.type = ''
+      }
+      return info.type
+    },
+    // 删除
+    handleDelete(e, index, row) {
+      const id = row._id
+      this.$http.delete(`/api/user/${id}`).then(() => {
+        this.getAllUser
+      })
+    },
+    // 确定修改
+    handleChange() {
+      let id = this.handleInfo._id
+      switch (this.handleInfo.type) {
+        case '管理员':
+          this.handleInfo.type = 1
+          break
+        case '仓库管理员':
+          this.handleInfo.type = 2
+          break
+        case '操作员':
+          this.handleInfo.type = 3
+          break
+        default:
+          this.handleInfo.type = ''
+      }
+      this.dialogVisible = false
+      this.$http.put(`/api/user/${id}`, {
+        order: this.handleInfo.order,
+        username: this.handleInfo.username,
+        password: this.handleInfo.password,
+        type: this.handleInfo.type,
+        info: {
+          address: this.handleInfo.info.address,
+          phone: this.handleInfo.info.phone,
+          sayAs: this.handleInfo.info.sayAs
+        },
+        isAdmin: false
+      }).then((res) => {
+        console.log(res)
+        this.getAllUser
+      }).catch((err) => {
+        console.log(err)
+      })
+    },
+    cancelChange() {
+      this.dialogVisible = false
+      this.getAllUser
+    },
+    addUser() {
+      this.$http.post('/api/user', {
+        order: this.handleInfo.order,
+        username: this.handleInfo.username,
+        password: 123456,
+        type: this.value,
+        info: {
+          address: '',
+          phone: this.handleInfo.info.phone,
+          sayAs: this.handleInfo.info.sayAs
+        }
+      }).then((res) => {
+        console.log(res)
+        this.isAdd = false
+        this.dialogVisible = false
+        this.getAllUser()
+      }).catch((err) => {
+        console.log(err)
+        this.handleInfo = {
+          info: {}
+        }
+      })
+    }
+  }
 }
 </script>
 <style>

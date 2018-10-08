@@ -133,17 +133,17 @@ export default {
     // 查询
     addToTable() {
       const arr = []
-       this.$http.get('/api/manufacturer').then((res) => {
-         if(this.form.buisNum == '') {
-           this.company = res.data
-           return
-         }
-         for(var i=0;i<res.data.length;i++) {
-           if(res.data[i].id == this.form.buisNum) {
-             arr.push(res.data[i])
-           }
-         }
-          this.company = arr
+      this.$http.get('/api/manufacturer').then((res) => {
+        if (this.form.buisNum == '') {
+          this.company = res.data
+          return
+        }
+        for (var i = 0; i < res.data.length; i++) {
+          if (res.data[i].id == this.form.buisNum) {
+            arr.push(res.data[i])
+          }
+        }
+        this.company = arr
       }).catch((error) => {
         console.log(error)
       })
@@ -204,9 +204,9 @@ export default {
       this.dialogVisible = true
       this.isChange = true
       this.tips = ''
-       const obj = JSON.parse(JSON.stringify(row))
-      for(var i in obj) {
-        if(obj[i] == undefined) {
+      const obj = JSON.parse(JSON.stringify(row))
+      for (var i in obj) {
+        if (obj[i] == undefined) {
           obj[i] = ''
         }
       }

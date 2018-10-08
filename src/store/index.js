@@ -10,7 +10,6 @@ import system from './modules/system'
 import tables from './modules/tables'
 import warehouse from './modules/warehouse'
 
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({

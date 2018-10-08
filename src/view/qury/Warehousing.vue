@@ -68,136 +68,136 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-    export default {
-        data() {
-            return {
-              value: '',
-              currentime: '',
-               pickerOptions: {
-                disabledDate(time) {
-                  return time.getTime() >= Date.now() - 8.64e7;
-                }
-              },
-              record: [{
-                order: '',
-                id: '',
-                name: '',
-                time: '',
-                type: '',
-                size: ''
-              }],
-              dialogVisible:false,
-              form: {
-                orderNum: '',
-                id: '',
-                storageDate: ''
-              },
-              index: '',
-              currentSelection: {}
-            }
-        },
-        created() {
-            this.getInStock
-        },
-        computed: {
-            getInStock() {
-                this.$http.get('/api/stockin').then(res => {
-                    this.record = res.data
-                })
-                    return this.record
-            }
-        },
-        create: {
-           getDateTime() {
-              const date = new Date()
-              var seperator = '/'
-              var month = date.getMonth() + 1
-              var strDate = date.getDate()
-              if (month >= 1 && month <= 9) {
-                month = '0' + month
-              }
-              if (strDate >= 0 && strDate <= 9) {
-                strDate = '0' + strDate
-              }
-              this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-              return this.currentime
-            }
-        },
-        methods: {
-          handlerFetch() {
-            const arr = []
-            this.$http.get('/api/stockin').then(res => {
-                for(var i in res.data) {
-                    if(this.form.orderNum){
-                        if(this.form.orderNum == res.data[i].orderNum) {
-                            arr.push(res.data[i])
-                        }
-                    }
-                    if(this.form.id){
-                        if(this.form.id == res.data[i].id) {
-                            arr.push(res.data[i])
-                        }
-                    }
-                    if(this.form.storageDate){
-                        if(this.form.storageDate == res.data[i].storageDate) {
-                            arr.push(res.data[i])
-                        }
-                    }
-                }
-                this.record = arr
-            })
-          },
-           // 编辑
-            handleEdit(index,row) {
-              this.dialogVisible = true
-              this.form = JSON.parse(JSON.stringify(row))
-              this.index = index
-            },
-            // 删除
-            handleDelete(row) {
-                const id = row._id
-                this.$http.delete(`/api/stockin/${id}`,{}).then((res) => {
-                  this.getInStock
-                })
-            },
-            addCompanyTrue () {
-                const id = this.form._id 
-                this.$http.put(`/api/stockin/${id}`, {
-                    orderNum: this.form.orderNum,
-                    storageDate: this.form.storageDate,
-                    storageType: this.form.storageType,
-                    name: this.form.name,
-                    id: this.form.id,
-                    rename: this.form.rename,
-                    size: this.form.size,
-                    approvalNumber: this.form.approvalNumber,
-                    batchNumber: this.form.batchNumber,
-                    position: this.form.position,
-                    stockNum: this.form.stockNum,
-                    unitPrice: this.form.unitPrice,
-                    bornDate: this.form.bornDate,
-                    validPeriod: this.form.validPeriod,
-                    deliveryUnit: this.form.deliveryUnit,
-                    factory: this.form.factory,
-                    type: this.form.type,
-                    drugType: this.form.drugType,
-                    custom: this.form.custom,
-                    certificate: this.form.certificate,
-                    quality: this.form.quality,
-                    conclusion: this.form.conclusion,
-                    checkPerson: this.form.checkPerson,
-                    buyPerson: this.form.buyPerson
-                  }).then(suc => {
-                    console.log(suc)
-                    this.getInStock
-              this.dialogVisible = false
-                  }).catch(rereqq => {
-                    console.log(rereqq)
-                  })
-            }
+import { mapState } from 'vuex'
+export default {
+  data() {
+    return {
+      value: '',
+      currentime: '',
+      pickerOptions: {
+        disabledDate(time) {
+          return time.getTime() >= Date.now() - 8.64e7
         }
+      },
+      record: [{
+        order: '',
+        id: '',
+        name: '',
+        time: '',
+        type: '',
+        size: ''
+      }],
+      dialogVisible: false,
+      form: {
+        orderNum: '',
+        id: '',
+        storageDate: ''
+      },
+      index: '',
+      currentSelection: {}
     }
+  },
+  created() {
+    this.getInStock
+  },
+  computed: {
+    getInStock() {
+      this.$http.get('/api/stockin').then(res => {
+        this.record = res.data
+      })
+      return this.record
+    }
+  },
+  create: {
+    getDateTime() {
+      const date = new Date()
+      var seperator = '/'
+      var month = date.getMonth() + 1
+      var strDate = date.getDate()
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
+      }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      this.currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
+      return this.currentime
+    }
+  },
+  methods: {
+    handlerFetch() {
+      const arr = []
+      this.$http.get('/api/stockin').then(res => {
+        for (var i in res.data) {
+          if (this.form.orderNum) {
+            if (this.form.orderNum == res.data[i].orderNum) {
+              arr.push(res.data[i])
+            }
+          }
+          if (this.form.id) {
+            if (this.form.id == res.data[i].id) {
+              arr.push(res.data[i])
+            }
+          }
+          if (this.form.storageDate) {
+            if (this.form.storageDate == res.data[i].storageDate) {
+              arr.push(res.data[i])
+            }
+          }
+        }
+        this.record = arr
+      })
+    },
+    // 编辑
+    handleEdit(index, row) {
+      this.dialogVisible = true
+      this.form = JSON.parse(JSON.stringify(row))
+      this.index = index
+    },
+    // 删除
+    handleDelete(row) {
+      const id = row._id
+      this.$http.delete(`/api/stockin/${id}`, {}).then((res) => {
+        this.getInStock
+      })
+    },
+    addCompanyTrue() {
+      const id = this.form._id
+      this.$http.put(`/api/stockin/${id}`, {
+        orderNum: this.form.orderNum,
+        storageDate: this.form.storageDate,
+        storageType: this.form.storageType,
+        name: this.form.name,
+        id: this.form.id,
+        rename: this.form.rename,
+        size: this.form.size,
+        approvalNumber: this.form.approvalNumber,
+        batchNumber: this.form.batchNumber,
+        position: this.form.position,
+        stockNum: this.form.stockNum,
+        unitPrice: this.form.unitPrice,
+        bornDate: this.form.bornDate,
+        validPeriod: this.form.validPeriod,
+        deliveryUnit: this.form.deliveryUnit,
+        factory: this.form.factory,
+        type: this.form.type,
+        drugType: this.form.drugType,
+        custom: this.form.custom,
+        certificate: this.form.certificate,
+        quality: this.form.quality,
+        conclusion: this.form.conclusion,
+        checkPerson: this.form.checkPerson,
+        buyPerson: this.form.buyPerson
+      }).then(suc => {
+        console.log(suc)
+        this.getInStock
+        this.dialogVisible = false
+      }).catch(rereqq => {
+        console.log(rereqq)
+      })
+    }
+  }
+}
 </script>
 <style>
 .el-button--primary {
