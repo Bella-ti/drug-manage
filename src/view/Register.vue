@@ -34,11 +34,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
       ruleForm: {}
     }
+  },
+  computed: {
+    ...mapState({
+        userList: ({ auth }) => auth.userList
+    })
   },
   methods: {
     getDate() {
@@ -55,8 +61,18 @@ export default {
       return currendate
     },
     submitForm() {
+      let tag = 0
+      for (let i = 0; i < this.userList.length; i++) {
+        if (this.userList[i].username === this.ruleForm.username) {
+          tag += 1
+          break
+        }
+      }
+      if (tag) {
+        this.$message.error('该用户已注册！')
+       return
+      }
       const dateTime = this.getDate()
-      console.log(dateTime)
       this.$http.post('/api/user', {
         order: dateTime,
         username: this.ruleForm.username,
@@ -67,13 +83,12 @@ export default {
           address: '',
           sayAs: ''
         },
-        array: [],
         isAdmin: true
       }).then((res) => {
-        console.log(res)
         this.$router.push('/login')
       }).catch((err) => {
         console.log(err)
+        this.$message.error('注册失败！')
       })
     }
   }

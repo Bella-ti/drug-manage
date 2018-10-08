@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
-
+// 获取所有用户信息
 router.get('/user', (req, res) => {
   User.find({})
     .sort({ update_at: -1 })
@@ -12,7 +12,7 @@ router.get('/user', (req, res) => {
       res.json(err)
     })
 })
-
+// 获取单个用户信息
 router.get('/user/:id', (req, res) => {
   User.findById(req.params.id)
     .then(user => {
@@ -32,10 +32,9 @@ router.post('/user', (req, res) => {
     }
   })
 })
-
+// 修改用户信息
 router.put('/user/:id', (req, res) => {
   console.log(req.body.isAdmin)
-  if (req.body.info == undefined) {
     User.findOneAndUpdate({ _id: req.params.id }
       , {
         $set: {
@@ -52,36 +51,13 @@ router.put('/user/:id', (req, res) => {
       })
       .then(user => res.json(user))
       .catch(err => res.json(err))
-    return
-  }
-  User.findOneAndUpdate({ _id: req.params.id }
-    , {
-      $set: {
-        order: req.body.order,
-        username: req.body.username,
-        password: req.body.password,
-        type: req.body.type,
-        info: {
-          address: req.body.info.address,
-          phone: req.body.info.phone,
-          sayAs: req.body.info.sayAs
-        },
-        isAdmin: req.body.isAdmin,
-        information: req.body.information,
-        array: req.body.array
-      }
-    }, {
-      new: true
-    })
-    .then(user => res.json(user))
-    .catch(err => res.json(err))
 })
-
+// 删除一个用户
 router.delete('/user/:id', (req, res) => {
   User.findOneAndRemove({
     _id: req.params.id
   })
-    .then(user => res.send(`${user.name}删除成功`))
+    .then(user => res.send(`${user.name}删除成功!`))
     .catch(err => res.json(err))
 })
 

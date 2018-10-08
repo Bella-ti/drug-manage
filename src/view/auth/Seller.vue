@@ -14,9 +14,9 @@
             </el-table-column>
             <el-table-column prop='type' label="职务" width="180">
             </el-table-column>
-            <el-table-column prop='info.phone' label="联系方式" width="180">
+            <el-table-column prop='information.phone' label="联系方式" width="180">
             </el-table-column>
-            <el-table-column prop='info.sayAs' label="说明" width="180">
+            <el-table-column prop='information.sayAs' label="说明" width="180">
             </el-table-column>
             <el-table-column label="操作" width="180">
                 <template scope="scope">
@@ -41,10 +41,10 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item label="联系方式">
-                    <el-input v-model="handleInfo.info.phone"></el-input>
+                    <el-input v-model="handleInfo.information.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="说明">
-                    <el-input v-model="handleInfo.info.sayAs"></el-input>
+                    <el-input v-model="handleInfo.information.sayAs"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
@@ -64,7 +64,7 @@ export default {
       userList: [
       ],
       handleInfo: {
-        info: {}
+        information: {}
       },
       editOrder: 0,
       cancleInfo: {},
@@ -106,21 +106,21 @@ export default {
     }
   },
   methods: {
-    switchType(info) {
-      switch (info.type) {
+    switchType(information) {
+      switch (information.type) {
         case 1:
-          info.type = '管理员'
+          information.type = '管理员'
           break
         case 2:
-          info.type = '仓库管理员'
+          information.type = '仓库管理员'
           break
         case 3:
-          info.type = '操作员'
+          information.type = '操作员'
           break
         default:
-          info.type = ''
+          information.type = ''
       }
-      return info.type
+      return information.type
     },
     // 删除
     handleDelete(e, index, row) {
@@ -151,10 +151,10 @@ export default {
         username: this.handleInfo.username,
         password: this.handleInfo.password,
         type: this.handleInfo.type,
-        info: {
-          address: this.handleInfo.info.address,
-          phone: this.handleInfo.info.phone,
-          sayAs: this.handleInfo.info.sayAs
+        information: {
+          address: this.handleInfo.information.address,
+          phone: this.handleInfo.information.phone,
+          sayAs: this.handleInfo.information.sayAs
         },
         isAdmin: false
       }).then((res) => {
@@ -174,10 +174,10 @@ export default {
         username: this.handleInfo.username,
         password: 123456,
         type: this.value,
-        info: {
+        information: {
           address: '',
-          phone: this.handleInfo.info.phone,
-          sayAs: this.handleInfo.info.sayAs
+          phone: this.handleInfo.information.phone,
+          sayAs: this.handleInfo.information.sayAs
         }
       }).then((res) => {
         console.log(res)
@@ -187,7 +187,7 @@ export default {
       }).catch((err) => {
         console.log(err)
         this.handleInfo = {
-          info: {}
+          information: {}
         }
       })
     }

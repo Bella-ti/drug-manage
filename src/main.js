@@ -4,6 +4,7 @@ import store from './store'
 import router from './router'
 import ElementUI from 'element-ui'
 import './assest/static/css/theme-green/index.css' // 浅绿色主题
+import './assest/static/font/iconfont.css'
 const VueResource = require('vue-resource')
 
 const axios = require('axios')

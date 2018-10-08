@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 export default {
   data() {
     return {
@@ -70,22 +71,24 @@ export default {
           label: '仓库管理员'
         }
       ],
-      value: '',
-      userList: []
+      value: ''
     }
   },
   mounted() {
-    this.getAllUser
+    this.getAllUser()
   },
   computed: {
-    getAllUser() {
-      this.$http.get('/api/user').then((res) => {
-        this.userList = res.data
+      ...mapState({
+          userList: ({ auth }) => auth.userList
       })
-      return this.userList
-    }
   },
   methods: {
+      ...mapMutations(['SET_USERLIST', 'SET_CUR_USER']),
+    getAllUser() {
+      this.$http.get('/api/user').then((res) => {
+        this.SET_USERLIST(res.data)
+      })
+    },
     submitForm(formName) {
       const self = this
       self.$refs[formName].validate((valid) => {
@@ -93,13 +96,15 @@ export default {
           if (self.ruleForm.username === self.userList[i].username && self.ruleForm.password === self.userList[i].password) {
             if (valid) {
               if (self.value == self.userList[i].type) {
+                  this.SET_CUR_USER(self.userList[i])
                 localStorage.setItem('curLogin', JSON.stringify(self.userList[i]))
-                self.userList[i].password = self.ruleForm.password
-                self.userList[i].type = self.value
+                // self.userList[i].password = self.ruleForm.password
+                // self.userList[i].type = self.value
                 self.$router.push('/systemSet')
               }
             } else {
               console.log('error submit!!')
+              this.$message.error('登录失败！')
               return false
             }
           }
