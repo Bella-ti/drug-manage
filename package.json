@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
-    "server": "nodemon app.js",
-    "start": "node app.js",
+    "server": "nodemon server/app.js",
+    "start": "node server/app.js",
     "lint": "eslint --ext .js,.vue src",
     "lint-server": "eslint --ext .js server"
   },

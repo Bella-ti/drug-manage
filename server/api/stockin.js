@@ -2,6 +2,35 @@ const express = require('express')
 const router = express.Router()
 const Stockin = require('../models/stockin')
 
+const stockInfo = function (param) {
+  return {
+    orderNum: param.orderNum,
+    storageDate: param.storageDate,
+    storageType: param.storageType,
+    goodsName: param.goodsName,
+    goodsId: param.goodsId,
+    pinyinMa: param.pinyinMa,
+    dosageForms: param.dosageForms,
+    approvalNumber: param.approvalNumber,
+    batchNumber: param.batchNumber,
+    location: param.location,
+    inventory: param.inventory,
+    unitPrice: param.unitPrice,
+    producteDate: param.producteDate,
+    validPeriod: param.validPeriod,
+    supplyUnit: param.supplyUnit,
+    manufacturer: param.manufacturer,
+    goodsType: param.goodsType,
+    drugCategory: param.drugCategory,
+    customClass: param.customClass,
+    certificate: param.certificate,
+    quality: param.quality,
+    conclusion: param.conclusion,
+    acceptPerson: param.acceptPerson,
+    purchaser: param.purchaser
+  }
+}
+
 router.get('/stockin', (req, res) => {
   Stockin.find({})
     .sort({ update_at: -1 })
@@ -31,68 +60,12 @@ router.post('/stockin', (req, res) => {
       res.json(stockin)
     }
   })
-
-  // let stockin = new Stockin({
-  //   id: req.body.id,
-  //   name: req.body.name,
-  //   renumber: req.body.renumber,
-  //   size: req.body.size,
-  //   unit: req.body.unit,
-  //   jx: req.body.jx,
-  //   stockintory: req.body.factory,
-  //   factoryJX: req.body.factoryJX,
-  //   factoryPY: req.body.factoryPY,
-  //   approvalNumber: req.body.approvalNumber,
-  //   batchNumber: req.body.batchNumber,
-  //   validPeriod: req.body.validPeriod,
-  //   position: req.body.position,
-  //   number: req.body.number,
-  //   storagePeriod: req.body.storagePeriod,
-  //   type: req.body.type,
-  //   drugsType: req.body.drugsType,
-  //   useType: req.body.useType,
-  //   unitPrice: req.body.unitPrice,
-  //   promotion: req.body.promotion,
-  //   importPrice: req.body.importPrice
-  // })
-  // stockin.save((err, stockin) => {
-  //   if (err) {
-  //     res.json(err)
-  //   } else {
-  //     res.json(stockin)
-  //   }
-  // })
 })
 
 router.put('/stockin/:id', (req, res) => {
   Stockin.findOneAndUpdate({ _id: req.params.id }
     , {
-      $set: {
-        orderNum: req.body.orderNum,
-        storageDate: req.body.storageDate,
-        storageType: req.body.storageType,
-        name: req.body.name,
-        id: req.body.id,
-        rename: req.body.rename,
-        size: req.body.size,
-        approvalNumber: req.body.approvalNumber,
-        batchNumber: req.body.batchNumber,
-        position: req.body.position,
-        stockNum: req.body.stockNum,
-        unitPrice: req.body.unitPrice,
-        bornDate: req.body.bornDate,
-        validPeriod: req.body.validPeriod,
-        deliveryUnit: req.body.deliveryUnit,
-        factory: req.body.factory,
-        type: req.body.type,
-        drugType: req.body.drugType,
-        custom: req.body.custom,
-        certificate: req.body.certificate,
-        quality: req.body.quality,
-        conclusion: req.body.conclusion,
-        checkPerson: req.body.checkPerson,
-        buyPerson: req.body.buyPerson
-      }
+      $set: stockInfo(req.body)
     }, {
       new: true
     })

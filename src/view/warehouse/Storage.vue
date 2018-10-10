@@ -6,123 +6,29 @@
                 <el-breadcrumb-item>药品入库</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <el-form class='form-condition' ref="form" :model="form" label-width="100px">
-                <el-form-item label="入库单号">
-                    <el-input class='query' disabled v-model="stockIn.orderNum"></el-input>
-                    <span class='tips'>*</span>
-                </el-form-item>
-                <el-form-item label="入库日期">
-                    <el-date-picker
-                      v-model="stockIn.storageDate"
-                      type="date"
-                      placeholder="入库日期"
-                      :picker-options="pickerOptions">
-                    </el-date-picker>
-                </el-form-item>
-                <el-form-item label="入库类型">
-                  <el-select size='small'
-                           v-model="stockIn.storageType"
-                           placeholder="请选择">
-                    <el-option v-for='item in stockTypes'
-                               :label="item.label"
-                               :value="item.value"></el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="药品名称">
-                  <el-input class='query' @change='checkName' v-model="form.name"></el-input>
-                </el-form-item>
-              <el-form-item label="商品ID">
-                  <el-input class='query' v-model="form.id"></el-input>
-                  <span class='tips'>{{tips}}</span>
-                </el-form-item>
-                <el-form-item label="拼音码">
-                    <el-input class='query' v-model="form.rename"></el-input>
-                </el-form-item>
-                <el-form-item label="剂型">
-                    <el-input class='query' v-model="form.size"></el-input>
-                </el-form-item>
-                <el-form-item label="批准文号">
-                  <el-input class='query' v-model="form.approvalNumber"></el-input>
-                </el-form-item>
-                <el-form-item label="批号">
-                  <el-input class='query' v-model="form.batchNumber"></el-input>
-                </el-form-item>
-                <el-form-item label="货位">
-                    <el-input class='query' v-model="form.position"></el-input>
-                </el-form-item>
-                <el-form-item label="入库数量">
-                    <el-input class='query' v-model="stockIn.stockNum"></el-input>
-                </el-form-item>
-                <el-form-item label="进价">
-                  <el-input class='query' v-model="form.unitPrice"></el-input>
-                  <span>元</span>
-                </el-form-item>
-                <el-form-item label="生产日期">
-                    <el-input class='query' v-model="form.bornDate"></el-input>
-                </el-form-item>
-                <el-form-item label="有效日期">
-                  <el-input class='query' v-model="form.validPeriod"></el-input>
-                </el-form-item>
-                <el-form-item label="供货单位">
-                    <el-input v-model="form.deliveryUnit"></el-input>
-                </el-form-item>
-                <el-form-item label="厂家">
-                    <el-input v-model="form.factory"></el-input>
-                </el-form-item>
-                <el-form-item label="商品种类">
-                  <el-input class='query' v-model="form.type"></el-input>
-                </el-form-item>
-                <el-form-item label="药品类别">
-                  <el-input class='query' v-model="form.drugType"></el-input>
-                </el-form-item>
-                 <el-form-item label="自定义类">
-                  <el-input class='query' v-model="form.custom"></el-input>
-                </el-form-item>
-                <el-form-item label="合格证">
-                    <el-select size='small'
-                              v-model="stockIn.certificate"
-                              placeholder="请选择">
-                        <el-option label="有"
-                                   value='有'></el-option>
-                                   <el-option label="没有"
-                                   value='没有'></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="外观质量">
-                    <el-select size='small'
-                              v-model="stockIn.quality"
-                              placeholder="请选择">
-                        <el-option label="合格"
-                                   value='合格'></el-option>
-                        <el-option label="不合格"
-                                    value='不合格'></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="验收结论">
-                    <el-select size='small'
-                              v-model="stockIn.conclusion"
-                              placeholder="请选择">
-                        <el-option label="合格"
-                                   value='合格'></el-option>
-                        <el-option label="不合格"
-                                    value='不合格'></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="验收人">
-                  <el-input class='query' v-model="stockIn.checkPerson"></el-input>
-                  <span class='tips'>*</span>
-                </el-form-item>
-                <el-form-item label="采购员">
-                    <el-input class='query' v-model="stockIn.buyPerson"></el-input>
-                </el-form-item>
-        <el-button size='middle' type="primary" @click="addToTable">加入入库单</el-button>
-        </el-form>
+        <el-form class='form-condition' ref="form" :model="goodsStockInfo" label-width="100px">
+          <el-form-item v-for="(item, k) in stockInfo" :label="item.label" :key="k">
 
+            <el-date-picker v-if="item.date" v-model="goodsStockInfo[item.value]" type="datetime" :placeholder="item.label" :picker-options="pickerOptions"></el-date-picker>
+            
+            <el-select v-if="item.option" size='small' v-model="goodsStockInfo[item.value]" placeholder="请选择">
+              <el-option v-for='(io, j) in item.option' :label="io" :value="io" :key="j"></el-option>
+            </el-select>
+            
+            <el-input v-if="(!item.date) && (!item.option)" class='query' :disabled="item.disabled" v-model="goodsStockInfo[item.value]"></el-input>
+            
+            <span v-if="item.require" class='tips'>*</span>
+            <span v-else class='tips'></span>
+            <!-- <span v-if="item.unit">元</span> -->
+          </el-form-item>
+        </el-form>
+        <el-button size='middle' type="primary" @click="addToTable">加入库存</el-button>
         </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
+import { stockIn } from '../../assest/static/js/stockInfo.js'
 export default {
   data() {
     return {
@@ -131,71 +37,46 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      form: {
-        name: '',
-        id: '',
-        rename: '',
-        size: '',
-        approvalNumber: '',
-        batchNumber: '',
-        position: '',
-        unitPrice: '',
-        bornDate: '',
-        validPeriod: '',
-        deliveryUnit: '',
-        factory: '',
-        type: '',
-        drugType: '',
-        custom: ''
-      },
-      stockIn: {
+      goodsStockInfo: {
         orderNum: '',
         storageDate: '',
         storageType: '',
-        stockNum: '',
+        goodsName: '',
+        goodsId: '',
+        pinyinMa: '',
+        dosageForms: '',
+        approvalNumber: '',
+        batchNumber: '',
+        location: '',
+        warehouseNum: '',
+        unitPrice: '',
+        producteDate: '',
+        validPeriod: '',
+        supplyUnit: '',
+        manufacturer: '',
+        goodsType: '',
+        drugCategory: '',
+        customClass: '',
         certificate: '',
         quality: '',
         conclusion: '',
-        checkPerson: '',
-        buyPerson: ''
+        acceptPerson: '',
+        purchaser: ''
       },
       tips: '',
-      drugs: [],
-      stockTypes: [{
-        value: '采购',
-        label: '采购'
-      }, {
-        value: '下架',
-        label: '下架'
-      }],
       status: false
     }
   },
   created() {
     this.getOrder()
-  },
-  computed: {
-    getDateTime: function() {
-      const date = new Date()
-      var seperator = '-'
-      var month = date.getMonth() + 1
-      var strDate = date.getDate()
-      if (month >= 1 && month <= 9) {
-        month = '0' + month
-      }
-      if (strDate >= 0 && strDate <= 9) {
-        strDate = '0' + strDate
-      }
-      var currentime = '' + date.getFullYear() + seperator + month + seperator + strDate
-      return currentime
-    }
+    this.stockInfo = stockIn()
   },
   methods: {
     checkName(value) {
       this.$http.get('/api/drug').then((res) => {
         for (var i in res.data) {
-          if (res.data[i].name == value) {
-            this.form = res.data[i]
+          if (res.data[i].name === value) {
+            this.goodsStockInfo = res.data[i]
             this.status = true
           }
         }
@@ -206,108 +87,40 @@ export default {
       const r2 = parseInt(Math.random() * (10))
       const now = (new Date()).valueOf()
       const paymentID = String(r1) + String(r2) + String(now)
-      this.form.id = paymentID.substring(paymentID.length - 6, paymentID.length)
-      this.stockIn.orderNum = paymentID
+      this.goodsStockInfo.orderNum = paymentID
     },
     addToTable() {
-      for (var i in this.form) {
-        if (this.form[i] == undefined) {
-          this.form[i] = ''
+      let v = 0
+      for (var i in this.goodsStockInfo) {
+      let tag = 0
+        if (!this.goodsStockInfo[i]) {
+          for(let j = 0; j < this.stockInfo.length; j++) {
+            if(this.stockInfo[j].require && this.stockInfo[j].value === i) {
+              this.$message.warning('请输入' + this.stockInfo[j].label)
+              tag++
+              v++
+              break
+            }
+          }
+          if(tag) {v++; break}
         }
       }
-      if (this.stockIn.checkPerson == '' || this.stockIn.orderNum == '' ||
-              this.stockIn.checkPerson == undefined || this.stockIn.orderNum == undefined) {
-        return
-      }
-      if (this.form.id == '' || isNaN(Number(this.form.id))) {
-        this.tips = '*必填且必须为数字'
-        return
-      }
-      const id = this.form._id
-      const number = parseInt(this.form.number) + parseInt(this.stockIn.stockNum)
-      if (isNaN(number)) {
-        return
-      }
+      if (v) return
+      let pros = null
       if (this.status) {
-        this.$http.put(`/api/drug/${id}`, {
-          id: this.form.id,
-          name: this.form.name,
-          rename: this.form.rename,
-          size: this.form.size,
-          approvalNumber: this.form.approvalNumber,
-          batchNumber: this.form.batchNumber,
-          position: this.form.position,
-          number: number,
-          unitPrice: this.form.unitPrice,
-          salePrice: this.form.salePrice,
-          promotion: this.form.promotion,
-          bornDate: this.form.bornDate,
-          validPeriod: this.form.validPeriod,
-          deliveryUnit: this.form.deliveryUnit,
-          factory: this.form.factory,
-          type: this.form.type,
-          drugsType: this.form.drugsType,
-          custom: this.form.custom
-        }).then(res => {
-          console.log(res)
-        }).catch(err => {
-          console.log(err)
-        })
+        const n = this.goodsStockInfo.orderNum
+        this.goodsStockInfo.goodsId = n.substring(n - 6, n)
+        pros = this.$http.put(`/api/drug/${id}`, this.goodsStockInfo)
       } else {
-        this.$http.post('/api/drug', {
-          id: this.form.id,
-          name: this.form.name,
-          rename: this.form.rename,
-          size: this.form.size,
-          approvalNumber: this.form.approvalNumber,
-          batchNumber: this.form.batchNumber,
-          position: this.form.position,
-          number: parseInt(this.form.number) + parseInt(this.stockIn.stockNum),
-          unitPrice: this.form.unitPrice,
-          salePrice: this.form.salePrice,
-          promotion: this.form.promotion,
-          bornDate: this.form.bornDate,
-          validPeriod: this.form.validPeriod,
-          deliveryUnit: this.form.deliveryUnit,
-          factory: this.form.factory,
-          type: this.form.type,
-          drugsType: this.form.drugsType,
-          custom: this.form.custom
-        }).then(res => {
-          console.log(res)
-        }).catch(err => {
-          console.log(err)
-        })
+        pros = this.$http.post('/api/drug', this.goodsStockInfo)
       }
-      this.$http.post('/api/stockin', {
-        orderNum: this.stockIn.orderNum,
-        storageDate: this.stockIn.storageDate,
-        storageType: this.stockIn.storageType,
-        name: this.form.name,
-        id: this.form.id,
-        rename: this.form.rename,
-        size: this.form.size,
-        approvalNumber: this.form.approvalNumber,
-        batchNumber: this.form.batchNumber,
-        position: this.form.position,
-        stockNum: this.stockIn.stockNum,
-        unitPrice: this.form.unitPrice,
-        bornDate: this.form.bornDate,
-        validPeriod: this.form.validPeriod,
-        deliveryUnit: this.form.deliveryUnit,
-        factory: this.form.factory,
-        type: this.form.type,
-        drugType: this.form.drugType,
-        custom: this.form.custom,
-        certificate: this.stockIn.certificate,
-        quality: this.stockIn.quality,
-        conclusion: this.stockIn.conclusion,
-        checkPerson: this.stockIn.checkPerson,
-        buyPerson: this.stockIn.buyPerson
+      pros.then(res => {
+        return this.$http.post('/api/stockin', this.goodsStockInfo)
       }).then(suc => {
-        console.log(suc)
-      }).catch(rereqq => {
-        console.log(rereqq)
+        this.getOrder()
+        this.$message.success('添加成功！')
+      }).catch(err => {
+        this.$message.error('添加失败！')
       })
     }
   }
@@ -325,7 +138,9 @@ export default {
   .sales .form-condition {
     display: flex;
     flex-direction: row;
-    flex-wrap:wrap
+    flex-wrap:wrap;
+    max-width: 1000px;
+    padding: 30px 0;
   }
   .sales .el-input__inner {
     height: 30px
@@ -346,12 +161,14 @@ export default {
      width:310px
    }
    .sales button {
-      float:right;
+      float:left;
       height: 34px;
-      margin-left: 187px
+      margin-left: 100px
    }
    .sales .tips {
      color:red;
-     float:left
+     float: left;
+     width: 6px;
+     height: 30px;
    }
 </style>

@@ -1,24 +1,44 @@
 const mongoose = require('mongoose')
 
+/** 库存商品信息
+ * goodsName 商品名称
+ * goodsId 商品ID
+ * pinyinMa 拼音码
+ * dosageForms 剂型
+ * approvalNumber 批准文号
+ * batchNumber 批号
+ * location 货位
+ * inventory 库存量
+ * unitPrice 进价
+ * salePrice 售价
+ * promotion 折扣
+ * producteDate 生产日期
+ * validPeriod 有效期
+ * supplyUnit 供货单位
+ * manufacturer 厂家
+ * goodsType 商品种类
+ * drugCategory 药品类别
+ * customClass 自定义类
+ */
 const drugSchema = mongoose.Schema({
-  id: { type: Number, required: true },
-  name: String,
-  rename: String,
-  size: String,
+  goodsId: { type: Number, required: true },
+  goodsName: String,
+  pinyinMa: String,
+  dosageForms: String,
   approvalNumber: String,
   batchNumber: String,
-  position: String,
-  number: Number,
+  location: String,
+  inventory: Number,
   unitPrice: String,
   salePrice: String,
   promotion: String,
-  bornDate: Date,
+  producteDate: Date,
   validPeriod: Date,
-  deliveryUnit: String,
-  factory: String,
-  type: String,
-  drugsType: String,
-  custom: String
+  supplyUnit: String,
+  manufacturer: String,
+  goodsType: String,
+  drugCategory: String,
+  customClass: String
 })
 
 const Drug = module.exports = mongoose.model('Drug', drugSchema)

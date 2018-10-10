@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
-  /**
+  /** 用户信息
    * order 编号
    * username 用户名
    * password 密码

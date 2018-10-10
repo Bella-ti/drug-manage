@@ -1,5 +1,9 @@
 const mongoose = require('mongoose')
 
+/** 厂家信息
+ * 
+ */
+
 const manufacturerSchema = mongoose.Schema({
   id: {
     type: Number,

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-/**
+/** 系统设置
  * 常规设置
  * dateTime 最近一次销售时间
  * cardLength 会员卡卡号长度（6~24位）

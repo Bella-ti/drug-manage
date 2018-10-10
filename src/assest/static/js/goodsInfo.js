@@ -3,20 +3,20 @@ export default function goodsInfo (type) {
 	if (type === 2) {
 		goodsInfo = [
 			{
-				prop:'name',
-				label:'药品名',
+				prop:'goodsName',
+				label:'商品名称',
 				fixed: true
 			},
 			{
-				prop:'id',
-				label:'药品ID'
+				prop:'goodsId',
+				label:'商品ID'
 			},
 			{
-				prop:'rename',
+				prop:'pinyinMa',
 				label:'拼音码'
 			},
 			{
-				prop:'size',
+				prop:'dosageForms',
 				label:'剂型'
 			},
 			{
@@ -28,11 +28,11 @@ export default function goodsInfo (type) {
 				label:'批号'
 			},
 			{
-				prop:'position',
+				prop:'location货位',
 				label:'货位'
 			},
 			{
-				prop:'number',
+				prop:'inventory',
 				label:'库存量'
 			},
 			{
@@ -48,7 +48,7 @@ export default function goodsInfo (type) {
 				label:'促销折扣'
 			},
 			{
-				prop:'bornDate',
+				prop:'producteDate',
 				label:'生产日期'
 			},
 			{
@@ -56,43 +56,43 @@ export default function goodsInfo (type) {
 				label:'有效日期'
 			},
 			{
-				prop:'deliveryUnit',
+				prop:'supplyUnit',
 				label:'供货单位'
 			},
 			{
-				prop:'factory',
+				prop:'manufacturer',
 				label:'厂家'
 			},
 			{
-				prop:'type',
+				prop:'goodsType',
 				label:'商品分类'
 			},
 			{
-				prop:'drugsType',
+				prop:'drugCategory',
 				label:'药品种类'
 			},
 			{
-				prop:'custom',
+				prop:'customClass',
 				label:'自定义类'
 			}
 		]
 	} else if (type === 0) {
 		goodsInfo = [
 			{
-				prop:'name',
-				label:'药品名',
+				prop:'goodsName',
+				label:'商品名称',
 				fixed: true
 			},
 			{
-				prop:'number',
+				prop:'inventory',
 				label:'库存量'
 			},,
 			{
-				prop:'drugsType',
+				prop:'drugCategory',
 				label:'药品种类'
 			},
 			{
-				prop:'bornDate',
+				prop:'producteDate',
 				label:'生产日期'
 			},
 			{
@@ -100,7 +100,7 @@ export default function goodsInfo (type) {
 				label:'有效日期'
 			},
 			{
-				prop:'deliveryUnit',
+				prop:'supplyUnit',
 				label:'供货单位'
 			},
 			{
@@ -115,20 +115,20 @@ export default function goodsInfo (type) {
 	} else if (type === 1) {
 		goodsInfo = [
 			{
-				prop:'name',
-				label:'药品名',
+				prop:'goodsName',
+				label:'商品名称',
 				fixed: true
 			},
 			{
-				prop:'id',
+				prop:'goodsId',
 				label:'药品ID'
 			},
 			{
-				prop:'size',
+				prop:'dosageForms',
 				label:'剂型'
 			},
 			{
-				prop:'number',
+				prop:'inventory',
 				label:'库存量'
 			},
 			{
@@ -144,7 +144,7 @@ export default function goodsInfo (type) {
 				label:'促销折扣'
 			},
 			{
-				prop:'bornDate',
+				prop:'producteDate',
 				label:'生产日期'
 			},
 			{
@@ -152,15 +152,15 @@ export default function goodsInfo (type) {
 				label:'有效日期'
 			},
 			{
-				prop:'deliveryUnit',
+				prop:'supplyUnit',
 				label:'供货单位'
 			},
 			{
-				prop:'factory',
+				prop:'manufacturer',
 				label:'厂家'
 			},
 			{
-				prop:'drugsType',
+				prop:'drugCategory',
 				label:'药品种类'
 			}
 		]

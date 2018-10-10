@@ -2,73 +2,82 @@ const express = require('express')
 const router = express.Router()
 const Drug = require('../models/drug')
 
+const checkGoods = function(param) {
+    return {
+        goodsId: param.goodsId,
+        goodsName: param.goodsName,
+        pinyinMa: param.pinyinMa,
+        dosageForms: param.dosageForms,
+        approvalNumber: param.approvalNumber,
+        batchNumber: param.batchNumber,
+        location: param.location,
+        inventory: param.inventory,
+        unitPrice: param.unitPrice,
+        salePrice: param.salePrice,
+        promotion: param.promotion,
+        producteDate: param.producteDate,
+        validPeriod: param.validPeriod,
+        supplyUnit: param.supplyUnit,
+        manufacturer: param.manufacturer,
+        goodsType: param.goodsType,
+        drugCategory: param.drugCategory,
+        customClass: param.customClass
+    }
+}
+
 router.get('/drug', (req, res) => {
-    Drug.find({})
-        .sort({ update_at: -1 })
-        .then(drug => {
-            res.json(drug)
-        })
-        .catch(err => {
-            res.json(err)
-        })
+  Drug.find({})
+    .sort({ update_at: -1 })
+    .then(drug => {
+      res.json(drug)
+    })
+    .catch(err => {
+      res.json(err)
+    })
 })
 
 router.get('/drug/:id', (req, res) => {
-    Drug.findById(req.params.id)
-        .then(drug => {
-            res.json(drug)
-        })
-        .catch(err => {
-            res.json(err)
-        })
+  Drug.findById(req.params.id)
+    .then(drug => {
+      res.json(drug)
+    })
+    .catch(err => {
+      res.json(err)
+    })
 })
 
 router.post('/drug', (req, res) => {
-    Drug.create(req.body, (err, drug) => {
-        if (err) {
-            res.json(err)
-        } else {
-            res.json(drug)
-        }
-    })
+  const goods = checkGoods(req.body)
+  Drug.create(goods, (err, drug) => {
+    if (err) {
+      res.json(err)
+    } else {
+      res.json(drug)
+    }
+  }).then(drug => res.json(drug))
+  .catch(err => res.json(err))
 })
 
 router.put('/drug/:id', (req, res) => {
-    Drug.findOneAndUpdate({ _id: req.params.id }
-        , {
-            $set: {
-                id: req.body.id,
-                name: req.body.name,
-                rename: req.body.rename,
-                size: req.body.size,
-                approvalNumber: req.body.approvalNumber,
-                batchNumber: req.body.batchNumber,
-                position: req.body.position,
-                number: req.body.number,
-                unitPrice: req.body.unitPrice,
-                salePrice: req.body.salePrice,
-                promotion: req.body.promotion,
-                bornDate: req.body.bornDate,
-                validPeriod: req.body.validPeriod,
-                deliveryUnit: req.body.deliveryUnit,
-                factory: req.body.factory,
-                type: req.body.type,
-                drugsType: req.body.drugsType,
-                custom: req.body.custom
-            }
-        }, {
-            new: true
-        })
-        .then(drug => res.json(drug))
-        .catch(err => res.json(err))
+  Drug.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: checkGoods(req.body)
+    },
+    {
+      new: true
+    }
+  )
+    .then(drug => res.json(drug))
+    .catch(err => res.json(err))
 })
 
 router.delete('/drug/:id', (req, res) => {
-    Drug.findOneAndRemove({
-        _id: req.params.id
-    })
-        .then(drug => res.send(`${drug.name}删除成功`))
-        .catch(err => res.json(err))
+  Drug.findOneAndRemove({
+    _id: req.params.id
+  })
+    .then(drug => res.send(`${drug.name}删除成功`))
+    .catch(err => res.json(err))
 })
 
 module.exports = router
