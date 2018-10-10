@@ -15,12 +15,12 @@ export default function dataTree (type) {
 				},
 				{
 					pathUrl: 'seller',
-					title: '销售员管理'
-				},
-				{
-					pathUrl: 'operator',
-					title: '操作员权限管理'
+					title: '人员管理'
 				}
+				// {
+				// 	pathUrl: 'operator',
+				// 	title: '人员权限管理'
+				// }
 			]
 		}
 		dataTree.search = {
@@ -29,24 +29,28 @@ export default function dataTree (type) {
 			children: [
 				{
 					pathUrl: 'stock',
-					title: '查询库存药品'
+					title: '库存药品'
 				},
 				{
 					pathUrl: 'warehousing',
-					title: '查询入库记录'
+					title: '入库记录'
 				},
 				{
 					pathUrl: 'profit',
-					title: '查询出库记录'
-				},
-				{
-					pathUrl: 'sales',
-					title: '查询销售记录'
+					title: '出库记录'
 				},
 				{
 					pathUrl: 'attendance',
-					title: '查询员工考勤'
-				} 
+					title: '员工考勤记录'
+				},
+				{
+					pathUrl: 'saleCharts',
+					title: '销售额查询'
+				},				
+				{
+					pathUrl: 'sales',
+					title: '查询销售记录'
+				}
 			]
 		}
 		dataTree.sale = {
@@ -68,17 +72,21 @@ export default function dataTree (type) {
 				{
 					pathUrl: 'settlement',
 					title: '药品销售应收结算'
-				},
-				{
-					pathUrl: 'saleCharts',
-					title: '销售营业额'
-				} 
+				}
 			]
 		}
-		dataTree.stock = {
-			icon: 'd-icon-churuku',
-			title: '出入库管理',
+		dataTree.storage = {
+			icon: 'd-icon-stock',
+			title: '仓库管理',
 			children: [
+				// {
+				// 	pathUrl: 'storageQuery',
+				// 	title: '库存盘点单'
+				// },
+				// {
+				// 	pathUrl: 'resultTable',
+				// 	title: '损益单'
+				// },
 				{
 					pathUrl: 'storage',
 					title: '药品入库'
@@ -86,20 +94,6 @@ export default function dataTree (type) {
 				{
 					pathUrl: 'drugsOut',
 					title: '药品出库'
-				} 
-			]
-		}
-		dataTree.storage = {
-			icon: 'd-icon-stock',
-			title: '仓库管理',
-			children: [
-				{
-					pathUrl: 'storageQuery',
-					title: '库存盘点单'
-				},
-				{
-					pathUrl: 'resultTable',
-					title: '损益单'
 				} 
 			]
 		}

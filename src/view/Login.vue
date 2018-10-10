@@ -1,25 +1,20 @@
 <template>
     <div class="login-wrap">
-        <div class="ms-title">康健药店管理系统</div>
+        <div class="ms-title">XX平台管理系统</div>
         <div class="ms-login">
-            <el-form :model="ruleForm"
-                     :rules="rules"
-                     ref="ruleForm"
-                     label-width="0px"
-                     class="demo-ruleForm">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
                 <el-form-item prop="username">
                     <el-input v-model="ruleForm.username"
-                              placeholder="username"></el-input>
+                              placeholder="用户名"></el-input>
                 </el-form-item>
                 <el-form-item prop="password">
                     <el-input type="password"
-                              placeholder="password"
+                              placeholder="密码"
                               v-model="ruleForm.password"
                               @keyup.enter.native="submitForm('ruleForm')"></el-input>
                 </el-form-item>
                 <el-form-item prop='type'>
-                    <el-select v-model="value"
-                               placeholder="duties">
+                  <el-select v-model="value" placeholder="职务">
                         <el-option v-for="item in options"
                                    :label="item.label"
                                    :value="item.value">

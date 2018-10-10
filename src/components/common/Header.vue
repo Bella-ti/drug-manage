@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <div class="logo">康健药店管理系统</div>
+        <div class="logo">XX平台管理系统</div>
         <div class="user-info">
             <el-dropdown trigger="click"
                          @command="handleCommand">

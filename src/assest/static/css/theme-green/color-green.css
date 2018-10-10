@@ -26,3 +26,14 @@
     background-color: #00d1b2 !important;
     border-color: #00d1b2 !important;
 }
+/* element-ui */
+.el-dialog__headerbtn {
+    background: #fff;
+    outline: 0;
+    inline-size: 0;
+    border: 0;
+    padding-right: 10px;
+}
+.el-dialog--tiny {
+    width: 510px !important;
+}
