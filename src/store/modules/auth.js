@@ -1,4 +1,3 @@
-
 const state = {
   userList: [],
   curUser: {

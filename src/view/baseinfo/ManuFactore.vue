@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+// import { mapState, mapActions } from 'vuex'
 export default {
   data() {
     return {
@@ -114,15 +114,9 @@ export default {
     }
   },
   created() {
-    this.getBusiness
+    this.getBusiness()
   },
   computed: {
-    getBusiness() {
-      this.$http.get('/api/manufacturer').then((res) => {
-        this.company = res.data
-      })
-      return this.company
-    }
   },
   watch: {
     getCompany(val, oldVal) {
@@ -130,16 +124,22 @@ export default {
     }
   },
   methods: {
+    getBusiness() {
+      this.$http.get('/api/manufacturer').then((res) => {
+        this.company = res.data
+      })
+      return this.company
+    },
     // 查询
     addToTable() {
       const arr = []
       this.$http.get('/api/manufacturer').then((res) => {
-        if (this.form.buisNum == '') {
+        if (this.form.buisNum === '') {
           this.company = res.data
           return
         }
         for (var i = 0; i < res.data.length; i++) {
-          if (res.data[i].id == this.form.buisNum) {
+          if (res.data[i].id === this.form.buisNum) {
             arr.push(res.data[i])
           }
         }
@@ -168,7 +168,7 @@ export default {
         address: this.form.address
       }).then((res) => {
         console.log(res)
-        this.getAllUser
+        // this.getAllUser()
       }).catch((err) => {
         console.log(err)
       })
@@ -196,7 +196,7 @@ export default {
       }).then((res) => {
         console.log(res)
         this.dialogVisible = false
-        this.getBusiness
+        this.getBusiness()
       })
     },
     // 编辑
@@ -206,7 +206,7 @@ export default {
       this.tips = ''
       const obj = JSON.parse(JSON.stringify(row))
       for (var i in obj) {
-        if (obj[i] == undefined) {
+        if (obj[i] === undefined) {
           obj[i] = ''
         }
       }
@@ -216,7 +216,7 @@ export default {
     handleDelete(e, index, row) {
       const id = this.company[index]._id
       this.$http.delete(`/api/manufacturer/${id}`).then(() => {
-        this.getBusiness
+        this.getBusiness()
       })
     }
   }
@@ -225,54 +225,55 @@ export default {
 <style>
 .factory .el-table .cell {
   white-space: nowrap;
-  word-break: normal
+  word-break: normal;
 }
 
 .factory .el-table .cell,
-.factory .el-table th>div {
-  padding: 0
+.factory .el-table th > div {
+  padding: 0;
 }
 
 .factory .query {
-  width: 60px
+  width: 60px;
 }
-.factory .el-table td, .factory .el-table th{
-  padding:5px;
-  text-align:center
+.factory .el-table td,
+.factory .el-table th {
+  padding: 5px;
+  text-align: center;
 }
 .factory .form-condition {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap
+  flex-wrap: wrap;
 }
 
 .factory .el-input__inner {
   height: 30px;
-  width: 200px
+  width: 200px;
 }
 
 .factory .result {
   display: flex;
   flex-direction: row;
-  margin-top: 15px
+  margin-top: 15px;
 }
 
 .factory .result .total {
-  width: 100px
+  width: 100px;
 }
 
 .factory .el-button--small {
-  margin-top: 3px
+  margin-top: 3px;
 }
 
 .factory .dialog-form {
   float: left;
-  width: 50%
+  width: 50%;
 }
 
 .factory .infomation {
   width: 100%;
-  float: left
+  float: left;
 }
 
 .factory .infomation .el-form-item {
@@ -280,14 +281,14 @@ export default {
 }
 
 .factory .el-dialog__body {
-  padding-bottom: 0
+  padding-bottom: 0;
 }
 
-.factory .el-form-item__content>span {
+.factory .el-form-item__content > span {
   color: red;
   font-size: 12px;
   margin-bottom: 22px;
   display: block;
-  height: 36px
+  height: 36px;
 }
 </style>

@@ -57,4 +57,4 @@ const stockinSchema = mongoose.Schema({
   purchaser: String
 })
 
-const Stockin = module.exports = mongoose.model('Stockin', stockinSchema)
+module.exports = mongoose.model('Stockin', stockinSchema)

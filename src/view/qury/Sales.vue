@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -53,6 +53,11 @@ export default {
     }
   },
   computed: {
+  },
+  created() {
+    this.getSales()
+  },
+  methods: {
     getSales() {
       this.$http.get(`/api/drugsale`).then(res => {
         for (var i in res.data) {
@@ -65,24 +70,19 @@ export default {
         }
         this.record = res.data
         return this.record
-      }).catch(err => {
+      }).catch(() => {
         this.$message.error('获取信息失败！')
       })
-    }
-  },
-  created() {
-    this.getSales
-  },
-  methods: {
+    },
     handlerFetch() {
-      if (this.currentime == '' || this.currentime == undefined) {
-        this.getSales
+      if (this.currentime === '' || this.currentime === undefined) {
+        this.getSales()
         return
       }
       var arr = []
       const currentime = this.getDateTime(this.currentime)
       for (var i in this.record) {
-        if (currentime == this.record[i].saleTime) {
+        if (currentime === this.record[i].saleTime) {
           arr.push(this.record[i])
         }
       }
@@ -107,9 +107,9 @@ export default {
     handleDelete(row) {
       const id = row._id
       this.$http.delete(`/api/drugsale/${id}`, {}).then(res => {
-        this.getSales
+        this.getSales()
         this.$message.success('删除成功！')
-      }).catch(err => {
+      }).catch(() => {
         this.$message.success('删除失败！')
       })
     }
@@ -118,53 +118,53 @@ export default {
 </script>
 <style>
 .table .form-condition {
-    display: flex;
-    flex-direction: row
+  display: flex;
+  flex-direction: row;
 }
 
 .table .query {
-    width: 260px
+  width: 260px;
 }
 
 .table .el-table .cell {
-    white-space: nowrap;
-    word-break: normal
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .table .el-table .cell,
-.el-table th>div {
-    padding: 0
+.el-table th > div {
+  padding: 0;
 }
 
 .table .dialog-form {
-    font-size: 12px;
-    float: left;
-    padding: 0 10px
+  font-size: 12px;
+  float: left;
+  padding: 0 10px;
 }
 
 .table .dialog-form .el-form-item__label {
-    padding: 6px 12px 6px 0;
-    font-size: 12px;
-    width: auto
+  padding: 6px 12px 6px 0;
+  font-size: 12px;
+  width: auto;
 }
 
 .table .dialog-form .el-input__inner {
-    height: 24px;
-    line-height: 24px;
-    width: 120px;
-    font-size: 12px
+  height: 24px;
+  line-height: 24px;
+  width: 120px;
+  font-size: 12px;
 }
 
 .table .dialog-form .el-form-item__content {
-    line-height: 24px
+  line-height: 24px;
 }
 
 .table .el-dialog__body {
-    overflow: hidden
+  overflow: hidden;
 }
 
 .table .el-dialog__footer {
-    padding-right: 100px;
-    padding-top: 0;
+  padding-right: 100px;
+  padding-top: 0;
 }
 </style>

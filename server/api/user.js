@@ -35,22 +35,25 @@ router.post('/user', (req, res) => {
 // 修改用户信息
 router.put('/user/:id', (req, res) => {
   console.log(req.body.isAdmin)
-    User.findOneAndUpdate({ _id: req.params.id }
-      , {
-        $set: {
-          order: req.body.order,
-          username: req.body.username,
-          password: req.body.password,
-          type: req.body.type,
-          isAdmin: req.body.isAdmin,
-          information: req.body.information,
-          array: req.body.array
-        }
-      }, {
-        new: true
-      })
-      .then(user => res.json(user))
-      .catch(err => res.json(err))
+  User.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      $set: {
+        order: req.body.order,
+        username: req.body.username,
+        password: req.body.password,
+        type: req.body.type,
+        isAdmin: req.body.isAdmin,
+        information: req.body.information,
+        array: req.body.array
+      }
+    },
+    {
+      new: true
+    }
+  )
+    .then(user => res.json(user))
+    .catch(err => res.json(err))
 })
 // 删除一个用户
 router.delete('/user/:id', (req, res) => {

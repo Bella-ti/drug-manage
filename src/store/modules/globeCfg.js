@@ -1,19 +1,15 @@
+const state = {}
 
-const state = {
-
-}
-
-const mutations = {
-}
+const mutations = {}
 
 const actions = {
   // deep copy
   deepCopy(p, c) {
-    var c = c || {}
+    c = c || {}
     for (var i in p) {
       if (typeof p[i] === 'object') {
-        c[i] = (p[i].constructor === Array) ? [] : {}
-        deepCopy(p[i], c[i])
+        c[i] = p[i].constructor === Array ? [] : {}
+        // deepCopy(p[i], c[i])
       } else {
         c[i] = p[i]
       }

@@ -38,9 +38,7 @@
                            v-model="drugValue"
                            placeholder="请选择"
                             @change='checkName'>
-                    <el-option v-for='item in drugsname'
-                               :label="item.label"
-                               :value="item.value"></el-option>
+                    <el-option v-for='(item,j) in drugsname' :key="j" :label="item.label" :value="item.value"></el-option>
                   </el-select>
               </el-form-item>
               <el-form-item label="药品ID">
@@ -77,7 +75,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -103,13 +101,23 @@ export default {
     }
   },
   created() {
-    this.curLogin
-    this.getAllDrugs
-    this.getName
-    this.getId
+    this.curLogin()
+    this.getAllDrugs()
+    this.getName()
+    this.getId()
     this.getOrder()
   },
   computed: {
+  },
+  watch: {
+    totalMoney(val) {
+      this.sale.saleMoney = val
+    },
+    extraMoney(val) {
+      this.sale.putPrice = val
+    }
+  },
+  methods: {
     curLogin() {
       let curUser = localStorage.getItem('curLogin')
       this.curUser = JSON.parse(curUser)
@@ -147,21 +155,11 @@ export default {
         this.sale.saleMoney = 0
       }
       return this.sale.saleMoney
-    }
-  },
-  watch: {
-    totalMoney(val) {
-      this.sale.saleMoney = val
     },
-    extraMoney(val) {
-      this.sale.putPrice = val
-    }
-  },
-  methods: {
     result(val) {
       this.sale.saleNumber = val
       this.sale.saleMoney = Number(this.drugs.salePrice) * Number(val)
-      this.setsaleMoney
+      this.setsaleMoney()
     },
     extra(val) {
       this.sale.putPrice = Number(val) - Number(this.sale.saleMoney)
@@ -182,20 +180,20 @@ export default {
     checkName(value) {
       this.$http.get('/api/drug').then((res) => {
         for (var i in res.data) {
-          if (res.data[i].name == value) {
+          if (res.data[i].name === value) {
             this.drugs = res.data[i]
           }
         }
       })
     },
     addMenu() {
-      if (this.drugs.saleNumber == undefined || this.drugs.id == undefined || this.sale.name) {
+      if (this.drugs.saleNumber == undefined || this.drugs.id === undefined || this.sale.name) {
         this.tips = '输入药品ID、数量和药品名'
         return
       }
       this.tips = ''
       for (var i in this.stockDrug) {
-        if (this.stockDrug[i].id == this.drugs.id) {
+        if (this.stockDrug[i].id === this.drugs.id) {
           this.stockDrug[i].saleNumber = this.drugs.saleNumber
           this.drugInfo.push(this.stockDrug[i])
         }
@@ -209,7 +207,7 @@ export default {
         this.$message.error('支付不足！')
         return
       }
-      if (this.drugInfo.length == 0) {
+      if (this.drugInfo.length === 0) {
         this.$message.success('未添加药品')
         return
       }

@@ -41,4 +41,4 @@ const drugSchema = mongoose.Schema({
   customClass: String
 })
 
-const Drug = module.exports = mongoose.model('Drug', drugSchema)
+module.exports = mongoose.model('Drug', drugSchema)

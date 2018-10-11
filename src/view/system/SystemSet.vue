@@ -116,7 +116,7 @@ export default {
         })
       }).then(() => {
         this.$message.success('设置成功!')
-      }).catch((err) => {
+      }).catch(() => {
         this.$message.error('设置出错!')
       })
     },

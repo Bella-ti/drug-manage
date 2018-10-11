@@ -15,7 +15,7 @@
                 </el-form-item>
                 <el-form-item prop='type'>
                   <el-select v-model="value" placeholder="职务">
-                        <el-option v-for="item in options"
+                        <el-option v-for="(item,j) in options" :key="j"
                                    :label="item.label"
                                    :value="item.value">
                         </el-option>
@@ -73,12 +73,12 @@ export default {
     this.getAllUser()
   },
   computed: {
-      ...mapState({
-          userList: ({ auth }) => auth.userList
-      })
+    ...mapState({
+      userList: ({ auth }) => auth.userList
+    })
   },
   methods: {
-      ...mapMutations(['SET_USERLIST', 'SET_CUR_USER']),
+    ...mapMutations(['SET_USERLIST', 'SET_CUR_USER']),
     getAllUser() {
       this.$http.get('/api/user').then((res) => {
         this.SET_USERLIST(res.data)
@@ -90,8 +90,8 @@ export default {
         for (var i = 0; i < self.userList.length; i++) {
           if (self.ruleForm.username === self.userList[i].username && self.ruleForm.password === self.userList[i].password) {
             if (valid) {
-              if (self.value == self.userList[i].type) {
-                  this.SET_CUR_USER(self.userList[i])
+              if (self.value === self.userList[i].type) {
+                this.SET_CUR_USER(self.userList[i])
                 localStorage.setItem('curLogin', JSON.stringify(self.userList[i]))
                 // self.userList[i].password = self.ruleForm.password
                 // self.userList[i].type = self.value

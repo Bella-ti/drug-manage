@@ -43,7 +43,7 @@ export default {
   },
   computed: {
     ...mapState({
-        userList: ({ auth }) => auth.userList
+      userList: ({ auth }) => auth.userList
     })
   },
   methods: {
@@ -70,7 +70,7 @@ export default {
       }
       if (tag) {
         this.$message.error('该用户已注册！')
-       return
+        return
       }
       const dateTime = this.getDate()
       this.$http.post('/api/user', {

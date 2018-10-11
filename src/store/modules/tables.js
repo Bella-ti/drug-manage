@@ -1,13 +1,10 @@
-
 const state = {
   state: false
 }
 
-const mutations = {
-}
+const mutations = {}
 
-const actions = {
-}
+const actions = {}
 
 export default {
   state,

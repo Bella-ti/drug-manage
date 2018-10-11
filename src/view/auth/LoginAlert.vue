@@ -76,22 +76,25 @@ export default {
       if (this.curLogin.type === '') {
         return
       }
-      this.$http.put(`/api/user/${id}`, {
-        order: this.curLogin.order,
-        username: this.curLogin.username,
-        password: this.curLogin.password,
-        type: this.curLogin.type,
-        information: {
-          address: this.curLogin.information.address,
-          phone: this.curLogin.information.phone,
-          sayAs: this.curLogin.information.sayAs
-        }
-      }).then(() => {
-        localStorage.setItem('curLogin', JSON.stringify(this.curLogin))
-        this.$message.success('修改成功！')
-      }).catch(() => {
-        this.$message.error('修改出错！')
-      })
+      this.$http
+        .put(`/api/user/${id}`, {
+          order: this.curLogin.order,
+          username: this.curLogin.username,
+          password: this.curLogin.password,
+          type: this.curLogin.type,
+          information: {
+            address: this.curLogin.information.address,
+            phone: this.curLogin.information.phone,
+            sayAs: this.curLogin.information.sayAs
+          }
+        })
+        .then(() => {
+          localStorage.setItem('curLogin', JSON.stringify(this.curLogin))
+          this.$message.success('修改成功！')
+        })
+        .catch(() => {
+          this.$message.error('修改出错！')
+        })
     }
   }
 }

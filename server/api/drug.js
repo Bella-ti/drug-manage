@@ -3,26 +3,26 @@ const router = express.Router()
 const Drug = require('../models/drug')
 
 const checkGoods = function(param) {
-    return {
-        goodsId: param.goodsId,
-        goodsName: param.goodsName,
-        pinyinMa: param.pinyinMa,
-        dosageForms: param.dosageForms,
-        approvalNumber: param.approvalNumber,
-        batchNumber: param.batchNumber,
-        location: param.location,
-        inventory: param.inventory,
-        unitPrice: param.unitPrice,
-        salePrice: param.salePrice,
-        promotion: param.promotion,
-        producteDate: param.producteDate,
-        validPeriod: param.validPeriod,
-        supplyUnit: param.supplyUnit,
-        manufacturer: param.manufacturer,
-        goodsType: param.goodsType,
-        drugCategory: param.drugCategory,
-        customClass: param.customClass
-    }
+  return {
+    goodsId: param.goodsId,
+    goodsName: param.goodsName,
+    pinyinMa: param.pinyinMa,
+    dosageForms: param.dosageForms,
+    approvalNumber: param.approvalNumber,
+    batchNumber: param.batchNumber,
+    location: param.location,
+    inventory: param.inventory,
+    unitPrice: param.unitPrice,
+    salePrice: param.salePrice,
+    promotion: param.promotion,
+    producteDate: param.producteDate,
+    validPeriod: param.validPeriod,
+    supplyUnit: param.supplyUnit,
+    manufacturer: param.manufacturer,
+    goodsType: param.goodsType,
+    drugCategory: param.drugCategory,
+    customClass: param.customClass
+  }
 }
 
 router.get('/drug', (req, res) => {
@@ -54,8 +54,9 @@ router.post('/drug', (req, res) => {
     } else {
       res.json(drug)
     }
-  }).then(drug => res.json(drug))
-  .catch(err => res.json(err))
+  })
+    .then(drug => res.json(drug))
+    .catch(err => res.json(err))
 })
 
 router.put('/drug/:id', (req, res) => {

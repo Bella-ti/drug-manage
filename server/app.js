@@ -1,7 +1,7 @@
 const pkg = require('../package')
 const config = require('./config/db')
 const express = require('express')
-const favicon = require('serve-favicon')
+// const favicon = require('serve-favicon')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const index = require('./api/index')
@@ -14,7 +14,10 @@ const outstock = require('./api/outstock')
 const drugsale = require('./api/drugsale')
 const stockin = require('./api/stockin')
 
-mongoose.connect(config.mongodb,{useMongoClient:true})
+mongoose.connect(
+  config.mongodb,
+  { useMongoClient: true }
+)
 mongoose.Promise = global.Promise
 
 const app = express()

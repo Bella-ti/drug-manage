@@ -52,4 +52,4 @@ const systemSchema = mongoose.Schema({
   update_at: { type: Date, default: Date.now }
 })
 
-const System = module.exports = mongoose.model('System', systemSchema)
+module.exports = mongoose.model('System', systemSchema)

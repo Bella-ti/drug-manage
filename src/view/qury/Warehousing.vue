@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -98,15 +98,9 @@ export default {
     }
   },
   created() {
-    this.getInStock
+    this.getInStock()
   },
   computed: {
-    getInStock() {
-      this.$http.get('/api/stockin').then(res => {
-        this.record = res.data
-      })
-      return this.record
-    }
   },
   create: {
     getDateTime() {
@@ -125,22 +119,28 @@ export default {
     }
   },
   methods: {
+    getInStock() {
+      this.$http.get('/api/stockin').then(res => {
+        this.record = res.data
+      })
+      return this.record
+    },
     handlerFetch() {
       const arr = []
       this.$http.get('/api/stockin').then(res => {
         for (var i in res.data) {
           if (this.form.orderNum) {
-            if (this.form.orderNum == res.data[i].orderNum) {
+            if (this.form.orderNum === res.data[i].orderNum) {
               arr.push(res.data[i])
             }
           }
           if (this.form.id) {
-            if (this.form.id == res.data[i].id) {
+            if (this.form.id === res.data[i].id) {
               arr.push(res.data[i])
             }
           }
           if (this.form.storageDate) {
-            if (this.form.storageDate == res.data[i].storageDate) {
+            if (this.form.storageDate === res.data[i].storageDate) {
               arr.push(res.data[i])
             }
           }
@@ -158,7 +158,7 @@ export default {
     handleDelete(row) {
       const id = row._id
       this.$http.delete(`/api/stockin/${id}`, {}).then((res) => {
-        this.getInStock
+        this.getInStock()
       })
     },
     addCompanyTrue() {
@@ -190,7 +190,7 @@ export default {
         buyPerson: this.form.buyPerson
       }).then(suc => {
         console.log(suc)
-        this.getInStock
+        this.getInStock()
         this.dialogVisible = false
       }).catch(rereqq => {
         console.log(rereqq)
@@ -201,46 +201,47 @@ export default {
 </script>
 <style>
 .el-button--primary {
-    height:34px
+  height: 34px;
 }
 .table .form-condition {
-  display:flex;
-  flex-direction: row
+  display: flex;
+  flex-direction: row;
 }
 .table .query {
-  width: 260px
+  width: 260px;
 }
 .table .el-table .cell {
-    white-space: nowrap;
-    word-break: normal
+  white-space: nowrap;
+  word-break: normal;
 }
-.table .el-table .cell, .el-table th>div {
-    padding:0
+.table .el-table .cell,
+.el-table th > div {
+  padding: 0;
 }
 .table .dialog-form {
-    font-size:12px;
-    float:left;
-    padding: 0 10px
+  font-size: 12px;
+  float: left;
+  padding: 0 10px;
 }
 .table .dialog-form .el-form-item__label {
-    padding:6px 12px 6px 0;
-    font-size:12px;
-    width:auto
+  padding: 6px 12px 6px 0;
+  font-size: 12px;
+  width: auto;
 }
 .table .dialog-form .el-input__inner {
-    height:24px;
-    line-height:24px;
-    width:120px;
-    font-size: 12px
+  height: 24px;
+  line-height: 24px;
+  width: 120px;
+  font-size: 12px;
 }
 .table .dialog-form .el-form-item__content {
-    line-height:24px
+  line-height: 24px;
 }
 .table .el-dialog__body {
-    overflow:hidden
+  overflow: hidden;
 }
 .table .el-dialog__footer {
-    padding-right: 100px;
-    padding-top: 0;
+  padding-right: 100px;
+  padding-top: 0;
 }
 </style>

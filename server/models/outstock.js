@@ -18,4 +18,4 @@ const outstockSchema = mongoose.Schema({
   outTime: Date
 })
 
-const Outstock = module.exports = mongoose.model('Outstock', outstockSchema)
+module.exports = mongoose.model('Outstock', outstockSchema)

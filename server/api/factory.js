@@ -25,15 +25,7 @@ router.get('/fac/:id', (req, res) => {
 })
 // 添加一个供应商信息
 router.post('/fac', (req, res) => {
-  //使用Fac model上的create方法储存数据
-  Fac.create(req.body, (err, fac) => {
-    if (err) {
-      res.json(err)
-    } else {
-      res.json(fac)
-    }
-  })
-  //使用实例的save方法存储数据
+  // 使用实例的save方法存储数据
   let Fac = new Fac({
     id: req.body.id,
     name: req.body.name,
@@ -57,7 +49,15 @@ router.post('/fac', (req, res) => {
     promotion: req.body.promotion,
     importPrice: req.body.importPrice
   })
-  fac.save((err, fac) => {
+  // 使用Fac model上的create方法储存数据
+  Fac.create(req.body, (err, fac) => {
+    if (err) {
+      res.json(err)
+    } else {
+      res.json(fac)
+    }
+  })
+  Fac.save((err, fac) => {
     if (err) {
       res.json(err)
     } else {
@@ -65,10 +65,11 @@ router.post('/fac', (req, res) => {
     }
   })
 })
-//更新一个供应商信息
+// 更新一个供应商信息
 router.put('/fac/:id', (req, res) => {
-  Fac.findOneAndUpdate({ _id: req.params.id }
-    , {
+  Fac.findOneAndUpdate(
+    { _id: req.params.id },
+    {
       $set: {
         ID: req.body.ID,
         name: req.body.name,
@@ -79,13 +80,15 @@ router.put('/fac/:id', (req, res) => {
         stockMax: req.body.stockMax,
         stockMin: req.body.stockMin
       }
-    }, {
+    },
+    {
       new: true
-    })
+    }
+  )
     .then(fac => res.json(fac))
     .catch(err => res.json(err))
 })
-//删除一个供应商信息
+// 删除一个供应商信息
 router.delete('/fac/:id', (req, res) => {
   Fac.findOneAndRemove({
     _id: req.params.id

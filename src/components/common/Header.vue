@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     handleCommand(command) {
-      if (command == 'loginout') {
+      if (command === 'loginout') {
         localStorage.removeItem('curLogin')
         this.$router.push('/login')
       }
@@ -41,47 +41,47 @@ export default {
 </script>
 <style scoped>
 .header {
-    position: relative;
-    box-sizing: border-box;
-    width: 100%;
-    height: 50px;
-    font-size: 18px;
-    line-height: 50px;
-    color: #fff;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  line-height: 50px;
+  color: #fff;
 }
 
 .header .logo {
-    float: left;
-    width: 250px;
-    text-align: center;
+  float: left;
+  width: 250px;
+  text-align: center;
 }
 
 .user-info {
-    float: right;
-    padding-right: 50px;
-    font-size: 16px;
-    color: #fff;
+  float: right;
+  padding-right: 50px;
+  font-size: 16px;
+  color: #fff;
 }
 
 .user-info .el-dropdown-link {
-    position: relative;
-    display: inline-block;
-    padding-left: 40px;
-    color: #fff;
-    cursor: pointer;
-    vertical-align: middle;
+  position: relative;
+  display: inline-block;
+  padding-left: 40px;
+  color: #fff;
+  cursor: pointer;
+  vertical-align: middle;
 }
 
 .user-info .user-logo {
-    position: absolute;
-    left: 0;
-    top: 10px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .el-dropdown-menu__item {
-    text-align: center;
+  text-align: center;
 }
 </style>

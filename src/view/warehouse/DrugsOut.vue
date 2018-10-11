@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -86,17 +86,17 @@ export default {
     }
   },
   computed: {
+  },
+  created() {
+    this.getAllDrugs()
+  },
+  methods: {
     getAllDrugs() {
       this.$http.get('/api/drug').then((res) => {
         this.drugs = res.data
       })
       return this.drugs
-    }
-  },
-  created() {
-    this.getAllDrugs
-  },
-  methods: {
+    },
     getOrder() {
       const r1 = parseInt(Math.random() * (10))
       const r2 = parseInt(Math.random() * (10))
@@ -153,7 +153,7 @@ export default {
         custom: form.custom
       }).then(res => {
         console.log(res)
-        this.getAllDrugs
+        this.getAllDrugs()
       }).catch(err => {
         console.log(err)
       })
@@ -188,24 +188,25 @@ export default {
 }
 </script>
 <style>
-  .sales .el-table .cell {
-    white-space: nowrap;
-    word-break: normal
-  }
-  .sales .el-table .cell,.sales .el-table th>div {
-    padding:0
-  }
+.sales .el-table .cell {
+  white-space: nowrap;
+  word-break: normal;
+}
+.sales .el-table .cell,
+.sales .el-table th > div {
+  padding: 0;
+}
 
-  .sales .el-input__inner {
-    height: 30px
-  }
+.sales .el-input__inner {
+  height: 30px;
+}
 
-   .sales .el-form-item {
-     width:300px;
-     float:left
-   }
-   .sales .el-dialog__footer {
-     padding:5px 55px 15px;
-     float:right
-   }
+.sales .el-form-item {
+  width: 300px;
+  float: left;
+}
+.sales .el-dialog__footer {
+  padding: 5px 55px 15px;
+  float: right;
+}
 </style>

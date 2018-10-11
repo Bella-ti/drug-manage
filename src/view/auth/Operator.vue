@@ -42,9 +42,10 @@ export default {
     }
   },
   created() {
-    this.getAllUser
+    this.getAllUser()
   },
-  computed: {
+  computed: {},
+  methods: {
     getAllUser() {
       this.$http.get('/api/user').then((res) => {
         this.putUser = res.data
@@ -63,18 +64,16 @@ export default {
         this.userInfo = userList
       })
       return this.userInfo
-    }
-  },
-  methods: {
+    },
     isNotAdmin(selection) {
       const status = selection.isAdmin
       var type = selection.type
-      if (status == true) {
+      if (status === true) {
         type = 1
       }
       const id = selection.id
       for (var i in this.putUser) {
-        if (this.putUser[i]._id == id) {
+        if (this.putUser[i]._id === id) {
           var user = this.putUser[i]
         }
       }
@@ -86,7 +85,7 @@ export default {
         isAdmin: status
       }).then((res) => {
         console.log(res)
-        this.getAllUser
+        this.getAllUser()
       }).catch((err) => {
         console.log(err)
       })
@@ -96,11 +95,11 @@ export default {
 </script>
 <style>
 .el-table-column {
-  text-align: center
+  text-align: center;
 }
 
 .addList {
   margin: 20px;
-  padding: 10px
+  padding: 10px;
 }
 </style>

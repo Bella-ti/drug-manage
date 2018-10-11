@@ -34,27 +34,27 @@ export default {
 </script>
 
 <style>
-    .sidebar{
-        display: block;
-        position: absolute;
-        width: 250px;
-        left: 0;
-        top: 50px;
-        bottom:0;
-        background: #2E363F;
-    }
-    .sidebar > ul {
-        height:100%;
-    }
-    .el-menu-item,
-    .el-submenu__title {
-        height:45px;
-        line-height: 45px
-    }
-    .d-icon-setting .setting-remote{
-        font-family: "Helvetica Neue",Helvetica, "microsoft yahei", arial, STHeiTi, sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        padding-left: 5px;
-    }
+.sidebar {
+  display: block;
+  position: absolute;
+  width: 250px;
+  left: 0;
+  top: 50px;
+  bottom: 0;
+  background: #2e363f;
+}
+.sidebar > ul {
+  height: 100%;
+}
+.el-menu-item,
+.el-submenu__title {
+  height: 45px;
+  line-height: 45px;
+}
+.d-icon-setting .setting-remote {
+  font-family: 'Helvetica Neue', Helvetica, 'microsoft yahei', arial, STHeiTi, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding-left: 5px;
+}
 </style>

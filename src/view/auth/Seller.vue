@@ -40,7 +40,7 @@
             <el-form-item label="职务">
                 <!-- <el-input v-if='!isAdd' v-model="handleInfo.type"></el-input> -->
                 <el-select v-model="value" placeholder="职务">
-                    <el-option v-for="item in options" :label="item.label" :value="item.value">
+                    <el-option v-for="(item,j) in options" :label="item.label" :key="j" :value="item.value">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -76,7 +76,8 @@ export default {
       },
       isAdd: false,
       value: '',
-      options: [{
+      options: [
+        {
           value: '1',
           label: '管理员'
         },
@@ -87,7 +88,8 @@ export default {
         {
           value: '3',
           label: '仓库管理员'
-        }]
+        }
+      ]
     }
   },
   watch: {
@@ -96,9 +98,11 @@ export default {
     }
   },
   created() {
-    return this.getAllUser
+    this.getAllUser()
   },
   computed: {
+  },
+  methods: {
     getAllUser() {
       this.$http.get('/api/user').then((res) => {
         this.userList = res.data
@@ -108,9 +112,7 @@ export default {
         }
       })
       return this.userList
-    }
-  },
-  methods: {
+    },
     switchType(information) {
       switch (information.type) {
         case 1:
@@ -131,7 +133,7 @@ export default {
     handleDelete(e, index, row) {
       const id = row._id
       this.$http.delete(`/api/user/${id}`).then(() => {
-        return this.getAllUser
+        this.getAllUser()
       })
     },
     changeInfo(e, index, row) {
@@ -174,7 +176,7 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
-      this.handleInfo =  {
+      this.handleInfo = {
         information: {}
       }
     },
@@ -197,7 +199,7 @@ export default {
       var currendate = '' + date.getFullYear() + month + strDate + date.getHours() + date.getMinutes() + date.getSeconds()
       return currendate
     },
-    handlerAdd () {
+    handlerAdd() {
       this.value = ''
       this.isAdd = true
       this.dialogVisible = true
@@ -217,11 +219,11 @@ export default {
       }).then((res) => {
         this.isAdd = false
         this.dialogVisible = false
-        return this.getAllUser
+        this.getAllUser()
       }).catch((err) => {
         console.log(err)
       })
-      this.handleInfo =  {
+      this.handleInfo = {
         information: {}
       }
     }
@@ -233,11 +235,11 @@ export default {
 </script>
 <style>
 .el-table-column {
-    text-align: center
+  text-align: center;
 }
 
 .addList {
-    margin: 20px;
-    padding: 10px
+  margin: 20px;
+  padding: 10px;
 }
 </style>

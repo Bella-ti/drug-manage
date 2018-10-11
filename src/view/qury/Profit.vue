@@ -53,19 +53,19 @@
                     <el-input type='text' disabled v-model="form.outNum"></el-input>
                 </el-form-item>
                 <el-form-item label="商品ID">
-                    <el-input type='text'disabled v-model="form.drugId"></el-input>
+                    <el-input type='text' disabled v-model="form.drugId"></el-input>
                 </el-form-item>
                 <el-form-item label="出库时间">
-                    <el-input type='text'disabled v-model="form.outTime"></el-input>
+                    <el-input type='text' disabled v-model="form.outTime"></el-input>
                 </el-form-item>
                 <el-form-item label="出库类型">
-                    <el-input type='text'disabled v-model="form.outType"></el-input>
+                    <el-input type='text' disabled v-model="form.outType"></el-input>
                 </el-form-item>
                 <el-form-item label="经手人">
-                    <el-input type='text'disabled v-model="form.operator"></el-input>
+                    <el-input type='text' disabled v-model="form.operator"></el-input>
                 </el-form-item>
                 <el-form-item label="说明">
-                    <el-input type='text'disabled v-model="form.size"></el-input>
+                    <el-input type='text' disabled v-model="form.size"></el-input>
                 </el-form-item>
             </el-form>
         </el-dialog>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+// import { mapState } from 'vuex'
 export default {
   data() {
     return {
@@ -104,6 +104,11 @@ export default {
     }
   },
   computed: {
+  },
+  created() {
+    this.getOutRecord()
+  },
+  methods: {
     getOutRecord() {
       this.$http.get('/api/outstock').then((res) => {
         this.record = res.data
@@ -112,18 +117,13 @@ export default {
         }
       })
       return this.record
-    }
-  },
-  created() {
-    this.getOutRecord
-  },
-  methods: {
+    },
     handlerFetch() {
       var arr = []
       if (this.form.value !== '') {
         this.$http.get('/api/outstock').then((res) => {
           for (var i in res.data) {
-            if (this.form.value == res.data[i].drugId) {
+            if (this.form.value === res.data[i].drugId) {
               arr.push(res.data[i])
             }
           }
@@ -136,7 +136,7 @@ export default {
           const curDate = this.getDateTime(this.currentime)
           for (var i in res.data) {
             var outTime = res.data[i].outTime.slice(0, 10)
-            if (curDate == outTime) {
+            if (curDate === outTime) {
               arr.push(res.data[i])
             }
           }
@@ -168,7 +168,7 @@ export default {
     handleDelete(e, index, row) {
       const id = row._id
       this.$http.delete(`/api/outstock/${id}`, {}).then(() => {
-        this.getOutRecord
+        this.getOutRecord()
       })
     },
     // 确认修改
@@ -182,43 +182,44 @@ export default {
 </script>
 <style>
 .table .form-condition {
-  display:flex;
-  flex-direction: row
+  display: flex;
+  flex-direction: row;
 }
 .table .query {
-  width: 260px
+  width: 260px;
 }
 .table .el-table .cell {
-    white-space: nowrap;
-    word-break: normal
+  white-space: nowrap;
+  word-break: normal;
 }
-.table .el-table .cell, .el-table th>div {
-    padding:0
+.table .el-table .cell,
+.el-table th > div {
+  padding: 0;
 }
 .table .dialog-form {
-    font-size:12px;
-    float:left;
-    padding: 0 10px
+  font-size: 12px;
+  float: left;
+  padding: 0 10px;
 }
 .table .dialog-form .el-form-item__label {
-    padding:6px 12px 6px 0;
-    font-size:12px;
-    width:auto
+  padding: 6px 12px 6px 0;
+  font-size: 12px;
+  width: auto;
 }
 .table .dialog-form .el-input__inner {
-    height:24px;
-    line-height:24px;
-    width:120px;
-    font-size: 12px
+  height: 24px;
+  line-height: 24px;
+  width: 120px;
+  font-size: 12px;
 }
 .table .dialog-form .el-form-item__content {
-    line-height:24px
+  line-height: 24px;
 }
 .table .el-dialog__body {
-    overflow:hidden
+  overflow: hidden;
 }
 .table .el-dialog__footer {
-    padding-right: 100px;
-    padding-top: 0;
+  padding-right: 100px;
+  padding-top: 0;
 }
 </style>

@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Stockin = require('../models/stockin')
 
-const stockInfo = function (param) {
+const stockInfo = function(param) {
   return {
     orderNum: param.orderNum,
     storageDate: param.storageDate,
@@ -63,12 +63,15 @@ router.post('/stockin', (req, res) => {
 })
 
 router.put('/stockin/:id', (req, res) => {
-  Stockin.findOneAndUpdate({ _id: req.params.id }
-    , {
+  Stockin.findOneAndUpdate(
+    { _id: req.params.id },
+    {
       $set: stockInfo(req.body)
-    }, {
+    },
+    {
       new: true
-    })
+    }
+  )
     .then(stockin => res.json(stockin))
     .catch(err => res.json(err))
 })

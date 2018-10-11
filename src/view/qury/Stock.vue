@@ -32,11 +32,11 @@
         </el-table>
         <el-dialog title="查看药品信息" v-model="dialogVisible" size="small">
             <el-form class='dialog-form' ref="form" :model="form" label-width="80px">
-              
+
                 <el-form-item v-for="(item,k) in detailGoods"  :key="k" :label="item.label">
                     <el-input v-model="currentSelection[item.prop]"></el-input>
                 </el-form-item>
-                
+
             </el-form>
             <span style='display:none' slot="footer" class="dialog-footer">
                     <el-button @click="dialogVisible = false">取 消</el-button>
@@ -61,7 +61,7 @@ export default {
       },
       drugs: [],
       drugTypes: [
-          {
+        {
           value: '感冒清热解毒',
           label: '感冒清热解毒'
         }, {
@@ -136,15 +136,9 @@ export default {
     }
   },
   mounted() {
-    return this.getAllDrugs
+    this.getAllDrugs()
   },
   computed: {
-    getAllDrugs() {
-      this.$http.get('/api/drug').then((res) => {
-        this.drugs = res.data
-      })
-      return this.drugs
-    }
   },
   created() {
     this.changeGoods()
@@ -154,6 +148,12 @@ export default {
     this.goodsType = null
   },
   methods: {
+    getAllDrugs() {
+      this.$http.get('/api/drug').then((res) => {
+        this.drugs = res.data
+      })
+      return this.drugs
+    },
     changeGoods() {
       this.goodsType = this.$lodash.compact(goodsInfo(this.seaModal))
     },
@@ -170,10 +170,10 @@ export default {
     },
     searchMenu() {
       var arr = []
-      if (this.form.id != '') {
+      if (this.form.id !== '') {
         this.$http.get('/api/drug').then((res) => {
           for (var i in res.data) {
-            if (res.data[i].id == this.form.id) {
+            if (res.data[i].id === this.form.id) {
               arr.push(res.data[i])
             }
           }
@@ -184,7 +184,7 @@ export default {
       if (this.form.name) {
         this.$http.get('/api/drug').then((res) => {
           for (var i in res.data) {
-            if (res.data[i].name == this.form.name) {
+            if (res.data[i].name === this.form.name) {
               arr.push(res.data[i])
             }
           }
@@ -195,15 +195,15 @@ export default {
       if (this.form.type) {
         this.$http.get('/api/drug').then((res) => {
           for (var i in res.data) {
-            if (res.data[i].drugsType == this.form.type) {
+            if (res.data[i].drugsType === this.form.type) {
               arr.push(res.data[i])
             }
           }
           this.drugs = arr
         })
       }
-      if (this.form.id == '' && this.form.type == '' && this.form.position == '') {
-        this.getAllDrugs
+      if (this.form.id === '' && this.form.type === '' && this.form.position === '') {
+        this.getAllDrugs()
       }
     }
   }
@@ -211,62 +211,62 @@ export default {
 </script>
 <style>
 .table .form-condition {
-    display: flex;
-    flex-direction: row;
-    margin-top: 75px;
+  display: flex;
+  flex-direction: row;
+  margin-top: 75px;
 }
 
 .table .query {
-    width: 200px
+  width: 200px;
 }
 
 .table .el-table .cell {
-    white-space: nowrap;
-    word-break: normal
+  white-space: nowrap;
+  word-break: normal;
 }
 
 .table .el-table .cell,
-.el-table th>div {
-    padding: 0
+.el-table th > div {
+  padding: 0;
 }
 
 .table .dialog-form {
-    padding: 0 54px;
-    display: flex;
-    flex-wrap: wrap;
+  padding: 0 54px;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .table .dialog-form .el-form-item__label {
-    padding: 6px 12px 6px 0;
-    font-size: 12px;
-    width: auto
+  padding: 6px 12px 6px 0;
+  font-size: 12px;
+  width: auto;
 }
 
 .table .dialog-form .el-input__inner {
-    height: 24px;
-    line-height: 24px;
-    width: 120px;
-    font-size: 12px
+  height: 24px;
+  line-height: 24px;
+  width: 120px;
+  font-size: 12px;
 }
 
 .table .dialog-form .el-form-item__content {
-    line-height: 24px
+  line-height: 24px;
 }
 
 .table .el-dialog__body {
-    overflow: hidden
+  overflow: hidden;
 }
 
 .table .el-dialog__footer {
-    padding-right: 100px;
-    padding-top: 0;
+  padding-right: 100px;
+  padding-top: 0;
 }
 
 .el-table__fixed,
 .el-table__fixed-right {
-    box-shadow: none
+  box-shadow: none;
 }
 .el-dialog--small {
-    width:40%
+  width: 40%;
 }
 </style>

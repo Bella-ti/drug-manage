@@ -116,24 +116,24 @@ export default {
     }
   },
   created() {
-    this.getSales
+    this.getSales()
   },
   computed: {
+  },
+  methods: {
     getSales() {
       this.$http.get(`/api/drugsale`).then(res => {
         this.record = res.data
       })
-    }
-  },
-  methods: {
+    },
     select() {
-      if (this.singleSelect == 3) {
+      if (this.singleSelect === 3) {
         this.selectYear()
       }
-      if (this.singleSelect == 2) {
+      if (this.singleSelect === 2) {
         this.selectMonth()
       }
-      if (this.singleSelect == 1) {
+      if (this.singleSelect === 1) {
         this.selectDay()
       }
     },
@@ -156,19 +156,19 @@ export default {
         for (var i in res.data) {
           var saleTime = res.data[i].saleTime.slice(0, 4)
           var year = this.getDateTime(this.year).year
-          if (saleTime == year) {
+          if (saleTime === year) {
             var month = res.data[i].saleTime.slice(5, 7)
             for (var k in monthArr) {
-              if (parseInt(month) == k) {
+              if (parseInt(month) === k) {
                 monthArr[k].push(res.data[i])
               }
             }
           }
         }
-        var arr_1 = []
+        var arr1 = []
         for (var m in monthArr) {
           if (!monthArr[m].length) {
-            arr_1.push(0)
+            arr1.push(0)
           } else {
             for (var s in monthArr[m]) {
               var total = 0
@@ -176,10 +176,10 @@ export default {
                 total += Number(monthArr[m][s].saleInfo[j].number) * Number(monthArr[m][s].saleInfo[j].unitPrice)
               }
             }
-            arr_1.push(total)
+            arr1.push(total)
           }
         }
-        this.mixYear.series[0].data = arr_1
+        this.mixYear.series[0].data = arr1
       }).catch(err => {
         console.log(err)
       })
@@ -222,20 +222,20 @@ export default {
         for (var i in res.data) {
           var saleTime = res.data[i].saleTime.slice(0, 7)
           var yearMon = this.getDateTime(this.month).year + '-' + this.getDateTime(this.month).month
-          console.log(saleTime == yearMon)
-          if (saleTime == yearMon) {
+          console.log(saleTime === yearMon)
+          if (saleTime === yearMon) {
             var month = res.data[i].saleTime.slice(8)
             for (var k in monthArr) {
-              if (parseInt(month) == k) {
+              if (parseInt(month) === k) {
                 monthArr[k].push(res.data[i])
               }
             }
           }
         }
-        var arr_1 = []
+        var arr2 = []
         for (var m in monthArr) {
           if (!monthArr[m].length) {
-            arr_1.push(0)
+            arr2.push(0)
           } else {
             for (var s in monthArr[m]) {
               var total = 0
@@ -243,11 +243,11 @@ export default {
                 total += Number(monthArr[m][s].saleInfo[j].number) * Number(monthArr[m][s].saleInfo[j].unitPrice)
               }
             }
-            arr_1.push(total)
+            arr2.push(total)
           }
         }
-        this.mixMonth.series[0].data = arr_1
-        console.log(arr_1)
+        this.mixMonth.series[0].data = arr2
+        console.log(arr2)
       }).catch(err => {
         console.log(err)
       })
@@ -276,13 +276,13 @@ export default {
 </script>
 
 <style scoped>
-    .mix-echarts{
-        width:600px;
-        height:400px;
-    }
-    .block{
-        float:left;
-        margin-left:20px;
-        margin-top:-6px
-    }
+.mix-echarts {
+  width: 600px;
+  height: 400px;
+}
+.block {
+  float: left;
+  margin-left: 20px;
+  margin-top: -6px;
+}
 </style>

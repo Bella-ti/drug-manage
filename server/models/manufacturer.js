@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 /** 厂家信息
- * 
+ *
  */
 
 const manufacturerSchema = mongoose.Schema({
@@ -21,4 +21,4 @@ const manufacturerSchema = mongoose.Schema({
   address: String
 })
 
-const Manufacturer = module.exports = mongoose.model('Manufacturer', manufacturerSchema)
+module.exports = mongoose.model('Manufacturer', manufacturerSchema)
