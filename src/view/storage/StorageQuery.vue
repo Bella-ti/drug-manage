@@ -7,7 +7,7 @@
             </el-breadcrumb>
         </div>
         <el-table :data="drugs" border style="width: 100%" >
-            <el-table-column prop="id" label="药品ID" width='100px'></el-table-column>
+            <el-table-column prop="id" label="商品ID" width='100px'></el-table-column>
             <el-table-column label="账面" width="auto">
                 <el-table-column prop="province" label="单价"></el-table-column>
                 <el-table-column prop="city" label="数量"></el-table-column>
@@ -55,7 +55,7 @@ export default {
           rename: '阿莫西林分散片', // 通用名
           size: '0.25G*24片', // 规格
           factory: '太极集团', // 厂家
-          approvalNumber: '国药准字H', // 批准文号
+          approvalNumber: '国商准字H', // 批准文号
           batchNumber: '20120501', // 批号
           validPeriod: '2014-1-28', // 有效期
           position: 'G1', // 货位
@@ -63,9 +63,9 @@ export default {
           storagePeriod: '2013-1-10', // 入库日期
           promotion: 0.2, // 促销提成
           deliveryUnit: '初期库存', // 供货单位
-          type: '药品', // 商品分类
+          type: '商品', // 商品分类
           renumber: 682302, // 助记码
-          drugsType: '抗菌素', // 药品种类
+          drugsType: '抗菌素', // 商品种类
           custom: '', // 自定义类
           unitPrice: 6.87, // 销售单价
           positionSaid: '', // 货位说明
@@ -77,7 +77,7 @@ export default {
           rename: '阿莫西林分散片',
           size: '0.25G*24片',
           factory: '太极集团',
-          approvalNumber: '国药准字H',
+          approvalNumber: '国商准字H',
           batchNumber: '20120501',
           validPeriod: '2014-1-28',
           position: 'G1',
@@ -85,7 +85,7 @@ export default {
           storagePeriod: '2013-1-10',
           promotion: 0.2,
           deliveryUnit: '初期库存',
-          type: '药品',
+          type: '商品',
           renumber: 682302,
           drugsType: '抗菌素',
           custom: '',
@@ -99,7 +99,7 @@ export default {
           rename: '阿莫西林分散片',
           size: '0.25G*24片',
           factory: '太极集团',
-          approvalNumber: '国药准字H',
+          approvalNumber: '国商准字H',
           batchNumber: '20120501',
           validPeriod: '2014-1-28',
           position: 'G1',
@@ -107,7 +107,7 @@ export default {
           storagePeriod: '2013-1-10',
           promotion: 0.2,
           deliveryUnit: '初期库存',
-          type: '药品',
+          type: '商品',
           renumber: 682302,
           drugsType: '抗菌素',
           custom: '',
@@ -121,7 +121,7 @@ export default {
           rename: '阿莫西林分散片',
           size: '0.25G*24片',
           factory: '太极集团',
-          approvalNumber: '国药准字H',
+          approvalNumber: '国商准字H',
           batchNumber: '20120501',
           validPeriod: '2014-1-28',
           position: 'G1',
@@ -129,7 +129,7 @@ export default {
           storagePeriod: '2013-1-10',
           promotion: 0.2,
           deliveryUnit: '初期库存',
-          type: '药品',
+          type: '商品',
           renumber: 682302,
           drugsType: '抗菌素',
           custom: '',
@@ -143,7 +143,7 @@ export default {
           rename: '阿莫西林分散片',
           size: '0.25G*24片',
           factory: '太极集团',
-          approvalNumber: '国药准字H',
+          approvalNumber: '国商准字H',
           batchNumber: '20120501',
           validPeriod: '2014-1-28',
           position: 'G1',
@@ -151,7 +151,7 @@ export default {
           storagePeriod: '2013-1-10',
           promotion: 0.2,
           deliveryUnit: '初期库存',
-          type: '药品',
+          type: '商品',
           renumber: 682302,
           drugsType: '抗菌素',
           custom: '',

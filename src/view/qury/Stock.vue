@@ -14,13 +14,13 @@
           </el-radio-group>
         </div>
         <el-form class='form-condition' ref="form" :model="form" label-width="100px">
-            <el-form-item label="按药品名">
-                <el-input class='query' size='small' v-model="form.name" placeholder="请输入药品名"></el-input>
+            <el-form-item label="按商品名">
+                <el-input class='query' size='small' v-model="form.name" placeholder="请输入商品名"></el-input>
             </el-form-item>
             <el-form-item label="按ID">
-                <el-input class='query' size='small' v-model="form.id" placeholder="请输入药品ID"></el-input>
+                <el-input class='query' size='small' v-model="form.id" placeholder="请输入商品ID"></el-input>
             </el-form-item>
-            <el-form-item label="按药品类别">
+            <el-form-item label="按商品类别">
                 <el-select size='small' v-model="form.type" placeholder="请选择">
                     <el-option v-for='(item,j) in drugTypes' :key="j" :label="item.label" :value="item.value"></el-option>
                 </el-select>
@@ -30,7 +30,7 @@
         <el-table :data="drugs" border style="width: 100%" @selection-change="handleSelectionChange" @current-change="handleCurrentChange">
             <el-table-column v-for="(item,j) in goodsType" :key="j" :prop="item.prop" :fixed="item.fixed" :label="item.label"></el-table-column>
         </el-table>
-        <el-dialog title="查看药品信息" v-model="dialogVisible" size="small">
+        <el-dialog title="查看商品信息" v-model="dialogVisible" size="small">
             <el-form class='dialog-form' ref="form" :model="form" label-width="80px">
 
                 <el-form-item v-for="(item,k) in detailGoods"  :key="k" :label="item.label">
@@ -53,7 +53,7 @@ export default {
     return {
       goodsType: [],
       seaModal: 0,
-      dialogVisible: true,
+      dialogVisible: false,
       form: {
         id: '',
         position: '',
@@ -68,8 +68,8 @@ export default {
           value: '心脑血管类',
           label: '心脑血管类'
         }, {
-          value: '外用药类',
-          label: '外用药类'
+          value: '外用商类',
+          label: '外用商类'
         }, {
           value: '呼吸系统类',
           label: '呼吸系统类'
@@ -95,11 +95,11 @@ export default {
           value: '五官科类',
           label: '五官科类'
         }, {
-          value: '妇科用药类',
-          label: '妇科用药类'
+          value: '妇科用商类',
+          label: '妇科用商类'
         }, {
-          value: '中药类',
-          label: '中药类'
+          value: '中商类',
+          label: '中商类'
         }, {
           value: '计生用品',
           label: '计生用品'
@@ -113,8 +113,8 @@ export default {
           value: '保健品',
           label: '保健品'
         }, {
-          value: '非药品',
-          label: '非药品'
+          value: '非商品',
+          label: '非商品'
         }, {
           value: '泌尿系统',
           label: '泌尿系统'

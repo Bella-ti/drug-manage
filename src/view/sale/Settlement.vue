@@ -3,13 +3,13 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 销售管理</el-breadcrumb-item>
-                <el-breadcrumb-item>药品销售应收结算</el-breadcrumb-item>
+                <el-breadcrumb-item>商品销售应收结算</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
-        <div>药品销售单</div>
+        <div>商品销售单</div>
           <el-table :data="record" border style="width: 100%">
-            <el-table-column prop="id" label="药品ID" width='120px'></el-table-column>
-            <el-table-column prop="time" label="药品名称" width='auto'></el-table-column>
+            <el-table-column prop="id" label="商品ID" width='120px'></el-table-column>
+            <el-table-column prop="time" label="商品名称" width='auto'></el-table-column>
             <el-table-column prop="type" label="销售数量" width='160px'></el-table-column>
             <el-table-column prop="name" label="销售单价" width='140px'></el-table-column>
             <el-table-column prop="size" label="销售时间" width='130px'></el-table-column>
@@ -57,7 +57,7 @@ export default {
           rename: '阿莫西林分散片', // 通用名
           size: '0.25G*24片', // 规格
           factory: '太极集团', // 厂家
-          approvalNumber: '国药准字H', // 批准文号
+          approvalNumber: '国商准字H', // 批准文号
           batchNumber: '20120501', // 批号
           validPeriod: '2014-1-28', // 有效期
           position: 'G1', // 货位
@@ -65,9 +65,9 @@ export default {
           storagePeriod: '2013-1-10', // 入库日期
           promotion: 0.2, // 促销提成
           deliveryUnit: '初期库存', // 供货单位
-          type: '药品', // 商品分类
+          type: '商品', // 商品分类
           renumber: 682302, // 助记码
-          drugsType: '抗菌素', // 药品种类
+          drugsType: '抗菌素', // 商品种类
           custom: '', // 自定义类
           unitPrice: 6.87, // 销售单价
           positionSaid: '', // 货位说明
@@ -87,7 +87,7 @@ export default {
           storagePeriod: '2013-1-10',
           promotion: 0.2,
           deliveryUnit: '初期库存',
-          type: '药品',
+          type: '商品',
           renumber: 682302,
           drugsType: '抗菌素',
           custom: '',
@@ -109,7 +109,7 @@ export default {
           storagePeriod: '2013-1-10',
           promotion: 0.2,
           deliveryUnit: '初期库存',
-          type: '药品',
+          type: '商品',
           renumber: 682302,
           drugsType: '抗菌素',
           custom: '',
@@ -131,7 +131,7 @@ export default {
           storagePeriod: '2013-1-10',
           promotion: 0.2,
           deliveryUnit: '初期库存',
-          type: '药品',
+          type: '商品',
           renumber: 682302,
           drugsType: '抗菌素',
           custom: '',
@@ -153,7 +153,7 @@ export default {
           storagePeriod: '2013-1-10',
           promotion: 0.2,
           deliveryUnit: '初期库存',
-          type: '药品',
+          type: '商品',
           renumber: 682302,
           drugsType: '抗菌素',
           custom: '',

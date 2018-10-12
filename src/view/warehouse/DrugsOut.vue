@@ -3,19 +3,19 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 入库出库管理</el-breadcrumb-item>
-                <el-breadcrumb-item>药品出库</el-breadcrumb-item>
+                <el-breadcrumb-item>商品出库</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
 
           <el-table :data="drugs" border style="width: 100%" @current-change="handleCurrentChange">
-            <el-table-column prop="id" label="药品ID" width='120px'></el-table-column>
-            <el-table-column prop="name" label="药品名称" width='140px'></el-table-column>
-            <el-table-column prop="size" label="剂型" width='115px'></el-table-column>
-            <el-table-column prop="factory" label="厂家" width='120px'></el-table-column>
-            <el-table-column prop="batchNumber" label="批号" width='115px'></el-table-column>
-            <el-table-column prop="validPeriod" label="有效期" width='130px'></el-table-column>
-            <el-table-column prop="salePrice" label="销售单价" width='100px'></el-table-column>
-            <el-table-column prop="number" label="库存量" width='auto'></el-table-column>
+            <el-table-column prop="goodsId" label="商品ID" ></el-table-column>
+            <el-table-column prop="goodsName" label="商品名称" ></el-table-column>
+            <el-table-column prop="dosageForms" label="剂型" ></el-table-column>
+            <el-table-column prop="manufacturer" label="厂家" ></el-table-column>
+            <el-table-column prop="batchNumber" label="批号"></el-table-column>
+            <el-table-column prop="validPeriod" label="有效期"></el-table-column>
+            <el-table-column prop="salePrice" label="销售单价" ></el-table-column>
+            <el-table-column prop="inventory" label="库存量"></el-table-column>
           </el-table>
           <el-dialog title="生成出库单"
                    v-model="dialogVisible"
@@ -27,11 +27,11 @@
                 <el-form-item label="出库单号">
                     <el-input class='query' v-model="newInfo.outNum"></el-input>
                 </el-form-item>
-              <el-form-item label="药品名称">
-                <el-input class='query' v-model="form.name"></el-input>
+              <el-form-item label="商品名称">
+                <el-input class='query' v-model="form.goodsName"></el-input>
               </el-form-item>
-              <el-form-item label="药品ID">
-                <el-input class='query' v-model="form.id"></el-input>
+              <el-form-item label="商品ID">
+                <el-input class='query' v-model="form.goodsId"></el-input>
               </el-form-item>
               <el-form-item label="出库类型">
                   <el-input v-model="newInfo.outType"></el-input>
@@ -40,7 +40,7 @@
                 <el-input class='query' v-model="form.batchNumber"></el-input>
               </el-form-item>
               <el-form-item label="生产厂商">
-                <el-input class='query' v-model="form.factory"></el-input>
+                <el-input class='query' v-model="form.manufacturer"></el-input>
               </el-form-item>
               <el-form-item label="出库数量">
                   <el-input class='query' v-model="form.outNumber"></el-input>
@@ -74,10 +74,10 @@ export default {
       newInfo: {},
       form: {
         outNum: '',
-        name: '',
+        goodsName: '',
         outType: '',
         batchNumber: '',
-        factory: '',
+        manufacturer: '',
         number: '',
         operator: ''
       },
@@ -133,24 +133,24 @@ export default {
         return
       }
       this.$http.put(`/api/drug/${id}`, {
-        id: form.id,
-        name: form.name,
-        rename: form.rename,
-        size: form.size,
+        goodsId: form.goodsId,
+        goodsName: form.goodsName,
+        pinyinMa: form.pinyinMa,
+        dosageForms: form.dosageForms,
         approvalNumber: form.approvalNumber,
         batchNumber: form.batchNumber,
-        position: form.position,
-        number: number,
+        location: form.location,
+        // inventory: inventory-number,
         unitPrice: form.unitPrice,
         salePrice: form.salePrice,
         promotion: form.promotion,
-        bornDate: form.bornDate,
+        producteDate: form.producteDate,
         validPeriod: form.validPeriod,
-        deliveryUnit: form.deliveryUnit,
-        factory: form.factory,
-        type: form.type,
-        drugsType: form.drugsType,
-        custom: form.custom
+        supplyUnit: form.supplyUnit,
+        manufacturer: form.manufacturer,
+        goodsType: form.goodsType,
+        drugCategory: form.drugCategory,
+        customClass: form.customClass
       }).then(res => {
         console.log(res)
         this.getAllDrugs()
@@ -161,14 +161,14 @@ export default {
       console.log(form.name)
       this.$http.post(`/api/outstock`, {
         outNum: this.newInfo.outNum,
-        name: form.name,
-        drugId: form.id,
+        goodsName: form.goodsName,
+        goodsId: form.goodsId,
         outType: this.newInfo.outType,
         batchNumber: form.batchNumber,
-        factory: form.factory,
+        manufacturer: form.manufacturer,
         totalNum: Number(form.number),
         operator: this.newInfo.operator,
-        guige: form.size,
+        dosageForms: form.dosageForms,
         saleUnitPrice: form.unitPrice,
         validDate: form.validPeriod,
         outTime: time

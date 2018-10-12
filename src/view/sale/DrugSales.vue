@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item><i class="el-icon-menu"></i> 销售管理</el-breadcrumb-item>
-                <el-breadcrumb-item>药品销售</el-breadcrumb-item>
+                <el-breadcrumb-item>商品销售</el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <p class='sale-title'>销售单</p>
@@ -31,9 +31,9 @@
                        @click="addSales"
                        style="height:28px;margin:5px 0 0 15px">生成销售单</el-button>
         </el-form>
-        <p class='sale-title'>添加药品</p>
+        <p class='sale-title'>添加商品</p>
         <el-form class='form-condition' ref="form" :model="drugs" label-width="100px">
-              <el-form-item label="药品名称">
+              <el-form-item label="商品名称">
                   <el-select size='small'
                            v-model="drugValue"
                            placeholder="请选择"
@@ -41,7 +41,7 @@
                     <el-option v-for='(item,j) in drugsname' :key="j" :label="item.label" :value="item.value"></el-option>
                   </el-select>
               </el-form-item>
-              <el-form-item label="药品ID">
+              <el-form-item label="商品ID">
                   <el-input class='query' v-model="drugs.id"></el-input>
               </el-form-item>
               <el-form-item label="销售数量">
@@ -55,8 +55,8 @@
          <span style='color:red;padding:0 0 15px 32px'>{{tips}}</span>
         </el-form>
           <el-table :data="drugInfo" border style="width:950px;margin:0 auto" >
-            <el-table-column prop="id" label="药品ID" width='100px'></el-table-column>
-            <el-table-column prop="name" label="药品名" width='140px'></el-table-column>
+            <el-table-column prop="id" label="商品ID" width='100px'></el-table-column>
+            <el-table-column prop="name" label="商品名" width='140px'></el-table-column>
             <el-table-column prop="factory" label="生产厂商" width='140px'></el-table-column>
             <el-table-column prop="batchNumber" label="批号" width='115px'></el-table-column>
             <el-table-column prop="comePrice" label="进价" width='130px'></el-table-column>
@@ -85,8 +85,8 @@ export default {
                 saleTime 销售时间，
                 saleMoney 销售金额，
                 seller 销售员，
-                saleInfo 销售药品信息{
-                    [药品id,药品name,生产厂家,批号，销售数量，进价,销售单价]
+                saleInfo 销售商品信息{
+                    [商品id,商品name,生产厂家,批号，销售数量，进价,销售单价]
                 }
               */
       drugValue: '',
@@ -188,7 +188,7 @@ export default {
     },
     addMenu() {
       if (this.drugs.saleNumber == undefined || this.drugs.id === undefined || this.sale.name) {
-        this.tips = '输入药品ID、数量和药品名'
+        this.tips = '输入商品ID、数量和商品名'
         return
       }
       this.tips = ''
@@ -208,7 +208,7 @@ export default {
         return
       }
       if (this.drugInfo.length === 0) {
-        this.$message.success('未添加药品')
+        this.$message.success('未添加商品')
         return
       }
       const curTime = this.getDateTime()

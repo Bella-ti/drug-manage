@@ -29,7 +29,7 @@ export default function dataTree(type) {
       children: [
         {
           pathUrl: 'stock',
-          title: '库存药品'
+          title: '库存商品'
         },
         {
           pathUrl: 'warehousing',
@@ -59,7 +59,7 @@ export default function dataTree(type) {
       children: [
         {
           pathUrl: 'drugSales',
-          title: '药品销售'
+          title: '商品销售'
         },
         {
           pathUrl: 'cashierHand',
@@ -67,11 +67,11 @@ export default function dataTree(type) {
         },
         {
           pathUrl: 'drugRegist',
-          title: '处方药含麻药登记'
+          title: '处方商含麻商登记'
         },
         {
           pathUrl: 'settlement',
-          title: '药品销售应收结算'
+          title: '商品销售应收结算'
         }
       ]
     }
@@ -89,11 +89,11 @@ export default function dataTree(type) {
         // },
         {
           pathUrl: 'storage',
-          title: '药品入库'
+          title: '商品入库'
         },
         {
           pathUrl: 'drugsOut',
-          title: '药品出库'
+          title: '商品出库'
         }
       ]
     }
@@ -128,7 +128,7 @@ export default function dataTree(type) {
       children: [
         {
           pathUrl: 'drugSales',
-          title: '药品销售'
+          title: '商品销售'
         },
         {
           pathUrl: 'cashierHand',
@@ -136,11 +136,11 @@ export default function dataTree(type) {
         },
         {
           pathUrl: 'drugRegist',
-          title: '处方药含麻药登记'
+          title: '处方商含麻商登记'
         },
         {
           pathUrl: 'settlement',
-          title: '药品销售应收结算'
+          title: '商品销售应收结算'
         },
         {
           pathUrl: 'saleCharts',
@@ -169,11 +169,11 @@ export default function dataTree(type) {
       children: [
         {
           pathUrl: 'storage',
-          title: '药品入库'
+          title: '商品入库'
         },
         {
           pathUrl: 'drugsOut',
-          title: '药品出库'
+          title: '商品出库'
         }
       ]
     }

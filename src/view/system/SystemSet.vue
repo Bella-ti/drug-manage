@@ -12,7 +12,7 @@
         <el-input class='card-length' v-model="param.cardLength"></el-input>
       </div>
       <div class='vaild'>
-        <span>药品有效期小于</span>
+        <span>商品有效期小于</span>
         <el-input class='card-length' v-model="param.limitDay"></el-input>
         <span>天禁止销售</span>
       </div>
@@ -32,9 +32,9 @@
       <div class='saling'>
         <el-checkbox class='one' v-model="param.allowTab">销售时，只允许销售柜台上的药，不允许销售库房的药</el-checkbox>
         <el-checkbox v-model="param.wordAlarm">销售时，处方药文字提醒</el-checkbox>
-        <el-checkbox v-model="param.limitYellow">销售时，查询药品数量小于下限，黄色显示</el-checkbox>
-        <el-checkbox v-model="param.limitDayDone">销售时，查询药品已过保质期，红色显示</el-checkbox>
-        <el-checkbox v-model="param.asTime">销售时，查询药品时显示顺序按入库时间排序</el-checkbox>
+        <el-checkbox v-model="param.limitYellow">销售时，查询商品数量小于下限，黄色显示</el-checkbox>
+        <el-checkbox v-model="param.limitDayDone">销售时，查询商品已过保质期，红色显示</el-checkbox>
+        <el-checkbox v-model="param.asTime">销售时，查询商品时显示顺序按入库时间排序</el-checkbox>
         <el-checkbox v-model="param.calculateAgain">销售时，实际销售价小于预售价，提醒重新计算</el-checkbox>
       </div>
     </div>
@@ -55,7 +55,7 @@
       <p>交班条内容</p>
       <div class='twing'>
         <el-checkbox class='one' v-model="param.allMoney">当天总营业额</el-checkbox>
-        <el-checkbox v-model="param.salesPar">当天促销药品及促销数量</el-checkbox>
+        <el-checkbox v-model="param.salesPar">当天促销商品及促销数量</el-checkbox>
         <el-checkbox v-model="param.changeTime">交班时间</el-checkbox>
         <el-checkbox v-model="param.changeWho">换班人员</el-checkbox>
       </div>

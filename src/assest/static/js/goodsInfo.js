@@ -1,7 +1,7 @@
-var goodsInfo = []
+var goodsInfos = []
 export default function goodsInfo(type) {
   if (type === 2) {
-    goodsInfo = [
+    goodsInfos = [
       {
         prop: 'goodsName',
         label: '商品名称',
@@ -69,7 +69,7 @@ export default function goodsInfo(type) {
       },
       {
         prop: 'drugCategory',
-        label: '药品种类'
+        label: '商品种类'
       },
       {
         prop: 'customClass',
@@ -77,7 +77,7 @@ export default function goodsInfo(type) {
       }
     ]
   } else if (type === 0) {
-    goodsInfo = [
+    goodsInfos = [
       {
         prop: 'goodsName',
         label: '商品名称',
@@ -87,10 +87,9 @@ export default function goodsInfo(type) {
         prop: 'inventory',
         label: '库存量'
       },
-      ,
       {
         prop: 'drugCategory',
-        label: '药品种类'
+        label: '商品种类'
       },
       {
         prop: 'producteDate',
@@ -114,7 +113,7 @@ export default function goodsInfo(type) {
       }
     ]
   } else if (type === 1) {
-    goodsInfo = [
+    goodsInfos = [
       {
         prop: 'goodsName',
         label: '商品名称',
@@ -122,7 +121,7 @@ export default function goodsInfo(type) {
       },
       {
         prop: 'goodsId',
-        label: '药品ID'
+        label: '商品ID'
       },
       {
         prop: 'dosageForms',
@@ -162,9 +161,9 @@ export default function goodsInfo(type) {
       },
       {
         prop: 'drugCategory',
-        label: '药品种类'
+        label: '商品种类'
       }
     ]
   }
-  return goodsInfo
+  return goodsInfos
 }

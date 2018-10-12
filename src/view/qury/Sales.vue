@@ -19,7 +19,7 @@
             <el-table-column prop="orderNumber" label="销售单号" width='160px'></el-table-column>
             <el-table-column prop="saleTime" label="销售时间" width='140px'></el-table-column>
             <el-table-column prop="saleMoney" label="销售金额" width='140px'></el-table-column>
-            <el-table-column prop="saleDrug" show-overflow-tooltip label="销售药品" width='auto'></el-table-column>
+            <el-table-column prop="saleDrug" show-overflow-tooltip label="销售商品" width='auto'></el-table-column>
             <el-table-column prop="seller" label="经手人" width='110px'></el-table-column>
             <el-table-column prop="size" label="说明" width='110px'></el-table-column>
             <el-table-column label="操作" width="160px">

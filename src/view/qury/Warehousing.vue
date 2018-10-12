@@ -10,8 +10,8 @@
             <el-form-item label="查询">
                 <el-input class='query' v-model="form.orderNum" placeholder="请输入入库单号"></el-input>
             </el-form-item>
-            <el-form-item label="按药品ID">
-                <el-input class='query' v-model="form.id" placeholder="请输入药品ID"></el-input>
+            <el-form-item label="按商品ID">
+                <el-input class='query' v-model="form.id" placeholder="请输入商品ID"></el-input>
             </el-form-item>
             <el-form-item label="按入库时间">
                <el-date-picker
@@ -28,11 +28,11 @@
                     @click="handlerFetch">查询</el-button>
         </el-form>
           <el-table :data="record" border style="width: 100%">
-            <el-table-column prop="orderNum" label="入库单号" width='180px'></el-table-column>
-            <el-table-column prop="id" label="商品ID" width='120px'></el-table-column>
-            <el-table-column prop="storageDate" label="入库时间" width='140px'></el-table-column>
-            <el-table-column prop="storageType" label="入库类型" width='160px'></el-table-column>
-            <el-table-column prop="checkPerson" label="经手人" width='140px'></el-table-column>
+            <el-table-column prop="orderNum" label="入库单号" ></el-table-column>
+            <el-table-column prop="goodsId" label="商品ID"></el-table-column>
+            <el-table-column prop="storageDate" label="入库时间"></el-table-column>
+            <el-table-column prop="storageType" label="入库类型"></el-table-column>
+            <el-table-column prop="acceptPerson" label="经手人"></el-table-column>
             <el-table-column label="操作" width="auto">
                 <template scope="scope">
                   <el-button
@@ -51,7 +51,7 @@
                     <el-input type='text' disabled v-model="form.orderNum"></el-input>
                 </el-form-item>
                 <el-form-item label="商品ID">
-                    <el-input type='text' disabled v-model="form.id"></el-input>
+                    <el-input type='text' disabled v-model="form.goodsId"></el-input>
                 </el-form-item>
                 <el-form-item label="入库时间">
                     <el-input type='text' disabled v-model="form.storageDate"></el-input>
@@ -60,7 +60,7 @@
                     <el-input type='text' disabled v-model="form.storageType"></el-input>
                 </el-form-item>
                 <el-form-item label="经手人">
-                    <el-input type='text' disabled v-model="form.checkPerson"></el-input>
+                    <el-input type='text' disabled v-model="form.acceptPerson"></el-input>
                 </el-form-item>
             </el-form>
         </el-dialog>

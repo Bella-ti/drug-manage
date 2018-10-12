@@ -7,8 +7,8 @@
             </el-breadcrumb>
         </div>
         <el-form class='form-condition' ref="form" :model="form" label-width="100px">
-            <el-form-item label="按药品ID">
-                <el-input class='query' v-model="form.value" placeholder="请输入药品ID"></el-input>
+            <el-form-item label="按商品ID">
+                <el-input class='query' v-model="form.value" placeholder="请输入商品ID"></el-input>
             </el-form-item>
             <el-form-item label="按出库时间">
                <el-date-picker
@@ -27,7 +27,7 @@
         </el-form>
           <el-table :data="record" border style="width: 100%">
             <el-table-column prop="outNum" label="出库单号" width='100px'></el-table-column>
-            <el-table-column prop="drugId" label="药品ID" width='90px'></el-table-column>
+            <el-table-column prop="drugId" label="商品ID" width='90px'></el-table-column>
             <el-table-column prop="validDate" label="有效期" width='110px'></el-table-column>
             <el-table-column prop="totalNum" label="剩余库存量" width='110px'></el-table-column>
             <el-table-column prop="outTime" label="出库时间" width='115px'></el-table-column>

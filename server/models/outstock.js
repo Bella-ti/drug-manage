@@ -5,14 +5,14 @@ const outstockSchema = mongoose.Schema({
     type: Number,
     required: true
   },
-  name: String,
-  drugId: String,
+  goodsName: String,
+  goodsId: String,
   outType: String,
   batchNumber: String,
-  factory: String,
+  manufacturer: String,
   totalNum: String,
   operator: String,
-  guige: String,
+  dosageForms: String,
   saleUnitPrice: String,
   validDate: String,
   outTime: Date

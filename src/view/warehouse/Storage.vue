@@ -15,7 +15,7 @@
           <el-option v-for='(io, j) in item.option' :label="io" :value="io" :key="j"></el-option>
         </el-select>
 
-        <el-input v-if="(!item.date) && (!item.option)" class='query' :disabled="item.disabled" v-model="goodsStockInfo[item.value]"></el-input>
+        <el-input v-if="(!item.date) && (!item.option)" class='query' :disabled="item.disabled" @blur="checkName($event, item)" v-model="goodsStockInfo[item.value]"></el-input>
 
         <span v-if="item.require" class='tips'>*</span>
         <span v-else class='tips'></span>
@@ -72,15 +72,19 @@ export default {
     this.stockInfo = stockIn()
   },
   methods: {
-    checkName(value) {
-      this.$http.get('/api/drug').then((res) => {
-        for (var i in res.data) {
-          if (res.data[i].name === value) {
-            this.goodsStockInfo = res.data[i]
-            this.status = true
-          }
-        }
-      })
+    checkName(value, item) {
+      console.log(item.value, 'goodsName', item.value === 'goodsName')
+      if (item.value === 'goodsName') {
+        this.$http.get('/api/drug', { goodsName: this.goodsStockInfo.goodsName }).then((res) => {
+          console.log(res)
+          // for (var i in res.data) {
+          //   if (res.data[i].name === value) {
+          //     this.goodsStockInfo = res.data[i]
+          //     this.status = true
+          //   }
+          // }
+        })
+      }
     },
     getOrder() {
       const r1 = parseInt(Math.random() * (10))
@@ -114,6 +118,8 @@ export default {
       } else {
         pros = this.$http.post('/api/drug', this.goodsStockInfo)
       }
+      this.goodsStockInfo.inventory = 0
+      this.goodsStockInfo.inventory = this.goodsStockInfo.inventory + Number(this.goodsStockInfo.warehouseNum)
       pros.then(res => {
         return this.$http.post('/api/stockin', this.goodsStockInfo)
       }).then(suc => {

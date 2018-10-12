@@ -25,7 +25,7 @@ export function stockIn(type) {
       option: ['采购', '下架']
     },
     {
-      label: '药品名称',
+      label: '商品名称',
       value: 'goodsName',
       require: true
     },
@@ -89,7 +89,7 @@ export function stockIn(type) {
       value: 'goodsType'
     },
     {
-      label: '药品类别',
+      label: '商品类别',
       value: 'drugCategory'
     },
     {

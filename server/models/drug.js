@@ -17,7 +17,7 @@ const mongoose = require('mongoose')
  * supplyUnit 供货单位
  * manufacturer 厂家
  * goodsType 商品种类
- * drugCategory 药品类别
+ * drugCategory 商品类别
  * customClass 自定义类
  */
 const drugSchema = mongoose.Schema({

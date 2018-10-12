@@ -90,11 +90,9 @@ export default {
         for (var i = 0; i < self.userList.length; i++) {
           if (self.ruleForm.username === self.userList[i].username && self.ruleForm.password === self.userList[i].password) {
             if (valid) {
-              if (self.value === self.userList[i].type) {
+              if (Number(self.value) === self.userList[i].type) {
                 this.SET_CUR_USER(self.userList[i])
                 localStorage.setItem('curLogin', JSON.stringify(self.userList[i]))
-                // self.userList[i].password = self.ruleForm.password
-                // self.userList[i].type = self.value
                 self.$router.push('/systemSet')
               }
             } else {
